@@ -13,7 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BackPressHandler
 import com.oc.catemoji.catoc.core.base.BaseFragment
@@ -21,6 +20,7 @@ import com.oc.catemoji.catoc.core.extention.gone
 import com.oc.catemoji.catoc.core.extention.invisible
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.extention.popBack
+import com.oc.catemoji.catoc.core.extention.setTextActionBar
 import com.oc.catemoji.catoc.core.extention.toHomeFromLanguage
 import com.oc.catemoji.catoc.core.extention.toIntroFromLanguage
 import com.oc.catemoji.catoc.core.extention.toSettingFromLang
@@ -66,9 +66,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding, LanguageViewModel
     override fun setupPreViews() {
 
         val isFirst = !SharedPreferencesManager.isLanuageScreen()
-        if (!isFirst) {
-            binding.imageBgLang.setImageResource(R.drawable.img_bg_home)
-        }
+
 
 
         binding.recycleLanguage.apply {
@@ -88,13 +86,13 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding, LanguageViewModel
     private fun updateActionBar(isFirst: Boolean) {
         binding.apply {
             if (isFirst) {
+                setTextActionBar(actionBar.tvStart, getString(R.string.language))
                 actionBar.btnActionBarRight.invisible()
                 actionBar.btnActionBarRight.setImageResource(R.drawable.select_language)
             } else {
+                setTextActionBar(actionBar.tvCenter, getString(R.string.language))
                 actionBar.btnActionBarLeft.visible()
                 actionBar.btnActionBarRight.setImageResource(R.drawable.select_language)
-                // ❌ Xóa Glide — dùng setImageResource trực tiếp
-                imageBgLang.setImageResource(R.drawable.img_bg_home)
             }
         }
     }
@@ -117,17 +115,11 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding, LanguageViewModel
 
     override fun initView() {
         isFromSetting = findNavController().previousBackStackEntry?.destination?.id == R.id.setting
-        Admob.getInstance().loadNativeAd(
-            requireContext(),
-            getString(R.string.native_language),
-            binding.nativeAds,
-            R.layout.ads_native_big_btn_top
-        )
+
         binding.actionBar.apply {
             btnActionBarRight.gone()
             btnActionBarLeft.setImageResource(R.drawable.back_app)
         }
-        binding.layoutTitle.txtLang.isSelected = true
 
         // ✅ Bỏ initRcv() — đã làm trong setupPreViews
         updateActionBar(viewModel.isFirstLanguage.value)

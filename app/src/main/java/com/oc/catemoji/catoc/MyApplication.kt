@@ -4,19 +4,16 @@ import android.app.Application
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.lvt.ads.util.AdsApplication
-import com.lvt.ads.util.AppOpenManager
 import com.oc.catemoji.catoc.core.extention.OuterStrokeShadownTextView
 import com.tencent.mmkv.MMKV
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp                     // QUAN TRỌNG NHẤT – KHÔNG ĐƯỢC THIẾU
-class MyApplication :  AdsApplication() {
+class MyApplication :  Application() {
     override fun onCreate() {
         super.onCreate()
         val mmkvDir = java.io.File(filesDir, "mmkv_store").also { it.mkdirs() }
         MMKV.initialize(this, mmkvDir.absolutePath)
-        AppOpenManager.getInstance().disableAppResumeWithActivity(MyApplication::class.java)
         Log.d("MyApplication", "MMKV initialized at: ${mmkvDir.absolutePath}")
         Thread {
             try {
@@ -45,19 +42,4 @@ class MyApplication :  AdsApplication() {
         }.start()
     }
 
-    override fun enableAdsResume(): Boolean {
-        return true
-    }
-
-    override fun getListTestDeviceId(): MutableList<String>? {
-        return null
-    }
-
-    override fun getResumeAdId(): String {
-        return getString(R.string.open_resume)
-    }
-
-    override fun buildDebug(): Boolean {
-        return true
-    }
 }

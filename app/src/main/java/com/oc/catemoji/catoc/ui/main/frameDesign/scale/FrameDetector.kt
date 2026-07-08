@@ -1,4 +1,4 @@
-package com.example.imagetestscale.scale
+package com.oc.catemoji.catoc.ui.main.frameDesign.scale
 
 import android.graphics.Bitmap
 import android.graphics.Color

@@ -12,18 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.ironsource.ch
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.ViewModelActivity
 import com.oc.catemoji.catoc.core.base.BaseFragment
 import com.oc.catemoji.catoc.core.extention.InternetExtension.isInternetAvailable
 import com.oc.catemoji.catoc.core.extention.InternetExtension.isNetworkConnected
-import com.oc.catemoji.catoc.core.extention.logEvent
 import com.oc.catemoji.catoc.core.extention.safeNavigate
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
 import com.oc.catemoji.catoc.core.extention.setTextActionBar
-import com.oc.catemoji.catoc.core.extention.showInter
 import com.oc.catemoji.catoc.data.model.custom.CustomModel
 import com.oc.catemoji.catoc.databinding.FragmentChoosePonyBinding
 import com.oc.catemoji.catoc.ui.main.customize.CustomizeFragment.Companion.ARG_TEMPLATE_ID
@@ -50,14 +46,10 @@ class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyVie
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): FragmentChoosePonyBinding = FragmentChoosePonyBinding.inflate(inflater, container, false)
-    private fun initNativeCollab() {
-        Log.d("NativeCollab", "🔄 initNativeCollab called, stack: ${Thread.currentThread().stackTrace[3]}")
-        Admob.getInstance().loadNativeCollapNotBanner(requireContext(), getString(R.string.native_cl_category), binding.flNativeCollab)
-    }
+
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
         (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
-        initNativeCollab()
     }
 
     override fun onFragmentStop() {
@@ -68,7 +60,6 @@ class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyVie
     override fun initView() {
         // Dialog ở Home do Activity giữ nên phải đóng khi Category đã được tạo.
         hideGlobalDialogSafe()
-        initNativeCollab()
         setImageActionBar(binding.actionBar.btnActionBarLeft, R.drawable.back_app)
         setTextActionBar(
             binding.actionBar.tvCenter,
@@ -79,7 +70,6 @@ class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyVie
             val dataName = character.id
                 .removePrefix("online_")
                 .removePrefix("template_")
-            logEvent("click_item_$dataName", character.avatar)
             Log.d("logevent", "click_item_$dataName - ${character.avatar}")
                 if (!isInternetAvailable(requireContext())) {
                     showUnstableNetworkDialog(); return@ChoosePonyAdapter
@@ -89,9 +79,9 @@ class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyVie
                         isNetworkConnected(requireContext())
                     }
                     if (!hasInternet) showUnstableNetworkDialog()
-                    else showInter {
+                    else
                         navigateToCustomize(character, position)
-                    }
+
                 }
 
 

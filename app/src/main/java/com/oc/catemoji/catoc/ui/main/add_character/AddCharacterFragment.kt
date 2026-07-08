@@ -26,7 +26,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BackPressHandler
 import com.oc.catemoji.catoc.core.base.BaseFragment
@@ -49,7 +48,6 @@ import com.oc.catemoji.catoc.core.extention.loadImage
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.extention.setFont
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
-import com.oc.catemoji.catoc.core.extention.showInter
 import com.oc.catemoji.catoc.core.extention.visible
 import com.oc.catemoji.catoc.core.helper.BitmapHelper
 import com.oc.catemoji.catoc.databinding.FragmentAddCharacterBinding
@@ -141,19 +139,13 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
         savedInstanceState: Bundle?
     ): FragmentAddCharacterBinding = FragmentAddCharacterBinding.inflate(inflater, container, false)
 
-    private fun initNativeCollab() {
-        Admob.getInstance().loadNativeCollapNotBanner(
-            requireContext(),
-            getString(R.string.native_cl_bg),
-            binding.flNativeCollab
-        )
-    }
+
 
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
         if (viewModel.isPickingImage) return
         (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
-        initNativeCollab()
+
     }
 
     override fun onFragmentStop() {
@@ -246,9 +238,9 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
             actionBar.btnActionBarLeft.onClick { confirmExit() }
             actionBar.btnActionBarCenter1.onClick { confirmReset() }
             actionBar.btnActionBarRight.onClick {
-                showInter {
+
                     handleSave()
-                }
+
             }
 
             // Background tabs
@@ -344,7 +336,6 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
     // ── Init ──────────────────────────────────────────────────────────────────
     override fun initView() {
 
-        initNativeCollab()
         binding.lnlBackground.btnBackgroundColorTv.isSelected = true
         binding.lnlBackground.btnBackgroundImageTv.isSelected = true
         requireActivity().hideNavigation(true)

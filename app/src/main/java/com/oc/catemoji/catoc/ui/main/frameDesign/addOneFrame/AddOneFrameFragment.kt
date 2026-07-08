@@ -6,26 +6,37 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.oc.catemoji.catoc.R
+import com.oc.catemoji.catoc.ViewModelActivity
+import com.oc.catemoji.catoc.core.base.BaseFragment
+import com.oc.catemoji.catoc.databinding.FragmentAddOneFrameBinding
+import com.oc.catemoji.catoc.databinding.FragmentFrameDesignBinding
+import com.oc.catemoji.catoc.databinding.FragmentFrameDesignBinding.inflate
+import com.oc.catemoji.catoc.ui.main.createPony.ChoosePonyAdapter
+import com.oc.catemoji.catoc.ui.main.frameDesign.addFrame.FrameDesignViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlin.getValue
 
-class AddOneFrameFragment : Fragment() {
+@AndroidEntryPoint
+class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrameViewModel>(
+    FragmentAddOneFrameBinding::inflate, AddOneFrameViewModel::class.java
+){
 
-    companion object {
-        fun newInstance() = AddOneFrameFragment()
+
+    override fun viewListener() {
+
     }
 
-    private val viewModel: AddOneFrameViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_add_one_frame, container, false)
+    ): FragmentAddOneFrameBinding = FragmentAddOneFrameBinding.inflate(inflater, container, false)
+
+    override fun bindViewModel() {
+
     }
+
 }

@@ -18,16 +18,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor() : ViewModel() {
 
-    private val _readyToNavigate = MutableSharedFlow<Unit>(
-        replay = 1,  // Replay lại event khi collect muộn
-        extraBufferCapacity = 0
-    )
+    private val _readyToNavigate = MutableSharedFlow<Unit>(replay = 1)
     val readyToNavigate = _readyToNavigate.asSharedFlow()
 
     private var isTimerRunning = false
 
     fun startSplashTimer(
-        hasOnlineTemplates: Boolean,
+        isOnline: Boolean,
         waitForOnline: suspend () -> Unit,
         waitForImages: suspend () -> Unit
     ) {
@@ -35,25 +32,19 @@ class SplashViewModel @Inject constructor() : ViewModel() {
         isTimerRunning = true
 
         viewModelScope.launch {
-            val startTime = System.currentTimeMillis()
-            val dataJob = launch {
-                if (!hasOnlineTemplates) {
-                    withTimeoutOrNull(8_000L) { waitForOnline() }
+            if (isOnline) {
+                // Có mạng: đợi data + image xong, tối đa 8s để tránh treo
+                withTimeoutOrNull(8_000L) {
+                    waitForOnline()
+                    waitForImages()
                 }
             }
-            val imagesJob = launch {
-                withTimeoutOrNull(8_000L) { waitForImages() }  // timeout tránh treo
-            }
 
-            dataJob.join()
-            imagesJob.join()
-
-            val elapsed = System.currentTimeMillis() - startTime
-            val remaining = 2_000L - elapsed
-            if (remaining > 0) delay(remaining)
+            // Data xong rồi mới đợi thêm 3s
+            delay(3_000L)
 
             isTimerRunning = false
-            _readyToNavigate.emit(Unit)  // Emit event
+            _readyToNavigate.emit(Unit)
         }
     }
 }

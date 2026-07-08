@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BackPressHandler
 import com.oc.catemoji.catoc.core.base.BaseFragment
@@ -54,11 +53,11 @@ class IntroFragment : BaseFragment<FragmentIntroBinding, IntroViewModel>(
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    if (position == 1) {
-                        nativeAds.gone()
-                    } else {
-                        nativeAds.visible()
-                    }
+//                    if (position == 1) {
+//                        nativeAds.gone()
+//                    } else {
+//                        nativeAds.visible()
+//                    }
                 }
             })
         }
@@ -73,12 +72,7 @@ class IntroFragment : BaseFragment<FragmentIntroBinding, IntroViewModel>(
     override fun initView() {
         binding.viewPager2.adapter = introAdapter
 //        binding.viewPager2.isUserInputEnabled = false
-        Admob.getInstance().loadNativeAd(
-            requireContext(),
-            getString(R.string.native_intro),
-            binding.nativeAds,
-            R.layout.ads_native_medium_btn_bottom
-        )
+
         binding.viewPager2.adapter = introAdapter
         binding.dotsIndicator.attachTo(binding.viewPager2)
         setOnChangeViewPager2()

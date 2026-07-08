@@ -2,9 +2,9 @@
     <string name="app_name">Cat Avatar: Cat Maker</string>
     <string name="next">Next</string>
     <string name="language">Language</string>
-    <string name="title_1">Create Different Styles However you like</string>
-    <string name="title_2">Make Your Perfect Avatar</string>
-    <string name="title_3">Collection of variety items</string>
+    <string name="title_1">Create your dream couple and style them your way!</string>
+    <string name="title_2">Double the characters, double the fashion fun!</string>
+    <string name="title_3">Design your perfect duo and rule the runway!</string>
     <string name="not_select_lang">Please select a language</string>
     <string name="pony_maker">Cat Maker</string>
     <string name="trending_custom">Trending Custom</string>
@@ -106,4 +106,7 @@
     <string name="enter_your_package_name">Enter your package name</string>
     <string name="please_enter_your_package_name">Please enter your package name!</string>
     <string name="this_action_may_contain_advertising">This action can contain ads</string>
+    <string name="error">Notice</string>
+    <string name="errorcontent">This character has been removed and can\'t be edited</string>
+    <string name="frame_design">Frame Design</string>
 </resources>

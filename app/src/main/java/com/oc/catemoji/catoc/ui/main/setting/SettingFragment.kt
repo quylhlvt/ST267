@@ -24,7 +24,6 @@ import com.oc.catemoji.catoc.core.extention.toHomeFromSetting
 import com.oc.catemoji.catoc.core.extention.toLangFromSetting
 import com.oc.catemoji.catoc.core.extention.visible
 import com.oc.catemoji.catoc.core.helper.RateHelper
-import com.oc.catemoji.catoc.databinding.FragmentQuickBinding
 import com.oc.catemoji.catoc.databinding.FragmentSettingBinding
 import com.oc.catemoji.catoc.utils.state.RateState
 import dagger.hilt.android.AndroidEntryPoint

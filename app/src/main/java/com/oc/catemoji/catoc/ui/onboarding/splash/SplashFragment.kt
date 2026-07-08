@@ -17,8 +17,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.lvt.ads.callback.InterCallback
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.ViewModelActivity
 import com.oc.catemoji.catoc.core.base.BackPressHandler
@@ -41,15 +39,13 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
     SplashViewModel::class.java
 ), BackPressHandler {
     private val mainViewModel: ViewModelActivity by activityViewModels()
-    var interCallBack: InterCallback? = null
-    private var progressAnimator: ValueAnimator? = null
-    private var currentOverlayFraction = 1f
+
     private var hasNavigated = false
-    private var adReady = false
 
     companion object {
-        private const val MIN_SPLASH_MS = 2_000L
+        private const val MIN_SPLASH_MS = 3_000L
         private const val API_TIMEOUT_MS = 8_000L
+
     }
 
 
@@ -58,19 +54,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
         checkAndClearDataIfNewVersion()
 
-        interCallBack = object : InterCallback() {
-            override fun onNextAction() {
-                super.onNextAction()
-                adReady = true
-                if (isAdded && !isDetached && !isRemoving) {
-                    lifecycleScope.launch { completeProgress { goToHome() } }
-                }
-            }
-        }
 
-        Admob.getInstance().loadSplashInterAds(
-            requireActivity(), getString(R.string.inter_splash), 30000, 3000, interCallBack
-        )
     }
 
     private fun checkAndClearDataIfNewVersion() {
@@ -100,15 +84,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.readyToNavigate.collect {
-                    if (!isNetworkAvailable()) {
-                        completeProgress { goToHome() }
-                    } else {
-                        withTimeoutOrNull(30_000L) {
-                            while (!adReady) delay(100)
-                        }
-                        if (!hasNavigated) {
-                            completeProgress { goToHome() }
-                        }
+                    if (!hasNavigated) {
+                       goToHome()
                     }
                 }
             }
@@ -124,60 +101,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
     ): FragmentSplashBinding = FragmentSplashBinding.inflate(inflater, container, false)
 
 
-    private fun startFakeProgress() {
-        animateOverlayTo(targetFraction = 0.2f, duration = MIN_SPLASH_MS)
-    }
-
-    private fun animateOverlayTo(
-        targetFraction: Float,
-        duration: Long,
-        onEnd: (() -> Unit)? = null
-    ) {
-        progressAnimator?.cancel()
-
-        val overlay = binding.progressOverlay
-        val capRight = binding.progressCap
-        val container = binding.progressWrapper
-
-        val containerWidth = container.width
-        if (containerWidth <= 0) {
-            onEnd?.invoke(); return
-        }
-
-        progressAnimator = ValueAnimator.ofFloat(currentOverlayFraction, targetFraction).apply {
-            this.duration = duration
-            interpolator = DecelerateInterpolator()
-
-            addUpdateListener { anim ->
-                val fraction = anim.animatedValue as Float
-                currentOverlayFraction = fraction
-
-                val total = container.width.toFloat()
-                val overlayLeft = overlay.left.toFloat() - dpToPx(requireContext(), 18)
-                val tx = total * (1f - fraction) - overlayLeft
-
-                overlay.translationX = tx
-                capRight.translationX = tx
-            }
-
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    onEnd?.invoke()
-                }
-
-                override fun onAnimationCancel(animation: Animator) {}
-            })
-
-            start()
-        }
-    }
-
-    private fun completeProgress(onDone: () -> Unit) {
-        animateOverlayTo(targetFraction = 0f, duration = 500L, onEnd = {
-            binding.progressWrapper.visibility = View.GONE
-            onDone()
-        })
-    }
 
 
     private fun goToHome() {
@@ -208,61 +131,38 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     override fun onPause() {
         super.onPause()
-        progressAnimator?.pause()
     }
 
     override fun onResume() {
         super.onResume()
-        progressAnimator?.resume()
 
-        if (adReady && !hasNavigated) {
-            adReady = false
-            lifecycleScope.launch { completeProgress { goToHome() } }
-            return
-        }
+        binding.root.post {
+            if (!isAdded || isDetached || isRemoving) return@post
 
-        binding.progressWrapper.post {
-            if (!isAdded || isDetached) return@post
-
-            startFakeProgress()
-
-            // ✅ Chờ frame đầu tiên thực sự được render ra màn hình
-            binding.root.viewTreeObserver.addOnPreDrawListener(object :
-                android.view.ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    binding.root.viewTreeObserver.removeOnPreDrawListener(this)
-
-                    // Frame đầu tiên đã sẵn sàng render → bắt đầu đếm giờ
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        viewModel.startSplashTimer(
-                            hasOnlineTemplates = mainViewModel.templates.value.any {
-                                it.id.startsWith("online_")
-                            },
-                            waitForOnline = {
-                                mainViewModel.templates.first { list ->
-                                    list.any { it.id.startsWith("online_") }
-                                }
-                            },
-                            waitForImages = {
-                                mainViewModel.imagesReady.first { it }
-                            }
-                        )
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.startSplashTimer(
+                    isOnline = isNetworkAvailable(),
+                    waitForOnline = {
+                        mainViewModel.templates.first { list ->
+                            list.any { it.id.startsWith("online_") }
+                        }
+                    },
+                    waitForImages = {
+                        mainViewModel.imagesReady.first { it }
                     }
+                )
+            }
 
-                    AsyncLayoutInflater(requireContext()).inflate(
-                        R.layout.fragment_home, null
-                    ) { _, _, _ -> }
-
-                    return true  // ✅ true = cho phép draw bình thường
-                }
-            })
+            AsyncLayoutInflater(requireContext()).inflate(
+                R.layout.fragment_home,
+                null
+            ) { _, _, _ -> }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        progressAnimator?.cancel()
-        progressAnimator = null
+
     }
 
     override fun onBackPressed(): Boolean {

@@ -23,7 +23,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.ViewModelActivity
 import com.oc.catemoji.catoc.core.base.BackPressHandler
@@ -34,7 +33,6 @@ import com.oc.catemoji.catoc.core.extention.OuterStrokeShadownTextView
 import com.oc.catemoji.catoc.core.extention.gone
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
-import com.oc.catemoji.catoc.core.extention.showInter
 import com.oc.catemoji.catoc.core.extention.toSettingFromHome
 import com.oc.catemoji.catoc.core.helper.RateHelper
 import com.oc.catemoji.catoc.core.helper.RateHelper.showRateDialog
@@ -57,15 +55,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): FragmentHomeBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
-    private fun initNativeCollab() {
-        Log.d("NativeCollab", "🔄 initNativeCollab called, stack: ${Thread.currentThread().stackTrace[3]}")
-        Admob.getInstance().loadNativeCollapNotBanner(requireContext(), getString(R.string.native_cl_home), binding.flNativeCollab)
-    }
+
     override fun initView() {
-        Admob.getInstance().loadNativeAll(requireContext(), getString(R.string.native_all))
-        Log.d("NativeCollab", "▶️ initView")
-        Admob.getInstance().loadInterAll(requireContext(), getString(R.string.inter_all))
-        initNativeCollab()
+
         binding.actionBar.apply {
             setImageActionBar(btnActionBarRight, R.drawable.ic_settings)
         }
@@ -73,7 +65,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
         (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
-        initNativeCollab()
     }
 
     override fun onFragmentStop() {
@@ -96,17 +87,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
             btnCreate.onClick {
                 navigateWithCheck(R.id.action_home_to_createPony)
             }
+            btnFrameDesign.onClick {
+                navigateWithCheck(R.id.action_home_to_frame_design)
+            }
             btnMyAlbum.onClick {
-                showInter {
-                    findNavController().navigate(R.id.action_home_to_myPony)
-                }
 
-            }
-            btnRandom.onClick(1000) {
-                navigateWithCheck(R.id.action_home_to_random)
-            }
-            btnCosPlay.onClick(1000) {
-                navigateWithCheck(R.id.action_home_to_cosplay)
+                    findNavController().navigate(R.id.action_home_to_myPony)
+
+
             }
             actionBar.btnActionBarRight.onClick { toSettingFromHome() }
         }
@@ -128,7 +116,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
             binding.tv1.isSelected = true
             binding.tv2.isSelected = true
             binding.tv3.isSelected = true
-            binding.tv4.isSelected = true
 
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {

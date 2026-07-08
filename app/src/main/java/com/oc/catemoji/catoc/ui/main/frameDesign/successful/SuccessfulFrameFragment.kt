@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BaseFragment
+import com.oc.catemoji.catoc.databinding.FragmentAddOneFrameBinding
 import com.oc.catemoji.catoc.databinding.FragmentSuccessfulFrameBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,19 +16,23 @@ import dagger.hilt.android.AndroidEntryPoint
 class SuccessfulFrameFragment: BaseFragment<FragmentSuccessfulFrameBinding, SuccessfulFrameViewModel>(
     FragmentSuccessfulFrameBinding::inflate, SuccessfulFrameViewModel::class.java
 ) {
+
+
     override fun viewListener() {
 
     }
+
 
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): FragmentSuccessfulFrameBinding = FragmentSuccessfulFrameBinding.inflate(inflater,container , false)
+    ): FragmentSuccessfulFrameBinding = FragmentSuccessfulFrameBinding.inflate(inflater, container, false)
 
     override fun bindViewModel() {
 
     }
+
 
 
 }

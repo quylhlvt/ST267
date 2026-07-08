@@ -18,6 +18,14 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_home_to_frame_design"
+            app:destination="@id/frameDesignFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/homeFragment" />
 
         <action
             android:id="@+id/action_home_to_myPony"
@@ -206,8 +214,15 @@
             />
 
     </fragment>
-
-
+    <fragment
+        android:id="@+id/frameDesignFragment"
+        android:name="com.oc.catemoji.catoc.ui.main.frameDesign.addFrame.FrameDesignFragment"
+        android:label="FrameDesignFragment" />
+    <fragment
+        android:id="@+id/addOneFrameFragment"
+        android:name="com.oc.catemoji.catoc.ui.main.frameDesign.addOneFrame.AddOneFrameFragment"
+        android:label="fragment_add_one_frame"
+        tools:layout="@layout/fragment_add_one_frame" />
 
 
 </navigation>

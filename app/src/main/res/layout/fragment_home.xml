@@ -4,15 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@drawable/img_bg_splash"
     android:layout_height="match_parent"
     tools:context=".ui.main.home.HomeFragment">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_bg_home" />
 
     <!--    layoutActionBar-->
     <FrameLayout
@@ -30,10 +25,9 @@
         android:id="@+id/title_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="37dp"
         android:scaleType="centerCrop"
         android:src="@drawable/img_title_home"
-        app:layout_constraintDimensionRatio="2.84:1.69"
+        app:layout_constraintDimensionRatio="3.6:1.69"
         app:layout_constraintTop_toBottomOf="@+id/layoutActionBar"
         tools:layout_editor_absoluteX="37dp" />
 
@@ -89,7 +83,7 @@
                     android:shadowRadius="5"
                     android:text="@string/pony_maker"
                     android:textColor="@color/app_color2"
-                    android:textSize="28dp"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="2.1:0.86"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +102,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="16dp"
-                android:id="@+id/btnCosPlay"
+                android:id="@+id/btnMyAlbum"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="3.21:1.16"
@@ -139,9 +133,9 @@
                     android:shadowDx="5"
                     android:shadowDy="-5"
                     android:shadowRadius="5"
-                    android:text="@string/cosplay"
+                    android:text="@string/my_creation"
                     android:textColor="@color/app_color2"
-                    android:textSize="28dp"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="2.1:0.86"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -160,11 +154,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="16dp"
-                android:id="@+id/btnRandom"
+                android:id="@+id/btnFrameDesign"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="3.21:1.16"
-                app:layout_constraintTop_toBottomOf="@+id/btnCosPlay">
+                app:layout_constraintTop_toBottomOf="@+id/btnMyAlbum">
 
                 <ImageView
                     android:layout_width="0dp"
@@ -191,9 +185,9 @@
                     android:shadowDx="5"
                     android:shadowDy="-5"
                     android:shadowRadius="5"
-                    android:text="@string/cat_random"
+                    android:text="@string/frame_design"
                     android:textColor="@color/app_color2"
-                    android:textSize="28dp"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="2.1:0.86"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -207,58 +201,6 @@
                     android:src="@drawable/img_avatar3"
                     app:layout_constraintDimensionRatio="0.96:1.1"
                     app:layout_constraintEnd_toStartOf="@+id/tv3"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_marginTop="16dp"
-                android:id="@+id/btnMyAlbum"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="3.21:1.16"
-                app:layout_constraintTop_toBottomOf="@+id/btnRandom">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/img_bg_home1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="2.96:1.16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.oc.catemoji.catoc.core.extention.OuterStrokeShadownTextView
-                    android:id="@+id/tv4"
-                    style="@style/single_marquee"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/img_bg_tv1"
-                    android:fontFamily="@font/baloo2_extrabold"
-                    android:gravity="center"
-                    android:paddingHorizontal="5dp"
-                    android:shadowColor="@color/app_color"
-                    android:shadowDx="5"
-                    android:shadowDy="-5"
-                    android:shadowRadius="5"
-                    android:text="@string/my_creation"
-                    android:textColor="@color/app_color2"
-                    android:textSize="28dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="2.1:0.86"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:outerStrokeColor="@color/app_color"
-                    app:outerStrokeWidth="1dp" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/img_avatar4"
-                    app:layout_constraintDimensionRatio="0.96:1.1"
-                    app:layout_constraintEnd_toStartOf="@+id/tv4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>

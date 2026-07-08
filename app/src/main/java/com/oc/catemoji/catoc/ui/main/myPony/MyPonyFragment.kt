@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.dialog.CreateNameDialog
 import com.oc.catemoji.catoc.core.extention.InternetExtension.isNetworkConnected
@@ -27,7 +26,6 @@ import com.oc.catemoji.catoc.core.extention.invisible
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
 import com.oc.catemoji.catoc.core.extention.setTextActionBar
-import com.oc.catemoji.catoc.core.extention.showInter
 import com.oc.catemoji.catoc.core.extention.toCleanSelections
 import com.oc.catemoji.catoc.core.extention.visible
 import com.oc.catemoji.catoc.core.helper.PermissionRequestHelper
@@ -69,20 +67,11 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
     }
 
     // ── INIT ──────────────────────────────────────────────────────────────────
-    private fun initNativeCollab() {
-        Log.d(
-            "NativeCollab",
-            "🔄 initNativeCollab called, stack: ${Thread.currentThread().stackTrace[3]}"
-        )
-        Admob.getInstance().loadNativeCollapNotBanner(
-            requireContext(), getString(R.string.native_cl_creation), binding.flNativeCollab
-        )
-    }
+
 
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
         (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
-        initNativeCollab()
     }
 
     override fun onFragmentStop() {
@@ -92,13 +81,7 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
     }
 
     override fun initView() {
-        initNativeCollab()
-        Admob.getInstance().loadNativeAd(
-            requireContext(),
-            getString(R.string.native_creation),
-            binding.nativeAds,
-            R.layout.ads_native_banner
-        )
+
 
         binding.apply {
             tvWhatApp.isSelected = true
@@ -118,10 +101,10 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
         binding.actionBar.apply {
             setImageActionBar(btnActionBarLeft, R.drawable.back_app)
             setTextActionBar(tvCenter, getString(R.string.my_creation1))
-            setImageActionBar(btnActionBarNextToRight1, R.drawable.ic_delete_all)
-            setImageActionBar(btnActionBarRight1, R.drawable.ic_select_all)
-            btnActionBarNextToRight1.invisible()
-            btnActionBarRight1.invisible()
+            setImageActionBar(btnActionBarNextToRight, R.drawable.ic_delete_all)
+            setImageActionBar(btnActionBarRight, R.drawable.ic_select_all)
+            btnActionBarNextToRight.invisible()
+            btnActionBarRight.invisible()
         }
     }
 
@@ -159,14 +142,13 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
     private fun setupRecyclerViews() {
         myAvatarAdapter = MyAvatarAdapter(requireContext()).apply {
             onItemClick = { item ->
-                showInter {
                     handleItemClick(item.path, true, 1, item.idEdit)
-                }
+
             }
             onLongClick = { position -> handleLongClick(position, true) }
             onItemTick = { position -> toggleSelection(position, true) }
             onEditClick = { idEdit ->
-                showInter {
+                if (ensureEditItemExists(idEdit)) {
                     navigateToEdit(idEdit)
                 }
             }
@@ -179,7 +161,7 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
         }
 
         myDesignAdapter = MyDesignAdapter().apply {
-            onItemClick = { path ->    showInter {handleItemClick(path, false, 2, "0") }}
+            onItemClick = { path ->    handleItemClick(path, false, 2, "0") }
             onLongClick = { position -> handleLongClick(position, false) }
             onItemTick = { position -> toggleSelection(position, false) }
             onDeleteClick = { path -> confirmDelete(arrayListOf(path), false) }
@@ -190,15 +172,26 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
             itemAnimator = null
         }
     }
-
+    private fun ensureEditItemExists(idEdit: String): Boolean {
+        val exists = idEdit.isNotBlank() &&
+                viewModelActivity.customizedCharacters.value.any { it.id == idEdit }
+        if (!exists) showEditItemNotFoundDialog()
+        return exists
+    }
+    private fun showEditItemNotFoundDialog() {
+        showOkDialog(
+            title = getString(R.string.error),
+            message = getString(R.string.errorcontent)
+        )
+    }
     private fun setupBottomButtons() {
         binding.apply {
             btnWhatsapp.onClick { handleWhatsAppShare() }
             btnTelegram.onClick { handleTelegramShare() }
             btnDownload.onClick { handleDownload() }
             btnShare.onClick { handleShare() }
-            actionBar.btnActionBarRight1.onClick { handleSelectAll() }
-            actionBar.btnActionBarNextToRight1.onClick { handleDeleteSelected() }  // ✅ thêm
+            actionBar.btnActionBarRight.onClick { handleSelectAll() }
+            actionBar.btnActionBarNextToRight.onClick { handleDeleteSelected() }  // ✅ thêm
 
         }
     }
@@ -310,15 +303,15 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
         binding.actionBar.apply {
             if (hasSelection) {
-                btnActionBarNextToRight1.visible()
-                btnActionBarRight1.visible()
+                btnActionBarNextToRight.visible()
+                btnActionBarRight.visible()
 
-                btnActionBarRight1.setImageResource(
+                btnActionBarRight.setImageResource(
                     if (allSelected) R.drawable.ic_select_all else R.drawable.ic_not_select_all
                 )
             } else {
-                btnActionBarNextToRight1.invisible()
-                btnActionBarRight1.invisible()
+                btnActionBarNextToRight.invisible()
+                btnActionBarRight.invisible()
 
             }
         }
@@ -483,7 +476,8 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
             savedSelections = customized.selections.toCleanSelections(),
             isFlipped = customized.isFlipped
         )
-        findNavController().navigate(R.id.action_mypony_to_custom, args)
+          findNavController().navigate(R.id.action_mypony_to_custom, args)
+
     }
 
     // ── ACTIONS ───────────────────────────────────────────────────────────────

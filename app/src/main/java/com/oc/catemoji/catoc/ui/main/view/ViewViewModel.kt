@@ -8,8 +8,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.country.human.countrycup.style.core.helper.DownloadHelper
-import com.country.human.countrycup.style.data.datalocal.manager.AppDataManager
+import com.oc.catemoji.catoc.core.helper.DownloadHelper
+import com.oc.catemoji.catoc.data.datalocal.manager.AppDataManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

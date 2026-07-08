@@ -11,12 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView
-import com.lvt.ads.callback.InterCallback
-import com.lvt.ads.callback.NativeCallback
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BackPressHandler
 import com.oc.catemoji.catoc.core.base.BaseFragment
@@ -44,17 +38,12 @@ import kotlinx.coroutines.launch
 class PermissionFragment : BaseFragment<FragmentPermissionBinding, PermissionViewModel>(
     FragmentPermissionBinding::inflate, PermissionViewModel::class.java
 ), BackPressHandler {
-    private var inter: InterstitialAd? = null
     override fun viewListener() {
         binding.swPermission.onClick(1500) { handlePermissionRequest(isStorage = true) }
         binding.swNotification.onClick(1500) { handlePermissionRequest(isStorage = false) }
         binding.tvContinue.onClick(1000) {
-            Admob.getInstance().showInterAds(requireActivity(), inter, object : InterCallback() {
-            override fun onNextAction() {
-                super.onNextAction()
-                handleContinue()
-            }
-        })}
+            handleContinue()
+        }
     }
     override fun inflateBinding(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -62,28 +51,7 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding, PermissionVie
 
     override fun initView() {
         updateContinueMargin()
-        Admob.getInstance().loadInterAds(requireContext(), getString(R.string.inter_per), object : InterCallback() {
-            override fun onAdLoadSuccess(interstitialAd: InterstitialAd?) {
-                super.onAdLoadSuccess(interstitialAd)
-                inter = interstitialAd
-            }
-        })
-        Admob.getInstance().loadNativeAd(requireContext(), getString(R.string.native_per), object : NativeCallback() {
-            override fun onAdFailedToLoad() {
-                super.onAdFailedToLoad()
-                binding.nativeAds.gone()
-            }
 
-            override fun onNativeAdLoaded(nativeAd: NativeAd?) {
-                super.onNativeAdLoaded(nativeAd)
-                binding.nativeAds.visible()
-                val adView =
-                    LayoutInflater.from(requireContext()).inflate(R.layout.ads_native_big_btn_top, null) as NativeAdView
-                binding.nativeAds.removeAllViews()
-                binding.nativeAds.addView(adView)
-                Admob.getInstance().pushAdsToViewCustom(nativeAd, adView)
-            }
-        })
         binding.setupActionBar()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             binding.btnStorage.visible()
@@ -117,14 +85,14 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding, PermissionVie
     }
 
     private fun updateContinueMargin() {
-        val marginPx = if (!isNetworkAvailable()) {
-            200.dp(requireContext())
-        } else {
-            10.dp(requireContext())
-        }
-        val params = binding.tvContinue.layoutParams as? ViewGroup.MarginLayoutParams
-        params?.bottomMargin = marginPx  // hoặc topMargin tuỳ layout
-        binding.tvContinue.layoutParams = params
+//        val marginPx = if (!isNetworkAvailable()) {
+//            200.dp(requireContext())
+//        } else {
+//            10.dp(requireContext())
+//        }
+//        val params = binding.tvContinue.layoutParams as? ViewGroup.MarginLayoutParams
+//        params?.bottomMargin = marginPx  // hoặc topMargin tuỳ layout
+//        binding.tvContinue.layoutParams = params
     }
 // ❌ Xóa 2 dòng này
 // private var storageDenyCount = 0

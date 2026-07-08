@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.core.base.BackPressHandler
 import com.oc.catemoji.catoc.core.extention.gone
 import com.oc.catemoji.catoc.core.extention.hideNavigation
@@ -240,12 +239,9 @@ class MainActivity : AppCompatActivity() , LoadingController{
 
         setContentView(R.layout.activity_main)
         Log.d("PERF2", "setContentView done: ${System.currentTimeMillis()}")
-        Admob.getInstance().setTimeLimitShowAds(30000)
-        Admob.getInstance().setTimeCountdownNativeCollab(15000)
         hideNavigation(true)        // ← sau setContentView, window đã sẵn sàng
         initSharedPreferences()
 //        applyLanguage()
-        Admob.getInstance().loadInterAll(this, getString(R.string.inter_all))
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment

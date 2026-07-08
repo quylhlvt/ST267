@@ -1,4 +1,4 @@
-package com.example.imagetestscale.scale
+package com.oc.catemoji.catoc.ui.main.frameDesign.scale
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
 import androidx.core.graphics.createBitmap
-import com.example.imagetestscale.model.CropImage
+import com.oc.catemoji.catoc.data.model.frameDesign.CropImage
 
 object FrameMultiRenderer {
 

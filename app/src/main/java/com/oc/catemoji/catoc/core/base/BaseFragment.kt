@@ -34,7 +34,6 @@ import com.oc.catemoji.catoc.core.extention.visible
 import com.oc.catemoji.catoc.core.helper.SharedPreferencesManager
 import com.oc.catemoji.catoc.databinding.DialogbaseBinding
 import com.google.android.material.snackbar.Snackbar
-import com.lvt.ads.util.Admob
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import java.util.Locale

@@ -34,13 +34,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.oc.catemoji.catoc.core.extention.OuterStrokeShadownTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLang"
             style="@style/single_marquee"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:fontFamily="@font/baloo2_extrabold"
+            android:fontFamily="@font/kavoon_regular"
             android:gravity="start"
             android:text="language"
             android:textColor="@color/white"
@@ -58,10 +58,11 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/flFocus"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="53dp"
         android:elevation="1dp"
         app:cardBackgroundColor="#40000000"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="10dp"
         app:strokeWidth="0dp" />
 
 </FrameLayout>

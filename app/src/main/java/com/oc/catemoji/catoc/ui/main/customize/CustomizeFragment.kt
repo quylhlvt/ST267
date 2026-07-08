@@ -24,7 +24,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.lvt.ads.util.Admob
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.ViewModelActivity
 import com.oc.catemoji.catoc.core.base.BackPressHandler
@@ -34,7 +33,6 @@ import com.oc.catemoji.catoc.core.extention.InternetExtension.isNetworkConnected
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.extention.saveToFile
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
-import com.oc.catemoji.catoc.core.extention.showInter
 import com.oc.catemoji.catoc.data.model.custom.BodyPartModel
 import com.oc.catemoji.catoc.data.model.custom.SelectionIndex
 import com.oc.catemoji.catoc.databinding.FragmentCustomizeBinding
@@ -80,15 +78,10 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
         savedInstanceState: Bundle?
     ): FragmentCustomizeBinding = FragmentCustomizeBinding.inflate(inflater, container, false)
 
-    private fun initNativeCollab() {
-        Log.d("NativeCollab", "🔄 initNativeCollab called, stack: ${Thread.currentThread().stackTrace[3]}")
-        Admob.getInstance().loadNativeCollapNotBanner(requireContext(), getString(R.string.native_cl_custom), binding.flNativeCollab)
-    }
 
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
         (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
-        initNativeCollab()
     }
 
     override fun onFragmentStop() {
@@ -125,7 +118,6 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
     }
 
     override fun initView() {
-        initNativeCollab()
         binding.actionBar.apply {
             setImageActionBar(btnActionBarLeft, R.drawable.back_app)
             setImageActionBar(btnActionBarCenter, R.drawable.ic_reset_all_custom)
@@ -238,10 +230,9 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
                     title = getString(R.string.reset),
                     message = getString(R.string.do_you_want_to_reset_all),
                     onYes = {
-                        showInter {
                             arrShowColor.fill(true);
                             viewModel.resetAll()
-                        }
+
                     }
                 )
             }}
@@ -251,9 +242,8 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
                 if (!isAdded || isDetached || view == null) return@onClick
                 if (checkOnlineNetworkOrShowDialog()) return@onClick
                 if (canSave)
-                    showInter {
                         performSave()
-                    }
+
             }
             actionBar.btnActionBarLeft.setOnClickListener { confirmExit() }
         }
@@ -618,10 +608,9 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
             message = getString(R.string.haven_t_saved_it_yet_do_you_want_to_exit),
             title = getString(R.string.exit),
             onYes = {
-                showInter {
                     hideLoadingSafe()
                     findNavController().navigateUp()
-                }
+
             },
             onNo = { hideLoadingSafe() }
         )

@@ -2,6 +2,7 @@ package com.oc.catemoji.catoc.ui.language
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.core.content.ContextCompat
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BaseAdapter
 import com.oc.catemoji.catoc.core.extention.gone
@@ -22,15 +23,13 @@ class LanguageAdapter (val context: Context) : BaseAdapter<LanguageModel, ItemLa
         binding.apply {
             // ✅ Dùng setImageResource thay Glide — resource tĩnh không cần Glide
             imvFlag.setImageResource(item.flag)
-
-            tvLang.text = item.name
-
-            // ✅ setImageResource cho radio button
-            btnRadio.setImageResource(
-                if (item.activate) R.drawable.ic_select_lang else R.drawable.ic_un_select_lang
+            btnRadio.setImageResource(if (item.activate) R.drawable.ic_select_lang else R.drawable.ic_un_select_lang)
+            flMain.setBackgroundResource(
+                if (item.activate) R.drawable.frame_select_language else R.drawable.frame_unselect_language
             )
-
-            if (item.activate) flFocus.visible() else flFocus.invisible()
+            val activeColor = ContextCompat.getColor(root.context, if (!item.activate) R.color.app_color else R.color.white)
+            tvLang.text = item.name
+            tvLang.setTextColor(activeColor)
 
             root.onClick { onItemClick.invoke(item.code) }
         }
