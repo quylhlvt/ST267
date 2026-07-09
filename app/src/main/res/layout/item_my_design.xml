@@ -3,79 +3,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/transparent"
-    android:layout_marginHorizontal="6dp"
-    android:layout_marginBottom="12dp">
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginBottom="8dp"
+    android:background="@color/transparent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:strokeColor="@color/app_color"
-        app:strokeWidth="1.6dp"
-        app:cardCornerRadius="24dp"
-        app:cardBackgroundColor="@color/app_color4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintDimensionRatio="1:1">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp">
+            android:layout_height="0dp"
+            app:strokeWidth="3dp"
+            app:strokeColor="@color/white"
+            app:cardBackgroundColor="@color/app_color3"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.card.MaterialCardView
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="6dp"
+                android:elevation="0dp"
+                app:strokeWidth="0dp"
+                app:strokeColor="@color/app_color2"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/imvImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="24dp"
-                    app:strokeWidth="0dp"
-                    app:strokeColor="#FFF5FE"
-                    app:cardBackgroundColor="@color/transparent"
-                    android:outlineAmbientShadowColor="#E8C0F5">
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_permission" />
 
-                    <ImageView
-                        android:id="@+id/imvImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_permission" />
+                <View
+                    android:id="@+id/shadownForcus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/shadown_black2"
+                    android:visibility="gone" />
 
-                    <ImageView
-                        android:id="@+id/btnDelete"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_margin="12dp"
-                        android:src="@drawable/ic_delete" />
+                <ImageView
+                    android:id="@+id/btnDelete"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/ic_delete" />
 
-                    <!--                    &lt;!&ndash;        btnEdit&ndash;&gt;-->
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/btnEdit"-->
-                    <!--                        android:layout_width="30dp"-->
-                    <!--                        android:layout_height="30dp"-->
+                <!--        btnEdit-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/btnEdit"-->
+                <!--                    android:layout_width="28dp"-->
+                <!--                    android:layout_height="28dp"-->
+                <!--                    android:layout_margin="2dp"-->
+                <!--                    android:src="@drawable/ic_edit" />-->
 
-                    <!--                        android:layout_margin="18dp"-->
-                    <!--                        android:src="@drawable/ic_edit" />-->
+                <!--        btnSelect-->
+                <ImageView
+                    android:id="@+id/btnSelect"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/ic_not_select"
+                    android:visibility="gone" />
 
-                    <!--        btnSelect-->
-                    <ImageView
-                        android:id="@+id/btnSelect"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_margin="12dp"
-                        android:src="@drawable/ic_not_select"
-                        android:visibility="gone" />
+            </com.google.android.material.card.MaterialCardView>
 
-                </com.google.android.material.card.MaterialCardView>
 
-            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

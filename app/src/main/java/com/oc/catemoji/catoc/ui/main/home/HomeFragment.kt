@@ -64,13 +64,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
+
     }
 
     override fun onFragmentStop() {
         if (!isAdded || isDetached) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = true
-        binding.flNativeCollab.removeAllViews()
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

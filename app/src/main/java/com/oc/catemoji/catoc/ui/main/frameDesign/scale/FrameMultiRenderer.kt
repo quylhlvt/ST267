@@ -15,7 +15,8 @@ object FrameMultiRenderer {
         frame: Bitmap,
         rects: List<Rect>,
         selectedIndex: Int,
-        selectedImages: Map<Int, CropImage>
+        selectedImages: Map<Int, CropImage>,
+        density: Float = 1f
     ): Bitmap {
 
         val result = createBitmap(
@@ -29,10 +30,24 @@ object FrameMultiRenderer {
             Paint.ANTI_ALIAS_FLAG or
                     Paint.FILTER_BITMAP_FLAG
         )
+        val whitePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.WHITE
+            style = Paint.Style.FILL
+        }
+        val plusPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeWidth = 4f * density
+        }
+        val selectedColor = Color.parseColor("#D3338E")
+        val unselectedColor = Color.rgb(170, 170, 170)
 
         rects.forEachIndexed { index, rect ->
 
             val cropImage = selectedImages[index]
+            val isSelected = selectedIndex == index
+
+            canvas.drawRect(rect, whitePaint)
 
             if (cropImage != null) {
 
@@ -91,21 +106,12 @@ object FrameMultiRenderer {
 
                 canvas.restore()
             }else {
-
-                val bgPaint =
-                    Paint(Paint.ANTI_ALIAS_FLAG).apply {
-
-                        color = Color.argb(
-                            60,
-                            120,
-                            120,
-                            120
-                        )
-                    }
-
-                canvas.drawRect(
-                    rect,
-                    bgPaint
+                drawPlus(
+                    canvas = canvas,
+                    rect = rect,
+                    paint = plusPaint,
+                    color = if (isSelected) selectedColor else unselectedColor,
+                    density = density
                 )
             }
         }
@@ -126,17 +132,44 @@ object FrameMultiRenderer {
 
                     style = Paint.Style.STROKE
 
-                    strokeWidth = 6f
+                    strokeWidth = 1f * density
 
-                    color = Color.YELLOW
+                    color = selectedColor
                 }
 
+            val inset = 5f * density + focusPaint.strokeWidth / 2f
+            val rect = rects[selectedIndex]
             canvas.drawRect(
-                rects[selectedIndex],
+                RectF(
+                    rect.left + inset,
+                    rect.top + inset,
+                    rect.right - inset,
+                    rect.bottom - inset
+                ),
                 focusPaint
             )
         }
 
         return result
+    }
+
+    private fun drawPlus(
+        canvas: Canvas,
+        rect: Rect,
+        paint: Paint,
+        color: Int,
+        density: Float
+    ) {
+        paint.color = color
+
+        val size = minOf(rect.width(), rect.height()) * 0.18f
+        val minSize = 18f * density
+        val maxSize = 44f * density
+        val half = size.coerceIn(minSize, maxSize) / 2f
+        val cx = rect.exactCenterX()
+        val cy = rect.exactCenterY()
+
+        canvas.drawLine(cx - half, cy, cx + half, cy, paint)
+        canvas.drawLine(cx, cy - half, cx, cy + half, paint)
     }
 }

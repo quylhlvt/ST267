@@ -1,6 +1,7 @@
 package com.oc.catemoji.catoc.ui.main.myPony.adapter
 
 import android.content.Context
+import android.view.View
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BaseAdapter
 import com.oc.catemoji.catoc.core.extention.gone
@@ -37,6 +38,7 @@ class MyAvatarAdapter(val context: Context) :
             btnSelect.setImageResource(
                 if (item.isSelected) R.drawable.ic_selected else R.drawable.ic_not_select
             )
+            shadownForcus.visibility = if (item.isSelected) View.VISIBLE else View.GONE
 
             // Click luôn navigate, không check selection mode
             root.onClick { onItemClick.invoke(item) }

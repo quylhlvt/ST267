@@ -46,6 +46,7 @@ class ViewModelActivity @Inject constructor(
     val stickers:             StateFlow<List<String>>      = appDataManager.stickers
     val speechs:              StateFlow<List<String>>      = appDataManager.speechs
     val myDesignPaths:        StateFlow<List<String>>      = appDataManager.myDesignPaths
+    val myFrameDesignPaths:   StateFlow<List<String>>      = appDataManager.myFrameDesignPaths
     val isLoading:            StateFlow<Boolean>           = appDataManager.isLoading
     val error:                StateFlow<String?>           = appDataManager.error
     private val _bgStickerFailed = MutableStateFlow(false)

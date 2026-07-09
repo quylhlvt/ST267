@@ -1,5 +1,6 @@
 package com.oc.catemoji.catoc.ui.main.myPony.adapter
 
+import android.view.View
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BaseAdapter
 import com.oc.catemoji.catoc.core.extention.gone
@@ -27,6 +28,7 @@ class MyDesignAdapter() : BaseAdapter<MyAlbumModel, ItemMyDesignBinding>(ItemMyD
                 btnSelect.gone()
                 btnDelete.visible()
             }
+            shadownForcus.visibility = if (item.isSelected) View.VISIBLE else View.GONE
 
             btnSelect.setImageResource(
                 if (item.isSelected) R.drawable.ic_selected else R.drawable.ic_not_select

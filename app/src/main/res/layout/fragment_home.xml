@@ -45,173 +45,209 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="30dp"
-            android:layout_marginHorizontal="20dp">
+            android:paddingHorizontal="16dp"
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnCreate"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="3.21:1.16"
-                app:layout_constraintTop_toTopOf="parent">
+            <!--                &lt;!&ndash;            gl05&ndash;&gt;-->
+            <!--                <androidx.constraintlayout.widget.Guideline-->
+            <!--                    android:id="@+id/gl05"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="vertical"-->
+            <!--                    app:layout_constraintGuide_percent="0.57" />-->
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/img_bg_home1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="2.96:1.16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <!--            gl063-->
+            <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:id="@+id/gl04"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="0dp"-->
+            <!--                    android:layout_marginStart="16dp"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="@+id/btnCreate"-->
+            <!--                    app:layout_constraintDimensionRatio="1.76:1.35"-->
+            <!--                    app:layout_constraintStart_toStartOf="@+id/btnCreate"-->
+            <!--                    app:layout_constraintTop_toTopOf="@+id/btnCreate" />   &lt;!&ndash;            gl063&ndash;&gt;-->
 
-                <com.oc.catemoji.catoc.core.extention.OuterStrokeShadownTextView
-                    android:id="@+id/tv1"
-                    style="@style/single_marquee"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/img_bg_tv1"
-                    android:fontFamily="@font/baloo2_extrabold"
-                    android:gravity="center"
-                    android:paddingHorizontal="5dp"
-                    android:shadowColor="@color/app_color"
-                    android:shadowDx="5"
-                    android:shadowDy="-5"
-                    android:shadowRadius="5"
-                    android:text="@string/pony_maker"
-                    android:textColor="@color/app_color2"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="2.1:0.86"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:outerStrokeColor="@color/app_color"
-                    app:outerStrokeWidth="1dp" />
+            <!--                &lt;!&ndash;            gl061&ndash;&gt;-->
+            <!--                <androidx.constraintlayout.widget.Guideline-->
+            <!--                    android:id="@+id/gl061"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="vertical"-->
+            <!--                    app:layout_constraintGuide_begin="120dp" />-->
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/img_avatar1"
-                    app:layout_constraintDimensionRatio="0.96:1.1"
-                    app:layout_constraintEnd_toStartOf="@+id/tv1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_marginTop="16dp"
-                android:id="@+id/btnMyAlbum"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="3.21:1.16"
-                app:layout_constraintTop_toBottomOf="@+id/btnCreate">
+            <!--            btnCreate-->
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/img_bg_home1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="2.96:1.16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/btnCreate"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:cardCornerRadius="10dp"
+    app:strokeWidth="3dp"
+    app:strokeColor="@color/white"
+    app:layout_constraintDimensionRatio="3.28:1"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_frame_home1"
+        >
 
-                <com.oc.catemoji.catoc.core.extention.OuterStrokeShadownTextView
-                    android:id="@+id/tv2"
-                    style="@style/single_marquee"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/img_bg_tv1"
-                    android:fontFamily="@font/baloo2_extrabold"
-                    android:gravity="center"
-                    android:paddingHorizontal="5dp"
-                    android:shadowColor="@color/app_color"
-                    android:shadowDx="5"
-                    android:shadowDy="-5"
-                    android:shadowRadius="5"
-                    android:text="@string/my_creation"
-                    android:textColor="@color/app_color2"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="2.1:0.86"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:outerStrokeColor="@color/app_color"
-                    app:outerStrokeWidth="1dp" />
+        <ImageView
+            android:id="@+id/img_home1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:elevation="2dp"
+            android:src="@drawable/img_home1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1.3:0.94"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/img_avatar2"
-                    app:layout_constraintDimensionRatio="0.96:1.1"
-                    app:layout_constraintEnd_toStartOf="@+id/tv2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_marginTop="16dp"
-                android:id="@+id/btnFrameDesign"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="3.21:1.16"
-                app:layout_constraintTop_toBottomOf="@+id/btnMyAlbum">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/img_bg_home1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="2.96:1.16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
-                <com.oc.catemoji.catoc.core.extention.OuterStrokeShadownTextView
-                    android:id="@+id/tv3"
-                    style="@style/single_marquee"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/img_bg_tv1"
-                    android:fontFamily="@font/baloo2_extrabold"
-                    android:gravity="center"
-                    android:paddingHorizontal="5dp"
-                    android:shadowColor="@color/app_color"
-                    android:shadowDx="5"
-                    android:shadowDy="-5"
-                    android:shadowRadius="5"
-                    android:text="@string/frame_design"
-                    android:textColor="@color/app_color2"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="2.1:0.86"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:outerStrokeColor="@color/app_color"
-                    app:outerStrokeWidth="1dp" />
+        <com.oc.catemoji.catoc.core.extention.OuterStrokeHaveShadownTextView
+            android:id="@+id/tv1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="-10dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/kavoon_regular"
+            android:gravity="center"
+            android:text="@string/pony_maker"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:dropShadowColor="@color/white"
+            app:dropShadowDy="2dp"
+            app:dropShadowWidth="2dp"
+            app:layout_constraintEnd_toStartOf="@+id/img_home1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:outerStrokeColor="@color/app_color"
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@drawable/img_avatar3"
-                    app:layout_constraintDimensionRatio="0.96:1.1"
-                    app:layout_constraintEnd_toStartOf="@+id/tv3"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            app:outerStrokeJoinStyle="miter"
+            app:outerStrokeWidth="2.5dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:cardCornerRadius="10dp"
+    app:strokeWidth="3dp"
+    app:strokeColor="@color/white"
+    app:layout_constraintDimensionRatio="3.28:1"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp"
+    android:id="@+id/btnMyAlbum"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/btnCreate">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_frame_home2"
+        >
+
+        <ImageView
+            android:id="@+id/img_home2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:elevation="2dp"
+            android:src="@drawable/img_home2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1.3:0.94"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <com.oc.catemoji.catoc.core.extention.OuterStrokeTextView
+            android:id="@+id/tv2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="-10dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/kavoon_regular"
+            android:gravity="center"
+            android:text="@string/my_creation"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/img_home2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:outerStrokeColor="@color/app_color"
+
+            app:outerStrokeJoinStyle="miter"
+            app:outerStrokeWidth="1dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:cardCornerRadius="10dp"
+    app:strokeWidth="3dp"
+    app:strokeColor="@color/white"
+    app:layout_constraintDimensionRatio="3.28:1"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp"
+    android:id="@+id/btnFrameDesign"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/btnMyAlbum">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_frame_home3"
+        >
+
+        <ImageView
+            android:id="@+id/img_home3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:elevation="2dp"
+            android:src="@drawable/img_home3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1.28:0.94"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <com.oc.catemoji.catoc.core.extention.OuterStrokeTextView
+            android:id="@+id/tv3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="-10dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/kavoon_regular"
+            android:gravity="center"
+            android:text="@string/frame_design"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/img_home3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:outerStrokeColor="@color/app_color"
+
+            app:outerStrokeJoinStyle="miter"
+            app:outerStrokeWidth="1dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
-<!--        flNativeCollab-->
-    <com.oc.catemoji.catoc.utils.BlockableFrameLayout
-        android:id="@+id/flNativeCollab"
-        android:elevation="100dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

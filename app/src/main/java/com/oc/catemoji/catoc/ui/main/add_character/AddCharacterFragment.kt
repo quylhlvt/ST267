@@ -893,7 +893,7 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
 
                 if (savedImagePath != null) {
                     findNavController().navigate(
-                        R.id.action_addCharacterFragment_to_viewImageFragment,
+                        R.id.action_addCharacterFragment_tosuccessFragment,
                         Bundle().apply {
                             putString("imagePath", savedImagePath)
                             putString("idEdit", "")

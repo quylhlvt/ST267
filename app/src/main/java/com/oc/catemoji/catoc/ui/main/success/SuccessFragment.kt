@@ -160,6 +160,7 @@ class SuccessFragment : BaseFragment<FragmentSuccessBinding, SuccessViewModel>(
                     path     = imagePath,
                     isAvatar = imageType == 1,
                     idEdit   = idEdit,
+                    imageType = imageType,
                     onDone   = {
                         findNavController().navigateUp()
                     }

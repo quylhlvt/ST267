@@ -32,6 +32,7 @@ import com.oc.catemoji.catoc.core.helper.PermissionRequestHelper
 import com.oc.catemoji.catoc.data.model.mypony.MyAlbumModel
 import com.oc.catemoji.catoc.databinding.FragmentMyPonyBinding
 import com.oc.catemoji.catoc.ui.main.customize.CustomizeFragment
+import com.oc.catemoji.catoc.ui.main.myPony.adapter.FrameDesignAdapter
 import com.oc.catemoji.catoc.ui.main.myPony.adapter.MyAvatarAdapter
 import com.oc.catemoji.catoc.ui.main.myPony.adapter.MyDesignAdapter
 import com.oc.catemoji.catoc.ui.onboarding.permission.PermissionViewModel
@@ -50,10 +51,15 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
     private lateinit var myAvatarAdapter: MyAvatarAdapter
     private lateinit var myDesignAdapter: MyDesignAdapter
+    private lateinit var frameDesignAdapter: FrameDesignAdapter
     private var pendingDownloadPaths: ArrayList<String> = arrayListOf()
     private val permissionViewModel: PermissionViewModel by activityViewModels()
 
-    private val isAvatarTab = MutableStateFlow(true)
+    private val currentTab = MutableStateFlow(MyPonyTab.AVATAR)
+
+    private enum class MyPonyTab {
+        AVATAR, DESIGN, FRAME
+    }
 
     companion object {
         private const val ADD_PACK_REQUEST = 200
@@ -109,32 +115,43 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
     }
 
     private fun setupTabs() {
-        binding.btnMyAvatar.onClick { switchTab(true) }
-        binding.btnMyDesign.onClick { switchTab(false) }
+        binding.btnMyAvatar.onClick { switchTab(MyPonyTab.AVATAR) }
+        binding.btnMyDesign.onClick { switchTab(MyPonyTab.DESIGN) }
+        binding.btnFrameDesign.onClick { switchTab(MyPonyTab.FRAME) }
     }
 
-    private fun switchTab(isAvatar: Boolean) {
-        isAvatarTab.value = isAvatar
-        applyTabUI(isAvatar)
+    private fun switchTab(tab: MyPonyTab) {
+        currentTab.value = tab
+        applyTabUI(tab)
         resetSelection()
     }
 
-    private fun applyTabUI(isAvatar: Boolean) {
+    private fun applyTabUI(tab: MyPonyTab) {
         binding.apply {
-            if (isAvatar) {
-                imvFocusMyDesign.setImageResource(R.drawable.bg_btn_type_unselected)
-                imvFocusMyAvatar.setImageResource(R.drawable.bg_btn_type_selected)
-                recycleAvatar.visible()
-                recycleDesign.gone()
-                updateEmptyState(myAvatarAdapter.items.isEmpty())
-                // ❌ Bỏ loadAvatarData() — dùng StateFlow
-            } else {
-                imvFocusMyDesign.setImageResource(R.drawable.bg_btn_type_selected)
-                imvFocusMyAvatar.setImageResource(R.drawable.bg_btn_type_unselected)
-                recycleAvatar.gone()
-                recycleDesign.visible()
-                updateEmptyState(myDesignAdapter.items.isEmpty())
-                loadDesignData() // Design vẫn load thủ công vì không có StateFlow
+            imvFocusMyAvatar.setImageResource(
+                if (tab == MyPonyTab.AVATAR) R.drawable.bg_btn_type_selected else R.drawable.bg_btn_type_unselected
+            )
+            imvFocusMyDesign.setImageResource(
+                if (tab == MyPonyTab.DESIGN) R.drawable.bg_btn_type_selected else R.drawable.bg_btn_type_unselected
+            )
+            imvFocusFrameDesign.setImageResource(
+                if (tab == MyPonyTab.FRAME) R.drawable.bg_btn_type_selected else R.drawable.bg_btn_type_unselected
+            )
+
+            recycleAvatar.isVisible = tab == MyPonyTab.AVATAR
+            recycleDesign.isVisible = tab == MyPonyTab.DESIGN
+            recycleFrameDesign.isVisible = tab == MyPonyTab.FRAME
+
+            when (tab) {
+                MyPonyTab.AVATAR -> updateEmptyState(myAvatarAdapter.items.isEmpty())
+                MyPonyTab.DESIGN -> {
+                    updateEmptyState(myDesignAdapter.items.isEmpty())
+                    loadDesignData()
+                }
+                MyPonyTab.FRAME -> {
+                    updateEmptyState(frameDesignAdapter.items.isEmpty())
+                    loadFrameDesignData()
+                }
             }
         }
     }
@@ -145,14 +162,14 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
                     handleItemClick(item.path, true, 1, item.idEdit)
 
             }
-            onLongClick = { position -> handleLongClick(position, true) }
-            onItemTick = { position -> toggleSelection(position, true) }
+            onLongClick = { position -> handleLongClick(position, MyPonyTab.AVATAR) }
+            onItemTick = { position -> toggleSelection(position, MyPonyTab.AVATAR) }
             onEditClick = { idEdit ->
                 if (ensureEditItemExists(idEdit)) {
                     navigateToEdit(idEdit)
                 }
             }
-            onDeleteClick = { path -> confirmDelete(arrayListOf(path), true) }
+            onDeleteClick = { path -> confirmDelete(arrayListOf(path), MyPonyTab.AVATAR) }
         }
         binding.recycleAvatar.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
@@ -162,13 +179,25 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
         myDesignAdapter = MyDesignAdapter().apply {
             onItemClick = { path ->    handleItemClick(path, false, 2, "0") }
-            onLongClick = { position -> handleLongClick(position, false) }
-            onItemTick = { position -> toggleSelection(position, false) }
-            onDeleteClick = { path -> confirmDelete(arrayListOf(path), false) }
+            onLongClick = { position -> handleLongClick(position, MyPonyTab.DESIGN) }
+            onItemTick = { position -> toggleSelection(position, MyPonyTab.DESIGN) }
+            onDeleteClick = { path -> confirmDelete(arrayListOf(path), MyPonyTab.DESIGN) }
         }
         binding.recycleDesign.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = myDesignAdapter
+            itemAnimator = null
+        }
+
+        frameDesignAdapter = FrameDesignAdapter().apply {
+            onItemClick = { path -> handleItemClick(path, false, 3, "0") }
+            onLongClick = { position -> handleLongClick(position, MyPonyTab.FRAME) }
+            onItemTick = { position -> toggleSelection(position, MyPonyTab.FRAME) }
+            onDeleteClick = { path -> confirmDelete(arrayListOf(path), MyPonyTab.FRAME) }
+        }
+        binding.recycleFrameDesign.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = frameDesignAdapter
             itemAnimator = null
         }
     }
@@ -245,6 +274,7 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
         }
         binding.recycleAvatar.addOnItemTouchListener(touchListener)
         binding.recycleDesign.addOnItemTouchListener(touchListener)
+        binding.recycleFrameDesign.addOnItemTouchListener(touchListener)
     }
 
     // ── OBSERVE ───────────────────────────────────────────────────────────────
@@ -258,7 +288,7 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
                     .map { MyAlbumModel(path = it.imageSave, idEdit = it.id, type = 1) }
 
                 myAvatarAdapter.submitList(list)
-                if (isAvatarTab.value) updateEmptyState(list.isEmpty())
+                if (currentTab.value == MyPonyTab.AVATAR) updateEmptyState(list.isEmpty())
                 updateSelectionUI()
             }
         }
@@ -267,7 +297,15 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.myDesignList.collect { list ->
                 myDesignAdapter.submitList(list)
-                if (!isAvatarTab.value) updateEmptyState(list.isEmpty())
+                if (currentTab.value == MyPonyTab.DESIGN) updateEmptyState(list.isEmpty())
+                updateSelectionUI()
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.myFrameDesignList.collect { list ->
+                frameDesignAdapter.submitList(list)
+                if (currentTab.value == MyPonyTab.FRAME) updateEmptyState(list.isEmpty())
                 updateSelectionUI()
             }
         }
@@ -296,7 +334,7 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
     }
 
     private fun updateSelectionUI() {
-        val currentList = if (isAvatarTab.value) myAvatarAdapter.items else myDesignAdapter.items
+        val currentList = getCurrentItems()
         val hasSelection = currentList.any { it.isShowSelection }
         val allSelected = currentList.isNotEmpty() && currentList.all { it.isSelected }
         val selectedCount = currentList.count { it.isSelected }
@@ -318,7 +356,7 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
         if (hasSelection) {
             binding.lnlBottom.visible()
-            if (isAvatarTab.value) {
+            if (currentTab.value == MyPonyTab.AVATAR) {
                 binding.lnlBottomTop.visible()   // WhatsApp + Telegram
                 binding.llBottom.gone()
             } else {
@@ -335,6 +373,7 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
     private fun loadAvatarData() = viewModel.loadMyAvatar(requireContext(), true)
     private fun loadDesignData() = viewModel.loadMyDesign(requireContext())
+    private fun loadFrameDesignData() = viewModel.loadMyFrameDesign(requireContext())
 
     // ── SELECTION ─────────────────────────────────────────────────────────────
 
@@ -353,8 +392,8 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
     // Fragment nhận và gọi ViewModel
 
-    private fun handleLongClick(position: Int, isAvatar: Boolean) {
-        val currentList = if (isAvatar) myAvatarAdapter.items else myDesignAdapter.items
+    private fun handleLongClick(position: Int, tab: MyPonyTab) {
+        val currentList = getItems(tab)
         val updatedList = currentList.mapIndexed { index, item ->
             if (index == position) {
                 item.copy(isSelected = true, isShowSelection = true)
@@ -362,13 +401,8 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
                 item.copy(isShowSelection = true)
             }
         }
-        if (isAvatar) {
-            myAvatarAdapter.submitList(updatedList)
-            setRecyclerBottomMargin(binding.recycleAvatar, 50) // ← thêm margin
-        } else {
-            myDesignAdapter.submitList(updatedList)
-            setRecyclerBottomMargin(binding.recycleDesign, 50) // ← thêm margin
-        }
+        submitItems(tab, updatedList)
+        setRecyclerBottomMargin(getRecyclerView(tab), 50)
         updateSelectionUI()
     }
 
@@ -380,13 +414,12 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
         }
     }
 
-    private fun toggleSelection(position: Int, isAvatar: Boolean) {
-        val currentList = if (isAvatar) myAvatarAdapter.items else myDesignAdapter.items
+    private fun toggleSelection(position: Int, tab: MyPonyTab) {
+        val currentList = getItems(tab)
         val updatedList = currentList.mapIndexed { index, item ->
             if (index == position) item.copy(isSelected = !item.isSelected) else item
         }
-        if (isAvatar) myAvatarAdapter.submitList(updatedList)
-        else myDesignAdapter.submitList(updatedList)
+        submitItems(tab, updatedList)
 
         updateSelectionUI()
         if (updatedList.none { it.isSelected }) resetSelection()
@@ -398,16 +431,15 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
             showToast(R.string.please_select_an_image); return
         }
         val paths = ArrayList(selected.map { it.path })
-        confirmDelete(paths, isAvatarTab.value)
+        confirmDelete(paths, currentTab.value)
     }
 
     private fun handleSelectAll() {
-        val currentList = if (isAvatarTab.value) myAvatarAdapter.items else myDesignAdapter.items
+        val currentList = getCurrentItems()
         val shouldSelectAll = !currentList.all { it.isSelected }
         val updatedList =
             currentList.map { it.copy(isSelected = shouldSelectAll, isShowSelection = true) }
-        if (isAvatarTab.value) myAvatarAdapter.submitList(updatedList)
-        else myDesignAdapter.submitList(updatedList)
+        submitItems(currentTab.value, updatedList)
         updateSelectionUI()
     }
 
@@ -416,19 +448,44 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
             myAvatarAdapter.items.map { it.copy(isSelected = false, isShowSelection = false) }
         val designReset =
             myDesignAdapter.items.map { it.copy(isSelected = false, isShowSelection = false) }
+        val frameReset =
+            frameDesignAdapter.items.map { it.copy(isSelected = false, isShowSelection = false) }
         myAvatarAdapter.submitList(avatarReset)
         myDesignAdapter.submitList(designReset)
+        frameDesignAdapter.submitList(frameReset)
 
         // Reset margin về 0
         setRecyclerBottomMargin(binding.recycleAvatar, 0)
         setRecyclerBottomMargin(binding.recycleDesign, 0)
+        setRecyclerBottomMargin(binding.recycleFrameDesign, 0)
 
         updateSelectionUI()
     }
 
     private fun getSelectedItems(): List<MyAlbumModel> =
-        if (isAvatarTab.value) myAvatarAdapter.items.filter { it.isSelected }
-        else myDesignAdapter.items.filter { it.isSelected }
+        getCurrentItems().filter { it.isSelected }
+
+    private fun getCurrentItems(): List<MyAlbumModel> = getItems(currentTab.value)
+
+    private fun getItems(tab: MyPonyTab): List<MyAlbumModel> = when (tab) {
+        MyPonyTab.AVATAR -> myAvatarAdapter.items
+        MyPonyTab.DESIGN -> myDesignAdapter.items
+        MyPonyTab.FRAME -> frameDesignAdapter.items
+    }
+
+    private fun submitItems(tab: MyPonyTab, items: List<MyAlbumModel>) {
+        when (tab) {
+            MyPonyTab.AVATAR -> myAvatarAdapter.submitList(items)
+            MyPonyTab.DESIGN -> myDesignAdapter.submitList(items)
+            MyPonyTab.FRAME -> frameDesignAdapter.submitList(items)
+        }
+    }
+
+    private fun getRecyclerView(tab: MyPonyTab): RecyclerView = when (tab) {
+        MyPonyTab.AVATAR -> binding.recycleAvatar
+        MyPonyTab.DESIGN -> binding.recycleDesign
+        MyPonyTab.FRAME -> binding.recycleFrameDesign
+    }
 
     // ── NAVIGATION ────────────────────────────────────────────────────────────
 
@@ -482,13 +539,16 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
     // ── ACTIONS ───────────────────────────────────────────────────────────────
 
-    private fun confirmDelete(paths: ArrayList<String>, isAvatar: Boolean) {
+    private fun confirmDelete(paths: ArrayList<String>, tab: MyPonyTab) {
         showConfirmDialog(
             title = getString(R.string.delete),
             message = getString(R.string.are_you_sure_want_to_delete_this_item),
             onYes = {
-                if (isAvatar) viewModel.deleteItem(requireContext(), paths)
-                else viewModel.deleteItemDesign(paths, requireContext())
+                when (tab) {
+                    MyPonyTab.AVATAR -> viewModel.deleteItem(requireContext(), paths)
+                    MyPonyTab.DESIGN -> viewModel.deleteItemDesign(paths, requireContext())
+                    MyPonyTab.FRAME -> viewModel.deleteItemFrameDesign(paths, requireContext())
+                }
                 resetSelection()
             },
             onNo = null
@@ -611,7 +671,10 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
     override fun viewListener() {
         binding.actionBar.btnActionBarLeft.setOnClickListener {
-            if (myAvatarAdapter.items.any { it.isShowSelection } || myDesignAdapter.items.any { it.isShowSelection }) {
+            if (myAvatarAdapter.items.any { it.isShowSelection } ||
+                myDesignAdapter.items.any { it.isShowSelection } ||
+                frameDesignAdapter.items.any { it.isShowSelection }
+            ) {
                 resetSelection()  // Thoát selection mode, KHÔNG navigate
             } else {
                 findNavController().navigateUp()
@@ -627,9 +690,11 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
     override fun onResume() {
         super.onResume()
-        applyTabUI(isAvatarTab.value)
-        if (!isAvatarTab.value) {
-            loadDesignData()
+        applyTabUI(currentTab.value)
+        when (currentTab.value) {
+            MyPonyTab.AVATAR -> Unit
+            MyPonyTab.DESIGN -> loadDesignData()
+            MyPonyTab.FRAME -> loadFrameDesignData()
         }
     }
 }

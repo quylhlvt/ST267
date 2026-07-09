@@ -10,8 +10,8 @@
     <color name="red_BA">#8D67D6</color>
     <color name="yellow_F6">#F6CD46</color>
     <color name="app_color">#580029</color>
-    <color name="app_color2">#F7AE41</color>
-    <color name="app_color3">#91553D</color>
+    <color name="app_color2">#FFE6F4</color>
+    <color name="app_color3">#EA4DA9</color>
     <color name="app_color4">#E28D35</color>
     <color name="app_color5">#FDF5B9</color>
     <color name="app_color6">#FBD893</color>
@@ -26,6 +26,7 @@
     <color name="color_content_dialog">#991F2F4F</color>
     <color name="color_draw">#4A2711</color>
     <color name="color_draw_unselect">#674A2711</color>
+    <color name="shadown_black2">#66000000</color>
 
     <color name="color_1">#E2D2D2</color>
     <color name="color_2">#DCD5FF</color>

@@ -53,15 +53,13 @@ class RateDialog(private val activity: Activity) : DialogFragment() {
         binding.apply {
             tv1.isSelected = true
             tv2.isSelected = true
-            txtExit.isSelected = true
-            txtVvote.isSelected = true
+            btnExit.isSelected = true
             btnVote.isSelected = true
-            btnCancel.isSelected = true
         }
     }
 
     private fun initAction() {
-        binding.btnCancel.setOnClickListener {
+        binding.btnExit.setOnClickListener {
             onCancel?.invoke()
             dismiss()
         }
@@ -83,20 +81,20 @@ class RateDialog(private val activity: Activity) : DialogFragment() {
         binding.ll1.setOnRatingChangeListener() { _, r, _ ->
             rating = r.toInt()
             when (rating) {
-                0 -> setView(R.string.zero_star_title, R.string.zero_star)
-                1 -> setView(R.string.one_star_title, R.string.four_star)
-                2 -> setView(R.string.two_star_title, R.string.four_star)
-                3 -> setView(R.string.three_star_title, R.string.three_star)
-                4 -> setView(R.string.four_star_title, R.string.four_star)
-                5 -> setView(R.string.five_star_title, R.string.five_star)
+                0 -> setView(R.drawable.ic_rate_rero,R.string.zero_star_title, R.string.zero_star)
+                1 -> setView(R.drawable.ic_rate_one,R.string.one_star_title, R.string.four_star)
+                2 -> setView(R.drawable.ic_rate_two,R.string.two_star_title, R.string.four_star)
+                3 -> setView(R.drawable.ic_rate_three,R.string.three_star_title, R.string.three_star)
+                4 -> setView(R.drawable.ic_rate_four,R.string.four_star_title, R.string.four_star)
+                5 -> setView(R.drawable.ic_rate_five,R.string.five_star_title, R.string.five_star)
             }
         }
     }
 
-    private fun setView(titleRes: Int, descRes: Int) {
+    private fun setView(imgRes :Int,titleRes: Int, descRes: Int) {
         binding.tv1.text = requireContext().strings(titleRes)
         binding.tv2.text = requireContext().strings(descRes)
-//        binding.imvAvtRate.setImageResource(imgRes)
+        binding.imvAvtRate.setImageResource(imgRes)
     }
 
     override fun onDestroyView() {

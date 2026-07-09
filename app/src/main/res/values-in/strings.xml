@@ -75,11 +75,11 @@
     <string name="three_star_title">Oh tidak =(</string>
     <string name="three_star">Silakan beri kami masukan</string>
 
-    <string name="four_star_title">Kami juga menyukaimu =3</string>
-    <string name="four_star">Terima kasih atas masukan Anda =3</string>
+    <string name="four_star_title">Kami juga menyukaimu</string>
+    <string name="four_star">Terima kasih atas masukan Anda</string>
 
-    <string name="five_star_title">Kami juga menyukaimu =3</string>
-    <string name="five_star">Terima kasih atas masukan Anda =3</string>
+    <string name="five_star_title">Kami juga menyukaimu</string>
+    <string name="five_star">Terima kasih atas masukan Anda</string>
 
     <string name="rate_us_0">Anda belum memberi nilai!</string>
     <string name="have_rated">Terima kasih telah memberi nilai aplikasi kami</string>

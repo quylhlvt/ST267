@@ -64,7 +64,7 @@ class ViewFragment : BaseFragment<FragmentViewBinding, ViewViewModel>(
                     txtLeft.visible()
                 }
 
-                2 -> {
+                2, 3 -> {
                     txtLeft.text = getString(R.string.share)
                     setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_delete)
                     txtRight.apply { visible(); text = getString(R.string.download) }
@@ -92,7 +92,7 @@ class ViewFragment : BaseFragment<FragmentViewBinding, ViewViewModel>(
                     btnBottomRight.onClick { downloadImage() }
                 }
 
-                2 -> {
+                2, 3 -> {
                     actionBar.btnActionBarRight.onClick { confirmDelete() }
                     btnBottomLeft.onClick1 { shareImage() }
                     btnBottomRight.onClick { downloadImage() }
@@ -162,6 +162,7 @@ class ViewFragment : BaseFragment<FragmentViewBinding, ViewViewModel>(
                     path = imagePath,
                     isAvatar = imageType == 1,
                     idEdit = idEdit,
+                    imageType = imageType,
                     onDone = {
                         findNavController().navigateUp()
                     }

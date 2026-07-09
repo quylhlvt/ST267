@@ -75,11 +75,11 @@
     <string name="three_star_title">Oh non =(</string>
     <string name="three_star">Merci de nous donner votre avis</string>
 
-    <string name="four_star_title">Nous vous aimons aussi =3</string>
-    <string name="four_star">Merci pour votre avis =3</string>
+    <string name="four_star_title">Nous vous aimons aussi</string>
+    <string name="four_star">Merci pour votre avis</string>
 
-    <string name="five_star_title">Nous vous aimons aussi =3</string>
-    <string name="five_star">Merci pour votre avis =3</string>
+    <string name="five_star_title">Nous vous aimons aussi</string>
+    <string name="five_star">Merci pour votre avis</string>
 
     <string name="rate_us_0">Vous n’avez pas encore noté !</string>
     <string name="have_rated">Merci d’avoir noté notre application</string>

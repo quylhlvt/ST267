@@ -14,6 +14,8 @@
     </attr>
 
     <!-- Outer stroke attributes -->
+
+    <!-- Outer stroke attributes -->
     <attr name="outerStrokeColor" format="color" />
     <attr name="outerStrokeWidth" format="dimension" />
     <attr name="outerStrokeJoinStyle">
@@ -22,6 +24,11 @@
         <enum name="round" value="2" />
     </attr>
 
+    <!-- Drop shadow attributes -->
+    <attr name="dropShadowColor" format="color" />
+    <attr name="dropShadowDx" format="dimension" />
+    <attr name="dropShadowDy" format="dimension" />
+    <attr name="dropShadowWidth" format="dimension" />
     <!-- Inner stroke attributes -->
     <attr name="innerStrokeColor" format="color" />
     <attr name="innerStrokeWidth" format="dimension" />
@@ -58,8 +65,27 @@
         <attr name="outerStrokeColor" />
         <attr name="outerStrokeWidth" />
         <attr name="outerStrokeJoinStyle" />
-    </declare-styleable>
 
+    </declare-styleable>
+    <declare-styleable name="OuterStrokeHaveShowTextView">
+        <attr name="outerStrokeColor" />
+        <attr name="outerStrokeWidth" />
+        <attr name="outerStrokeJoinStyle" />
+        <attr name="dropShadowColor" />
+        <attr name="dropShadowDx" />
+        <attr name="dropShadowDy" />
+        <attr name="dropShadowWidth" />
+    </declare-styleable>
+    <declare-styleable name="CurvedTextView">
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="android:fontFamily" />
+        <attr name="curveDepth" format="float" />
+        <attr name="arc_centerAngle2" format="float" />
+        <attr name="arc_strokeWidth" format="dimension" />
+        <attr name="arc_strokeColor" format="color" />
+    </declare-styleable>
     <!-- ==================== CROP IMAGE VIEW ==================== -->
     <declare-styleable name="CropImageView">
         <attr name="cropGuidelines">

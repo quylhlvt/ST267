@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@drawable/img_bg_splash"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <FrameLayout
         android:id="@+id/layoutActionBar"
         android:layout_width="match_parent"
@@ -18,6 +20,10 @@
         android:id="@+id/recycleFrameCouple"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:spanCount="2"
+        android:layout_marginHorizontal="8dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_frame_design"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutActionBar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

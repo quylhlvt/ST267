@@ -166,8 +166,8 @@
             android:defaultValue=""
             app:argType="string" />
         <action
-            android:id="@+id/action_addCharacterFragment_to_viewImageFragment"
-            app:destination="@id/viewFragment"
+            android:id="@+id/action_addCharacterFragment_tosuccessFragment"
+            app:destination="@id/successFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

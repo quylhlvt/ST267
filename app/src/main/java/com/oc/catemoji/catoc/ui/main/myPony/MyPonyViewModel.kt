@@ -45,6 +45,9 @@ class MyPonyViewModel @Inject constructor(
     private val _myDesignList = MutableStateFlow<List<MyAlbumModel>>(emptyList())
     val myDesignList: StateFlow<List<MyAlbumModel>> = _myDesignList.asStateFlow()
 
+    private val _myFrameDesignList = MutableStateFlow<List<MyAlbumModel>>(emptyList())
+    val myFrameDesignList: StateFlow<List<MyAlbumModel>> = _myFrameDesignList.asStateFlow()
+
     // Download state
     private val _downloadState = MutableStateFlow<DownloadState>(DownloadState.IDLE)
     val downloadState: StateFlow<DownloadState> = _downloadState.asStateFlow()
@@ -134,6 +137,38 @@ class MyPonyViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "❌ Error loading designs: ${e.message}", e)
+            }
+        }
+    }
+
+    fun loadMyFrameDesign(context: Context, forceReload: Boolean = false) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                Log.d(TAG, "🔄 Loading frame designs...")
+
+                val paths = appDataManager.myFrameDesignPaths.value
+                val existingPaths = paths.filter { path ->
+                    val exists = File(path).exists()
+                    if (!exists) Log.w(TAG, "⚠️ Frame design file not found: $path")
+                    exists
+                }
+
+                val list = existingPaths.map { path ->
+                    MyAlbumModel(
+                        path = path,
+                        isSelected = false,
+                        isShowSelection = false,
+                        idEdit = "",
+                        type = 3
+                    )
+                }
+
+                withContext(Dispatchers.Main) {
+                    _myFrameDesignList.value = list
+                    Log.d(TAG, "✅ Frame design list updated: ${list.size} items")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "❌ Error loading frame designs: ${e.message}", e)
             }
         }
     }
@@ -250,6 +285,30 @@ class MyPonyViewModel @Inject constructor(
                 Log.d(TAG, "✅ Delete design completed")
             } catch (e: Exception) {
                 Log.e(TAG, "❌ Error deleting designs: ${e.message}", e)
+            }
+        }
+    }
+
+    fun deleteItemFrameDesign(paths: ArrayList<String>, context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                Log.d(TAG, "🗑️ Deleting ${paths.size} frame design items")
+
+                paths.forEach { path ->
+                    deleteFileFromStorage(context, path)
+                }
+
+                val current = appDataManager.myFrameDesignPaths.value.toMutableList()
+                current.removeAll(paths)
+                appDataManager.saveMyFrameDesignToJson(current)
+
+                withContext(Dispatchers.Main) {
+                    loadMyFrameDesign(context, true)
+                }
+
+                Log.d(TAG, "✅ Delete frame design completed")
+            } catch (e: Exception) {
+                Log.e(TAG, "❌ Error deleting frame designs: ${e.message}", e)
             }
         }
     }

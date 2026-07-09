@@ -34,19 +34,25 @@ class ViewViewModel @Inject constructor(  private val appDataManager: AppDataMan
         path: String,
         isAvatar: Boolean,
         idEdit: String = "",
+        imageType: Int = if (isAvatar) 1 else 2,
         onDone: () -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                // ✅ Nếu là avatar, xóa khỏi customizedCharacters
-                if (isAvatar && idEdit.isNotEmpty()) {
-                    appDataManager.deleteCustomizedCharacter(idEdit)
-                }
-                // ✅ Nếu là design, xóa khỏi myDesignPaths
-                if (!isAvatar) {
-                    val current = appDataManager.myDesignPaths.value.toMutableList()
-                    current.remove(path)
-                    appDataManager.saveMyDesignToJson(current)
+                when (imageType) {
+                    1 -> if (idEdit.isNotEmpty()) {
+                        appDataManager.deleteCustomizedCharacter(idEdit)
+                    }
+                    2 -> {
+                        val current = appDataManager.myDesignPaths.value.toMutableList()
+                        current.remove(path)
+                        appDataManager.saveMyDesignToJson(current)
+                    }
+                    3 -> {
+                        val current = appDataManager.myFrameDesignPaths.value.toMutableList()
+                        current.remove(path)
+                        appDataManager.saveMyFrameDesignToJson(current)
+                    }
                 }
                 // Xóa file vật lý
                 File(path).delete()

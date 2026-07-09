@@ -6,9 +6,7 @@
     <string name="title_2">Double the characters, double the fashion fun!</string>
     <string name="title_3">Design your perfect duo and rule the runway!</string>
     <string name="not_select_lang">Please select a language</string>
-    <string name="pony_maker">Cat Maker</string>
-    <string name="trending_custom">Trending Custom</string>
-    <string name="my_work">My Work</string>
+    <string name="pony_maker">Couple Creator</string>
 
     <string name="permission">Permission</string>
     <string name="storage">Storage</string>
@@ -41,7 +39,7 @@
     <string name="download">Download</string>
     <string name="avatar">Avatar</string>
     <string name="my_avatar">My Avatar</string>
-    <string name="design">My Design</string>
+    <string name="design">Design</string>
     <string name="no_item_here">No Item Here</string>
     <string name="add_to_whatsapp">Add To WhatsApp</string>
     <string name="add_to_telegram">Add To Telegram</string>
@@ -64,20 +62,20 @@
     <string name="zero_star_title">Do you like the app?</string>
     <string name="zero_star">Let us know your experience</string>
 
-    <string name="one_star_title">Oh, no =((</string>
+    <string name="one_star_title">Oh, no</string>
     <string name="one_star">Please give us some feedback</string>
 
-    <string name="two_star_title">Oh, no =((</string>
+    <string name="two_star_title">Oh, no</string>
     <string name="two_star">Please give us some feedback</string>
 
-    <string name="three_star_title">Oh, no =((</string>
+    <string name="three_star_title">Oh, no</string>
     <string name="three_star">Please give us some feedback</string>
 
-    <string name="four_star_title">We love you too =3</string>
-    <string name="four_star">Thanks for your feedback =3</string>
+    <string name="four_star_title">We love you too</string>
+    <string name="four_star">Thanks for your feedback</string>
 
-    <string name="five_star_title">We love you too =3</string>
-    <string name="five_star">Thanks for your feedback =3</string>
+    <string name="five_star_title">We love you too</string>
+    <string name="five_star">Thanks for your feedback</string>
 
     <string name="rate_us_0">You have not rated it yet!</string>
     <string name="have_rated">Thank you for rate our app</string>
@@ -88,8 +86,8 @@
     <string name="permission_camera_denied">Cần quyền camera để sử dụng tính năng này</string>
     <string name="cat_random">Cat Random</string>
     <string name="random">Random</string>
-    <string name="my_creation">My Creation</string>
-    <string name="my_creation1">My creation</string>
+    <string name="my_creation">My Couple</string>
+    <string name="my_creation1">My couple</string>
     <string name="category">Category</string>
     <string name="image">Image</string>
     <string name="color">Color</string>
@@ -109,4 +107,6 @@
     <string name="error">Notice</string>
     <string name="errorcontent">This character has been removed and can\'t be edited</string>
     <string name="frame_design">Frame Design</string>
+    <string name="frame">Frame</string>
+    <string name="gallery">Gallery</string>
 </resources>

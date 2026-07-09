@@ -25,10 +25,12 @@ class AppDataManager @Inject constructor(
         private const val TEMPLATES_FILE  = "templates.json"
         private const val CUSTOMIZED_FILE = "customized.json"
         private const val MY_DESIGNS_FILE = "my_designs.json"
+        private const val MY_FRAME_DESIGNS_FILE = "my_frame_designs.json"
         private const val API_CACHE_FILE = "api_cache.json"
         private const val KEY_TEMPLATES   = "templates"
         private const val KEY_CUSTOMIZED  = "customized"
         private const val KEY_MY_DESIGNS  = "my_designs"
+        private const val KEY_MY_FRAME_DESIGNS = "my_frame_designs"
         private const val KEY_API_CACHE   = "api_cache"
     }
     private val mmkv by lazy {
@@ -67,6 +69,9 @@ class AppDataManager @Inject constructor(
 
     private val _myDesignPaths        = MutableStateFlow<List<String>>(emptyList())
     val myDesignPaths: StateFlow<List<String>> = _myDesignPaths.asStateFlow()
+
+    private val _myFrameDesignPaths   = MutableStateFlow<List<String>>(emptyList())
+    val myFrameDesignPaths: StateFlow<List<String>> = _myFrameDesignPaths.asStateFlow()
 
     private val _isLoading            = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
@@ -111,6 +116,7 @@ class AppDataManager @Inject constructor(
                     launch { loadStickers() }
                     launch { loadSpeechs() }
                     launch { loadMyDesigns() }
+                    launch { loadMyFrameDesigns() }
                 }
 
                 isDataLoaded = true
@@ -152,6 +158,7 @@ class AppDataManager @Inject constructor(
             launch { loadStickers() }
             launch { loadSpeechs() }
             launch { loadMyDesigns() }
+            launch { loadMyFrameDesigns() }
         }
 
         cached.isNotEmpty()
@@ -507,7 +514,10 @@ class AppDataManager @Inject constructor(
     }
 
     suspend fun saveMyDesignToJson(paths: List<String>) = withContext(Dispatchers.IO) {
-        runCatching { mmkv.encode(KEY_MY_DESIGNS, gson.toJson(paths)) }
+        runCatching {
+            _myDesignPaths.value = paths
+            mmkv.encode(KEY_MY_DESIGNS, gson.toJson(paths))
+        }
             .onFailure { Log.e(TAG, "❌ saveMyDesigns", it) }
     }
     suspend fun addMyDesignPath(imagePath: String) {
@@ -528,6 +538,53 @@ class AppDataManager @Inject constructor(
     }
 
     suspend fun loadMyDesignData() = loadMyDesigns()
+
+    // ── MY FRAME DESIGNS ─────────────────────────────────────────────────────
+
+    private suspend fun loadMyFrameDesigns() = withContext(Dispatchers.IO) {
+        runCatching {
+            val json = mmkv.decodeString(KEY_MY_FRAME_DESIGNS)
+            if (json.isNullOrEmpty()) {
+                _myFrameDesignPaths.value = emptyList()
+                return@withContext
+            }
+            val type = object : TypeToken<List<String>>() {}.type
+            val all: List<String> = gson.fromJson(json, type) ?: emptyList()
+            val existing = all.filter { File(it).exists() }
+            if (existing.size != all.size) {
+                Log.w(TAG, "⚠️ Cleaned ${all.size - existing.size} missing frame design paths")
+                saveMyFrameDesignToJson(existing)
+            }
+            _myFrameDesignPaths.value = existing
+        }.onFailure { Log.e(TAG, "❌ loadMyFrameDesigns", it) }
+    }
+
+    suspend fun saveMyFrameDesignToJson(paths: List<String>) = withContext(Dispatchers.IO) {
+        runCatching {
+            _myFrameDesignPaths.value = paths
+            mmkv.encode(KEY_MY_FRAME_DESIGNS, gson.toJson(paths))
+        }
+            .onFailure { Log.e(TAG, "❌ saveMyFrameDesigns", it) }
+    }
+
+    suspend fun addMyFrameDesignPath(imagePath: String) {
+        val list = _myFrameDesignPaths.value.toMutableList()
+        if (!list.contains(imagePath)) {
+            list.add(0, imagePath)
+            _myFrameDesignPaths.value = list
+            saveMyFrameDesignToJson(list)
+        }
+    }
+
+    suspend fun removeMyFrameDesignPath(imagePath: String) {
+        val list = _myFrameDesignPaths.value.toMutableList()
+        if (list.remove(imagePath)) {
+            _myFrameDesignPaths.value = list
+            saveMyFrameDesignToJson(list)
+        }
+    }
+
+    suspend fun loadMyFrameDesignData() = loadMyFrameDesigns()
 
     // ── QUICK RANDOM ──────────────────────────────────────────────────────────
 
@@ -560,6 +617,7 @@ class AppDataManager @Inject constructor(
         _stickers.value             = emptyList()
         _speechs.value              = emptyList()
         _myDesignPaths.value        = emptyList()
+        _myFrameDesignPaths.value   = emptyList()
         isDataLoaded                = false
         isDataQuickLoaded           = false
     }
