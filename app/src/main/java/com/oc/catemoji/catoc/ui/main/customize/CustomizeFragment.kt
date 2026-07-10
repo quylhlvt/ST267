@@ -31,7 +31,10 @@ import com.oc.catemoji.catoc.core.base.BaseFragment
 import com.oc.catemoji.catoc.core.extention.InternetExtension.isInternetAvailable
 import com.oc.catemoji.catoc.core.extention.InternetExtension.isNetworkConnected
 import com.oc.catemoji.catoc.core.extention.onClick
+import com.oc.catemoji.catoc.core.extention.gone
+import com.oc.catemoji.catoc.core.extention.visible
 import com.oc.catemoji.catoc.core.extention.saveToFile
+import com.oc.catemoji.catoc.core.extention.setFrameActionBar
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
 import com.oc.catemoji.catoc.data.model.custom.BodyPartModel
 import com.oc.catemoji.catoc.data.model.custom.SelectionIndex
@@ -51,6 +54,8 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
     CustomizeViewModel::class.java
 ), BackPressHandler {
     private val arrShowColor = mutableListOf<Boolean>()
+    private var isScaleActive = false
+    private var isSyncingSlider = false
 
     private var isColorVisible = true
 
@@ -121,9 +126,10 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
     override fun initView() {
         binding.actionBar.apply {
             setImageActionBar(btnActionBarLeft, R.drawable.back_app)
-            setImageActionBar(btnActionBarCenter, R.drawable.ic_reset_all_custom)
-            setImageActionBar(btnActionBarCenter2, R.drawable.ic_flip_all_custom)
-            setImageActionBar(btnActionBarRight, R.drawable.next_app)
+            setImageActionBar(btnActionCenter, R.drawable.ic_reset_all_custom)
+//            setImageActionBar(btnActionBarCenter2, R.drawable.ic_flip_all_custom)
+            setFrameActionBar(btnActionBarRightText,tvRightText,getString(R.string.next ))
+
         }
         setupAdapters()
 
@@ -186,6 +192,34 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
 
     // ── ACTIONS ───────────────────────────────────────────────────────────────
     override fun viewListener() {
+        binding.sliderSize.onProgressChanged = { progress ->
+            if (!isSyncingSlider) {
+                val navIdx = viewModel.state.value.currentNavIndex
+                val old = viewModel.getTransform(navIdx)
+                viewModel.updateTransform(navIdx, old.copy(scale = 0.3f + progress * 1.7f))
+                applyTransformToCurrentLayer()
+            }
+        }
+        binding.ratioRight.onClickAndHold { changeCurrentTransform { it.copy(rotation = normalizeRotation(it.rotation + 5f)) } }
+        binding.ratioLeft.onClickAndHold { changeCurrentTransform { it.copy(rotation = normalizeRotation(it.rotation - 5f)) } }
+        binding.transitionLeft.onClickAndHold { changeCurrentTransform { it.copy(translationX = it.translationX - 20f) } }
+        binding.transitionRight.onClickAndHold { changeCurrentTransform { it.copy(translationX = it.translationX + 20f) } }
+        binding.transitionTop.onClickAndHold { changeCurrentTransform { it.copy(translationY = it.translationY - 20f) } }
+        binding.transitionBottom.onClickAndHold { changeCurrentTransform { it.copy(translationY = it.translationY + 20f) } }
+        binding.btnResetScale.onClick {
+            viewModel.resetTransform(viewModel.state.value.currentNavIndex)
+            syncTransformControls()
+            applyTransformToCurrentLayer()
+        }
+        binding.imgScale.onClick {
+            val state = viewModel.state.value
+            if (viewModel.resolvePathAt(state.currentNavIndex) == null) return@onClick
+            isScaleActive = !isScaleActive
+            binding.imgScale.setImageResource(
+                if (isScaleActive) R.drawable.ic_scale_cus_true else R.drawable.ic_scale_cus_false
+            )
+            if (isScaleActive) binding.frameScale.visible() else binding.frameScale.gone()
+        }
         adapterNav.onClick = {
             if (!checkOnlineNetworkOrShowDialog()) syncNavSelection(it)
         }
@@ -222,10 +256,10 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
                 llColor.alpha = 0f
                 llColor.animate().alpha(1f).setDuration(200).start()
             }
-            imgRandom.onClick {
-                if (!checkOnlineNetworkOrShowDialog()) viewModel.randomizeAll()
-            }
-            actionBar.btnActionBarCenter.setOnClickListener {
+//            imgRandom.onClick {
+//                if (!checkOnlineNetworkOrShowDialog()) viewModel.randomizeAll()
+//            }
+            actionBar.btnActionCenter.setOnClickListener {
                 if (!checkOnlineNetworkOrShowDialog()){
                 showConfirmDialog(
                     title = getString(R.string.reset),
@@ -238,7 +272,7 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
                 )
             }}
             actionBar.btnActionBarCenter2.onClick { viewModel.toggleFlip() }
-            actionBar.btnActionBarRight.onClick {
+            actionBar.btnActionBarRightText.onClick {
                 if (!canSave) return@onClick
                 if (!isAdded || isDetached || view == null) return@onClick
                 if (checkOnlineNetworkOrShowDialog()) return@onClick
@@ -269,8 +303,7 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
                     }
                     renderLayers(state)
                     updateAdapters(state)
-                    val scale = if (state.isFlipped) -1f else 1f
-                    layerViews.forEach { it.scaleX = scale }
+                    applyTransformsToAllLayers(state)
                 }
             }
         }
@@ -297,6 +330,68 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
             layerViews.add(iv)
             navToLayerIndex[bp.nav] = layerIdx
         }
+    }
+
+    private fun applyTransformsToAllLayers(state: CustomizeState = viewModel.state.value) {
+        state.listData.forEachIndexed { navIdx, bp ->
+            val layerIdx = navToLayerIndex[bp.nav] ?: return@forEachIndexed
+            val iv = layerViews.getOrNull(layerIdx) ?: return@forEachIndexed
+            val transform = viewModel.getTransform(navIdx)
+            iv.scaleX = transform.scaleX * transform.scale * if (state.isFlipped) -1f else 1f
+            iv.scaleY = transform.scale
+            iv.translationX = transform.translationX
+            iv.translationY = transform.translationY
+            iv.rotation = transform.rotation
+        }
+    }
+
+    private fun applyTransformToCurrentLayer() {
+        applyTransformsToAllLayers()
+        updateResetButtonState()
+    }
+
+    private fun changeCurrentTransform(
+        block: (com.oc.catemoji.catoc.data.model.custom.LayerTransform) -> com.oc.catemoji.catoc.data.model.custom.LayerTransform
+    ) {
+        val navIdx = viewModel.state.value.currentNavIndex
+        viewModel.updateTransform(navIdx, block(viewModel.getTransform(navIdx)))
+        applyTransformToCurrentLayer()
+    }
+
+    private fun normalizeRotation(value: Float): Float = when {
+        value >= 360f -> value - 360f
+        value <= -360f -> value + 360f
+        else -> value
+    }
+
+    private fun syncTransformControls() {
+        val navIdx = viewModel.state.value.currentNavIndex
+        val transform = viewModel.getTransform(navIdx)
+        val hasVisibleLayer = viewModel.resolvePathAt(navIdx) != null
+        binding.imgScale.apply {
+            isEnabled = hasVisibleLayer
+            isClickable = hasVisibleLayer
+            if (!hasVisibleLayer) {
+                isScaleActive = false
+                setImageResource(R.drawable.ic_scale_cus_none)
+                binding.frameScale.gone()
+            } else {
+                setImageResource(
+                    if (isScaleActive) R.drawable.ic_scale_cus_true
+                    else R.drawable.ic_scale_cus_false
+                )
+            }
+        }
+        isSyncingSlider = true
+        binding.sliderSize.progress = (transform.scale - 0.3f) / 1.7f
+        isSyncingSlider = false
+        updateResetButtonState()
+    }
+
+    private fun updateResetButtonState() {
+        val isDefault = viewModel.isTransformDefault(viewModel.state.value.currentNavIndex)
+        binding.btnResetScale.isEnabled = !isDefault
+        binding.btnResetScale.alpha = if (isDefault) 0.4f else 1f
     }
 
     // Reset pendingLoads mỗi khi bắt đầu render lại
@@ -334,7 +429,7 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
         pathsToLoad.forEach { (view, path, _) ->
             view.tag = path
             view.visibility = View.VISIBLE
-            view.scaleX = if (viewModel.state.value.isFlipped) -1f else 1f
+            applyTransformsToAllLayers()
             loadImageIntoView(view, path, skipCount = true) // skipCount vì đã set ở trên
         }
     }
@@ -418,8 +513,7 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
             buildLayerViews(state.listData)
             renderLayers(state)
             updateAdapters(state)
-            val scale = if (state.isFlipped) -1f else 1f
-            layerViews.forEach { it.scaleX = scale }
+            applyTransformsToAllLayers(state)
         } else {
             // ✅ Force re-render để reload ảnh bị mất khỏi memory
             layerViews.forEach { it.tag = null }
@@ -429,8 +523,8 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
 
     private fun setSaveEnabled(enabled: Boolean) {
         canSave = enabled
-        binding.actionBar.btnActionBarRight.alpha = if (enabled) 1f else 0.5f
-        binding.actionBar.btnActionBarRight.isEnabled = enabled
+        binding.actionBar.btnActionBarRightText.alpha = if (enabled) 1f else 0.5f
+        binding.actionBar.btnActionBarRightText.isEnabled = enabled
     }
 
     // ── ADAPTERS ──────────────────────────────────────────────────────────────
@@ -494,6 +588,7 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
         binding.rcvPart.post {
             binding.rcvPart.smoothScrollToPosition(targetPartIndex)
         }
+        syncTransformControls()
     }
 
     private fun buildThumbList(bp: BodyPartModel?, paths: List<String>): List<String> {
@@ -547,7 +642,8 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
                     character = template,
                     selections = selections,
                     imageSave = savedPath,
-                    isFlipped = viewModel.state.value.isFlipped
+                    isFlipped = viewModel.state.value.isFlipped,
+                    layerTransforms = viewModel.layerTransforms.value
                 )
             }
 
@@ -583,21 +679,67 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
         val bitmap = Bitmap.createBitmap(root.width, root.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
-        layerViews.forEach { iv ->
-            if (iv.visibility != View.VISIBLE) return@forEach
-
+        layerViews.forEachIndexed { layerIdx, iv ->
+            if (iv.visibility != View.VISIBLE) return@forEachIndexed
+            val navIdx = navToLayerIndex.entries.firstOrNull { it.value == layerIdx }?.key
+                ?.let { nav -> viewModel.state.value.listData.indexOfFirst { it.nav == nav } }
+                ?: return@forEachIndexed
+            val transform = viewModel.getTransform(navIdx)
             canvas.save()
-            if (iv.scaleX < 0) {
-                canvas.scale(-1f, 1f, root.width / 2f, 0f)
-            }
-
-            // ✅ Vẽ trực tiếp từ ImageView — giữ đúng transform matrix của FIT_CENTER
+            canvas.translate(root.width / 2f + transform.translationX, root.height / 2f + transform.translationY)
+            canvas.scale(
+                transform.scaleX * transform.scale * if (viewModel.state.value.isFlipped) -1f else 1f,
+                transform.scale
+            )
+            canvas.rotate(transform.rotation)
+            canvas.translate(-root.width / 2f, -root.height / 2f)
+            val oldScaleX = iv.scaleX
+            val oldScaleY = iv.scaleY
+            val oldTranslationX = iv.translationX
+            val oldTranslationY = iv.translationY
+            val oldRotation = iv.rotation
+            iv.scaleX = 1f
+            iv.scaleY = 1f
+            iv.translationX = 0f
+            iv.translationY = 0f
+            iv.rotation = 0f
             iv.draw(canvas)
-
+            iv.scaleX = oldScaleX
+            iv.scaleY = oldScaleY
+            iv.translationX = oldTranslationX
+            iv.translationY = oldTranslationY
+            iv.rotation = oldRotation
             canvas.restore()
         }
 
         return bitmap
+    }
+
+    private fun View.onClickAndHold(action: () -> Unit) {
+        var job: kotlinx.coroutines.Job? = null
+        setOnTouchListener { _, event ->
+            when (event.action) {
+                android.view.MotionEvent.ACTION_DOWN -> {
+                    action()
+                    job = viewLifecycleOwner.lifecycleScope.launch {
+                        kotlinx.coroutines.delay(400)
+                        while (true) {
+                            action()
+                            kotlinx.coroutines.delay(80)
+                        }
+                    }
+                    true
+                }
+                android.view.MotionEvent.ACTION_UP,
+                android.view.MotionEvent.ACTION_CANCEL -> {
+                    job?.cancel()
+                    job = null
+                    performClick()
+                    true
+                }
+                else -> false
+            }
+        }
     }
     // ── BASE OVERRIDES ────────────────────────────────────────────────────────
 

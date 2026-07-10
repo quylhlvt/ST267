@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.load.DataSource
+import com.oc.catemoji.catoc.core.extention.dp
 import com.oc.catemoji.catoc.core.extention.gone
 import com.oc.catemoji.catoc.core.extention.invisible
 import com.oc.catemoji.catoc.databinding.ItemBottomCustomBinding
@@ -48,35 +49,9 @@ class NavAdapter :
         binding.apply {
             val ctx = root.context
         if (posNav == position) {
-            focus.visible()
-            cardLayer.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    ctx,
-                    R.color.app_color4
-                )
-            )
-            cardLayerImg.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    ctx,
-                    R.color.app_color5
-                )
-            )
-            cardLayer.strokeColor = ContextCompat.getColor(ctx, R.color.app_color)
+            forcus.visible()
         } else {
-            focus.invisible()
-            cardLayer.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    ctx,
-                    R.color.app_color8
-                )
-            )
-                cardLayerImg.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    ctx,
-                    R.color.app_color9
-                )
-            )
-            cardLayer.strokeColor = ContextCompat.getColor(ctx, R.color.app_color7)
+            forcus.gone()
         }
         Glide.with(imvImage)
             .load(item.nav)
@@ -125,7 +100,9 @@ class ColorAdapter : BaseAdapter<ColorModel, ItemColorBinding>(ItemColorBinding:
     }
 
     override fun onBind(binding: ItemColorBinding, item: ColorModel, position: Int) {
-        binding.colorSelected.isVisible = posColor == position
+        val isSelected = posColor == position
+
+        binding.colorSelected.isVisible = isSelected
 
         val colorInt = runCatching {
             Color.parseColor(
@@ -133,7 +110,11 @@ class ColorAdapter : BaseAdapter<ColorModel, ItemColorBinding>(ItemColorBinding:
                 else "#${item.color}"
             )
         }.getOrDefault(Color.WHITE)
-
+        val marginPx = if (isSelected) (4).dp(binding.root.context) else 0
+        (binding.viewColor.layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
+            setMargins(marginPx, marginPx, marginPx, marginPx)
+        }
+        binding.viewColor.requestLayout()
         DrawableCompat.setTint(binding.viewColor.background.mutate(), colorInt)
         binding.root.setOnClickListener { onClick?.invoke(position) }
     }
@@ -160,37 +141,10 @@ class PartAdapter : BaseAdapter<String, ItemLayerBinding>(ItemLayerBinding::infl
             val ctx = root.context
 
         if (posPath == position) {
-            focus.visible()
 
-            cardLayer.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    ctx,
-                    R.color.app_color4
-                )
-            )
-            cardLayerImg.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    ctx,
-                    R.color.app_color5
-                )
-            )
-            cardLayer.strokeColor = ContextCompat.getColor(ctx, R.color.app_color)
+            forcus.visible()
         } else {
-            focus.invisible()
-
-            cardLayer.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    ctx,
-                    R.color.app_color8
-                )
-            )
-            cardLayerImg.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    ctx,
-                    R.color.app_color9
-                )
-            )
-            cardLayer.strokeColor = ContextCompat.getColor(ctx, R.color.app_color7)
+            forcus.gone()
         }
         val thumbPath = listThumb.getOrElse(position) { item }
         when (item) {

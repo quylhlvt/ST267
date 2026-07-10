@@ -16,6 +16,15 @@ data class SelectionIndex(
     val pathIndex:     Int = 0
 ) : Parcelable
 
+@Parcelize
+data class LayerTransform(
+    val scale: Float = 1f,
+    val scaleX: Float = 1f,
+    val translationX: Float = 0f,
+    val translationY: Float = 0f,
+    val rotation: Float = 0f
+) : Parcelable
+
 // ─────────────────────────────────────────────
 //  ColorModel
 // ─────────────────────────────────────────────
@@ -55,7 +64,8 @@ data class CustomModel(
     val isFlipped:  Boolean                    = false,
     val createdAt:  Long                       = 0L,
     val updatedAt:  Long                       = System.currentTimeMillis(),
-    val level:      Int                        = 0
+    val level:      Int                        = 0,
+    val layerTransforms: Map<Int, LayerTransform> = emptyMap()
 ) : Parcelable {
     val bodyPartCount: Int get() = listPath.size
     fun isTemplate() = id.startsWith("template_") || id.startsWith("online_")

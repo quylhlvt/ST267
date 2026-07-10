@@ -114,4 +114,5 @@
     <string name="create">Create</string>
     <string name="the_app_need_read_storage">The app need read storage</string>
     <string name="go_to_settings">Go To Settings</string>
+    <string name="size">Size</string>
 </resources>
