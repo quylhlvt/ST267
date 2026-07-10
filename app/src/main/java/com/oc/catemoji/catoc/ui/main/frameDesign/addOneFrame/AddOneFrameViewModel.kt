@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oc.catemoji.catoc.data.datalocal.manager.AppDataManager
-import com.oc.catemoji.catoc.data.model.mypony.MyAlbumModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,22 +19,14 @@ class AddOneFrameViewModel  @Inject constructor(
     private val appDataManager: AppDataManager
 ) : ViewModel() {
 
-    private val _avatarList = MutableStateFlow<List<MyAlbumModel>>(emptyList())
-    val avatarList: StateFlow<List<MyAlbumModel>> = _avatarList.asStateFlow()
+    private val _avatarList = MutableStateFlow<List<String>>(emptyList())
+    val avatarList: StateFlow<List<String>> = _avatarList.asStateFlow()
+    private val selectedImageDrafts = mutableMapOf<Int, SelectedImageDraft>()
 
     fun loadAvatarList() {
         viewModelScope.launch(Dispatchers.IO) {
             val list = runCatching {
-                appDataManager.customizedCharacters.value
-                    .filter { it.imageSave.isNotEmpty() && File(it.imageSave).exists() }
-                    .sortedByDescending { it.updatedAt }
-                    .map {
-                        MyAlbumModel(
-                            path = it.imageSave,
-                            idEdit = it.id,
-                            type = 1
-                        )
-                    }
+                appDataManager.myDesignPaths.value
             }.onFailure {
                 Log.e("AddOneFrameViewModel", "loadAvatarList failed", it)
             }.getOrDefault(emptyList())
@@ -45,4 +36,35 @@ class AddOneFrameViewModel  @Inject constructor(
             }
         }
     }
+
+    suspend fun saveFrameDesign(imagePath: String) {
+        appDataManager.addMyFrameDesignPath(imagePath)
+    }
+
+    fun saveSelectedImage(
+        index: Int,
+        path: String,
+        scale: Float,
+        offsetX: Float,
+        offsetY: Float,
+        rotation: Float
+    ) {
+        selectedImageDrafts[index] = SelectedImageDraft(
+            path = path,
+            scale = scale,
+            offsetX = offsetX,
+            offsetY = offsetY,
+            rotation = rotation
+        )
+    }
+
+    fun getSelectedImageDrafts(): Map<Int, SelectedImageDraft> = selectedImageDrafts.toMap()
+
+    data class SelectedImageDraft(
+        val path: String,
+        val scale: Float,
+        val offsetX: Float,
+        val offsetY: Float,
+        val rotation: Float
+    )
 }

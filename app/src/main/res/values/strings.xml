@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Cat Avatar: Cat Maker</string>
     <string name="next">Next</string>
+    <string name="save">Save</string>
     <string name="language">Language</string>
     <string name="title_1">Create your dream couple and style them your way!</string>
     <string name="title_2">Double the characters, double the fashion fun!</string>
@@ -108,5 +109,9 @@
     <string name="errorcontent">This character has been removed and can\'t be edited</string>
     <string name="frame_design">Frame Design</string>
     <string name="frame">Frame</string>
+    <string name="add_frame">Add Frame</string>
     <string name="gallery">Gallery</string>
+    <string name="create">Create</string>
+    <string name="the_app_need_read_storage">The app need read storage</string>
+    <string name="go_to_settings">Go To Settings</string>
 </resources>

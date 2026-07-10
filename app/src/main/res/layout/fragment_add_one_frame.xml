@@ -110,6 +110,48 @@
 
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/emptyState"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearSelectImage"
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+
+            style="@style/single_marquee"
+            android:id="@+id/tvEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="12dp"
+            android:text="@string/no_item_here"
+            android:fontFamily="@font/kavoon_regular"
+            android:textColor="@color/app_color"
+            android:textSize="14sp"
+            />
+        <FrameLayout
+            android:id="@+id/btnEmptyAction"
+            android:layout_width="136dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_frame_creation_mycouple">
+            <TextView
+                android:id="@+id/tvEmptyAction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/create"
+                style="@style/single_marquee"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:fontFamily="@font/kavoon_regular"/>
+        </FrameLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCustom"
@@ -121,6 +163,7 @@
         app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toBottomOf="@+id/linearSelectImage"
         app:spanCount="4"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:itemCount="9"
         tools:listitem="@layout/item_image" />

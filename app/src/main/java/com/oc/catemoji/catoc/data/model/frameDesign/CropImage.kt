@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 
 data class CropImage(
     val bitmap: Bitmap,
+    val path: String = "",
     var scale: Float = 1f,
     var offsetX: Float = 0f,
     var offsetY: Float = 0f,

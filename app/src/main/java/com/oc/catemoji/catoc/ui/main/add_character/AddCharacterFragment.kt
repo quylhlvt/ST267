@@ -58,6 +58,7 @@ import com.oc.catemoji.catoc.ui.main.add_character.adapter.TextColorAdapter
 import com.oc.catemoji.catoc.ui.main.add_character.adapter.TextFontAdapter
 import com.oc.catemoji.catoc.ui.onboarding.permission.PermissionViewModel
 import com.oc.catemoji.catoc.utils.DataLocal
+import com.oc.catemoji.catoc.utils.key.IntentKey
 import com.oc.catemoji.catoc.utils.key.ValueKey
 import com.oc.catemoji.catoc.data.datalocal.manager.CharacterImageManager
 import com.oc.catemoji.catoc.ui.main.add_character.adapter.SpeechAdapter
@@ -898,6 +899,10 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                             putString("imagePath", savedImagePath)
                             putString("idEdit", "")
                             putInt("imageType", 0)
+                            putBoolean(
+                                IntentKey.FROM_ADD_FRAME_CREATION,
+                                arguments?.getBoolean(IntentKey.FROM_ADD_FRAME_CREATION) ?: false
+                            )
                         }
                     )
                 } else {

@@ -57,7 +57,7 @@ class FrameDesignFragment : BaseFragment<FragmentFrameDesignBinding, FrameDesign
     private fun getFramePathsFromAssets(): List<String> {
         return requireContext().assets
             .list("listFrame")
-            ?.filter { it.endsWith(".webp", true) }
+            ?.filter { it.endsWith(".png", true) }
             ?.sortedBy { it.substringBeforeLast(".").toIntOrNull() ?: Int.MAX_VALUE }
             ?.map { "listFrame/$it" }
             ?: emptyList()

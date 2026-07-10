@@ -28,6 +28,7 @@ import com.oc.catemoji.catoc.core.helper.PermissionRequestHelper
 import com.oc.catemoji.catoc.databinding.FragmentSuccessBinding
 import com.oc.catemoji.catoc.ui.main.customize.CustomizeFragment
 import com.oc.catemoji.catoc.ui.onboarding.permission.PermissionViewModel
+import com.oc.catemoji.catoc.utils.key.IntentKey
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import kotlin.getValue
@@ -44,6 +45,8 @@ class SuccessFragment : BaseFragment<FragmentSuccessBinding, SuccessViewModel>(
     private val imagePath: String by lazy { arguments?.getString("imagePath") ?: "" }
     private val imageType: Int    by lazy { arguments?.getInt("imageType", 0) ?: 0 }
     private val idEdit: String    by lazy { arguments?.getString("idEdit") ?: "" }
+    private val isAddFrameResult: Boolean
+        get() = arguments?.getBoolean(IntentKey.FROM_ADD_FRAME_CREATION) ?: false
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -57,7 +60,10 @@ class SuccessFragment : BaseFragment<FragmentSuccessBinding, SuccessViewModel>(
         binding.apply {
             setImageActionBar(actionBar.btnActionBarLeft, R.drawable.back_app)
             loadImage(requireContext(), imagePath, imvImage)
-            txtLeft.apply  { visible(); text = getString(R.string.my_creation1) }
+            txtLeft.apply {
+                visible()
+                text = getString(if (isAddFrameResult) R.string.add_frame else R.string.my_creation1)
+            }
             txtRight.apply { visible(); text = getString(R.string.download) }
             setTextActionBar(actionBar.tvCenter, getString(R.string.successful))
             setImageActionBar(actionBar.btnActionBarNextToRight, R.drawable.ic_share)
@@ -89,7 +95,11 @@ class SuccessFragment : BaseFragment<FragmentSuccessBinding, SuccessViewModel>(
 
             // MyCreation
             btnBottomLeft.onClick {
-
+                if (isAddFrameResult) {
+                    val popped = findNavController().popBackStack(R.id.addOneFrameFragment, false)
+                    if (!popped) findNavController().navigateUp()
+                    return@onClick
+                }
                     findNavController().navigate(
                         R.id.action_success_to_myPony, null,
                         NavOptions.Builder()

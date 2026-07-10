@@ -128,6 +128,9 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
     private fun applyTabUI(tab: MyPonyTab) {
         binding.apply {
+            val selectedTextColor = requireContext().getColor(R.color.white)
+            val unselectedTextColor = requireContext().getColor(R.color.app_color)
+
             imvFocusMyAvatar.setImageResource(
                 if (tab == MyPonyTab.AVATAR) R.drawable.bg_btn_type_selected else R.drawable.bg_btn_type_unselected
             )
@@ -137,6 +140,10 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
             imvFocusFrameDesign.setImageResource(
                 if (tab == MyPonyTab.FRAME) R.drawable.bg_btn_type_selected else R.drawable.bg_btn_type_unselected
             )
+
+            tvMyAvatar.setTextColor(if (tab == MyPonyTab.AVATAR) selectedTextColor else unselectedTextColor)
+            tvMyDesign.setTextColor(if (tab == MyPonyTab.DESIGN) selectedTextColor else unselectedTextColor)
+            tvFrameDesign.setTextColor(if (tab == MyPonyTab.FRAME) selectedTextColor else unselectedTextColor)
 
             recycleAvatar.isVisible = tab == MyPonyTab.AVATAR
             recycleDesign.isVisible = tab == MyPonyTab.DESIGN

@@ -7,4 +7,5 @@ object IntentKey {
     const val TYPE_KEY = "TYPE_KEY"
     const val PATH_KEY = "PATH_KEY"
     const val STATUS_FROM_KEY = "STATUS_FROM_KEY"
+    const val FROM_ADD_FRAME_CREATION = "FROM_ADD_FRAME_CREATION"
 }

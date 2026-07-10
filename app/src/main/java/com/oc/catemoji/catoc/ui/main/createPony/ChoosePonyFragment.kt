@@ -25,6 +25,7 @@ import com.oc.catemoji.catoc.databinding.FragmentChoosePonyBinding
 import com.oc.catemoji.catoc.ui.main.customize.CustomizeFragment.Companion.ARG_TEMPLATE_ID
 import com.oc.catemoji.catoc.ui.main.customize.CustomizeFragment.Companion.ARG_TEMPLATE_INDEX
 import com.oc.catemoji.catoc.utils.BlockableFrameLayout
+import com.oc.catemoji.catoc.utils.key.IntentKey
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.drop
@@ -114,7 +115,9 @@ class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyVie
             R.id.action_createPony_to_custom,
             bundleOf(
                 ARG_TEMPLATE_INDEX to correctIndex,
-                ARG_TEMPLATE_ID to character.id  // ✅ Pass thêm id để verify
+                ARG_TEMPLATE_ID to character.id,  // ✅ Pass thêm id để verify
+                IntentKey.FROM_ADD_FRAME_CREATION to
+                    (arguments?.getBoolean(IntentKey.FROM_ADD_FRAME_CREATION) ?: false)
             )
         )
     }

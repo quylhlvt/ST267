@@ -171,11 +171,11 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding, PermissionVie
         val textRes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             R.string.to_access_13 else R.string.to_access
         binding.txtPermission.text = TextUtils.concat(
-            createColoredText(R.string.allow, R.color.app_color),
+            createColoredText(R.string.allow),
             " ",
-            createColoredText(R.string.app_name, R.color.app_color),
+            createColoredText(R.string.app_name),
             " ",
-            createColoredText(textRes, R.color.app_color)
+            createColoredText(textRes)
         )
     }
 
@@ -188,9 +188,8 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding, PermissionVie
 
     private fun createColoredText(
         @androidx.annotation.StringRes textRes: Int,
-        @androidx.annotation.ColorRes colorRes: Int,
-        font: Int = R.font.baloo2_bold
-    ) = StringHelper.changeColor(requireContext(), getString(textRes), colorRes, font)
+        font: Int = R.font.kavoon_regular
+    ) = StringHelper.changeColor(requireContext(), getString(textRes), font)
 
     override fun onBackPressed(): Boolean {
         requireActivity().finish()

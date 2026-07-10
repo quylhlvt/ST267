@@ -37,6 +37,7 @@ import com.oc.catemoji.catoc.data.model.custom.BodyPartModel
 import com.oc.catemoji.catoc.data.model.custom.SelectionIndex
 import com.oc.catemoji.catoc.databinding.FragmentCustomizeBinding
 import com.oc.catemoji.catoc.utils.BlockableFrameLayout
+import com.oc.catemoji.catoc.utils.key.IntentKey
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -563,7 +564,13 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
             if (isAdded && !isDetached) {
                 findNavController().navigate(
                     R.id.action_customizeFragment_to_addFragment,
-                    Bundle().apply { putString("imagePath", savedPath) }
+                    Bundle().apply {
+                        putString("imagePath", savedPath)
+                        putBoolean(
+                            IntentKey.FROM_ADD_FRAME_CREATION,
+                            arguments?.getBoolean(IntentKey.FROM_ADD_FRAME_CREATION) ?: false
+                        )
+                    }
                 )
             }
         }
