@@ -70,18 +70,15 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
             setSelectedImage(imagePath)
         }
     }
-
     private val galleryAdapter by lazy {
         ImageOneFrameAdapter(emptyList()) { imagePath ->
             setSelectedImage(imagePath)
         }
     }
-
     private enum class Tab {
         MY_CREATION,
         GALLERY
     }
-
     override fun initView() {
         binding.apply {
             tvEmptyAction.isSelected = true
