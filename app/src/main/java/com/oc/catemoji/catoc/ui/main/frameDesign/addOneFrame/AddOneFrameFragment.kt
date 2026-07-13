@@ -17,9 +17,12 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BaseFragment
+import com.oc.catemoji.catoc.core.extention.InternetExtension.isInternetAvailable
+import com.oc.catemoji.catoc.core.extention.InternetExtension.isNetworkConnected
 import com.oc.catemoji.catoc.core.extention.checkPermissions
 import com.oc.catemoji.catoc.core.extention.goToSettings
 import com.oc.catemoji.catoc.core.extention.onClick
@@ -495,7 +498,7 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
 
         binding.btnEmptyAction.onClick {
             when (currentTab) {
-                Tab.MY_CREATION -> navController?.navigate(
+                Tab.MY_CREATION -> navigateWithCheck(
                     R.id.createPony,
                     Bundle().apply {
                         putBoolean(IntentKey.FROM_ADD_FRAME_CREATION, true)
@@ -507,6 +510,19 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
 
         binding.actionBar.btnActionBarRightText.onClick {
             performSave()
+        }
+    }
+    private fun navigateWithCheck(
+        destination: Int,
+        args: Bundle? = null
+    ) {
+        val hasNetwork = isInternetAvailable(requireContext()) && isNetworkConnected(requireContext())
+        val hasData = viewModelActivity.templates.value.isNotEmpty() // ← bỏ dấu !
+
+        when {
+            !hasNetwork -> showUnstableNetworkDialog()
+            !hasData -> showLoadingDataDialog()
+            else -> findNavController().navigate(destination, args)
         }
     }
     private fun setupActionBar() {
@@ -527,6 +543,12 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
     private fun performSave() {
         if (isSaving || targetRects.isEmpty()) return
         if (!targetRects.indices.all { selectedImages.containsKey(it) }) return
+
+        // Bỏ focus của ô đang chọn trước khi render và lưu ảnh.
+        selectedIndex = -1
+        isDragging = false
+        isRotating = false
+        renderFrame()
 
         isSaving = true
         updateSaveButtonVisibility()
@@ -558,10 +580,9 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
             }
 
             navController?.navigate(
-                R.id.successFragment,
+                R.id.action_addOneFrameFragment_tosuccessfulFrameFragment,
                 Bundle().apply {
-                    putString("imagePath", savedPath)
-                    putInt("imageType", 3)
+                    putString("imagePathFrame", savedPath)
                 }
             )
         }
@@ -572,7 +593,7 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
         return FrameMultiRenderer.render(
             frame = frame,
             rects = targetRects,
-            selectedIndex = selectedIndex,
+            selectedIndex = -1,
             selectedImages = selectedImages,
             density = density
         )
@@ -596,19 +617,19 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
         currentTab = Tab.MY_CREATION
         updateAvatarState(viewModel.avatarList.value.map { it })
         binding.recyclerViewGallery.isVisible = false
-        binding.imvFocusMyCouple.setImageResource(com.oc.catemoji.catoc.R.drawable.bg_btn_type_selected_frame)
+        binding.imvFocusMyCouple.setImageResource(R.drawable.bg_btn_type_selected_frame)
         binding.imvFocusGallery.setImageDrawable(null)
-        binding.tvMyCouple.setTextColor(requireContext().getColor(com.oc.catemoji.catoc.R.color.app_color))
-        binding.tvGallery.setTextColor(requireContext().getColor(com.oc.catemoji.catoc.R.color.white))
+        binding.tvMyCouple.setTextColor(requireContext().getColor(R.color.app_color))
+        binding.tvGallery.setTextColor(requireContext().getColor(R.color.white))
     }
 
     private fun showGalleryTab() {
         binding.recyclerViewCustom.isVisible = false
         currentTab = Tab.GALLERY
         binding.imvFocusMyCouple.setImageDrawable(null)
-        binding.imvFocusGallery.setImageResource(com.oc.catemoji.catoc.R.drawable.bg_btn_type_selected_frame)
-        binding.tvMyCouple.setTextColor(requireContext().getColor(com.oc.catemoji.catoc.R.color.white))
-        binding.tvGallery.setTextColor(requireContext().getColor(com.oc.catemoji.catoc.R.color.app_color))
+        binding.imvFocusGallery.setImageResource(R.drawable.bg_btn_type_selected_frame)
+        binding.tvMyCouple.setTextColor(requireContext().getColor(R.color.white))
+        binding.tvGallery.setTextColor(requireContext().getColor(R.color.app_color))
         if (hasStoragePermission()) {
             loadGalleryImages()
         } else {

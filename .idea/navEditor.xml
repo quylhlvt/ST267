@@ -19,7 +19,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_addCharacterFragment_to_viewImageFragment">
+                            <entry key="action_addCharacterFragment_tosuccessFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -37,6 +37,15 @@
                             <option name="x" value="343" />
                             <option name="y" value="-391" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_addOneFrameFragment_tosuccessfulFrameFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -102,6 +111,15 @@
                             <option name="y" value="18" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_frameDesignFragment_toaddOneFrameFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -117,6 +135,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_home_to_createPony">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_home_to_frame_design">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -172,8 +195,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="827" />
+                            <option name="x" value="-66" />
+                            <option name="y" value="797" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -189,6 +212,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="successfulFrameFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="2" />
+                            <option name="y" value="-407" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BaseFragment
@@ -50,10 +51,17 @@ class ViewFragment : BaseFragment<FragmentViewBinding, ViewViewModel>(
         currentImagePath = imagePath
         binding.apply {
             setImageActionBar(actionBar.btnActionBarLeft, R.drawable.back_app)
-            loadImage(requireContext(), imagePath, imvImage)
+            val isFrame = imageType == 3
+            imvImage.isVisible = !isFrame
+            imvImage2.isVisible = isFrame
+            loadImage(
+                requireContext(),
+                imagePath,
+                if (isFrame) imvImage2 else imvImage
+            )
             txtRight.isSelected = true
             txtLeft.isSelected = true
-            setTextActionBar(actionBar.tvCenter, getString(R.string.my_creation))
+//            setTextActionBar(actionBar.tvCenter, getString(R.string.my_creation))
 
             when (imageType) {
                 1 -> {

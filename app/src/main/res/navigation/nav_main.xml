@@ -217,12 +217,64 @@
     <fragment
         android:id="@+id/frameDesignFragment"
         android:name="com.oc.catemoji.catoc.ui.main.frameDesign.addFrame.FrameDesignFragment"
-        android:label="FrameDesignFragment" />
+        android:label="FrameDesignFragment" >
+        <action
+            android:id="@+id/action_frameDesignFragment_toaddOneFrameFragment"
+            app:destination="@id/addOneFrameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/addOneFrameFragment"
         android:name="com.oc.catemoji.catoc.ui.main.frameDesign.addOneFrame.AddOneFrameFragment"
         android:label="fragment_add_one_frame"
-        tools:layout="@layout/fragment_add_one_frame" />
+        tools:layout="@layout/fragment_add_one_frame" >
+        <argument
+            android:name="imagePathFrame"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addOneFrameFragment_tosuccessfulFrameFragment"
+            app:destination="@id/successfulFrameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/successfulFrameFragment"
+        android:name="com.oc.catemoji.catoc.ui.main.frameDesign.successful.SuccessfulFrameFragment"
+        android:label="fragment_successful_frame"
+        tools:layout="@layout/fragment_successful_frame" >
+        <argument
+            android:name="imagePathFrame"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_successfulFrameFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_successfulFrameFragment_to_myPony"
+            app:destination="@id/myPony"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 
 
 </navigation>

@@ -87,7 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
                 navigateWithCheck(R.id.action_home_to_createPony)
             }
             btnFrameDesign.onClick {
-                navigateWithCheck(R.id.action_home_to_frame_design)
+                findNavController().navigate(R.id.action_home_to_frame_design)
             }
             btnMyAlbum.onClick {
 
