@@ -66,7 +66,7 @@ class ViewFragment : BaseFragment<FragmentViewBinding, ViewViewModel>(
             when (imageType) {
                 1 -> {
                     txtLeft.text = getString(R.string.share)
-                    setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_delete)
+                    setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_delete1)
                     setImageActionBar(actionBar.btnActionBarNextToRight, R.drawable.ic_edit1)
                     txtRight.apply { visible(); text = getString(R.string.download) }
                     txtLeft.visible()
@@ -74,7 +74,7 @@ class ViewFragment : BaseFragment<FragmentViewBinding, ViewViewModel>(
 
                 2, 3 -> {
                     txtLeft.text = getString(R.string.share)
-                    setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_delete)
+                    setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_delete1)
                     txtRight.apply { visible(); text = getString(R.string.download) }
                     txtLeft.visible()
                 }

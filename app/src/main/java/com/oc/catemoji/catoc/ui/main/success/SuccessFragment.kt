@@ -66,8 +66,8 @@ class SuccessFragment : BaseFragment<FragmentSuccessBinding, SuccessViewModel>(
             }
             txtRight.apply { visible(); text = getString(R.string.download) }
             setTextActionBar(actionBar.tvCenter, getString(R.string.successful))
-            setImageActionBar(actionBar.btnActionBarNextToRight, R.drawable.ic_share)
-            setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_home)
+            setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_share)
+            setImageActionBar(actionBar.btnActionBarNextToRight, R.drawable.ic_home)
             tvSuccess.visible()
         }
     }
@@ -79,7 +79,7 @@ class SuccessFragment : BaseFragment<FragmentSuccessBinding, SuccessViewModel>(
             }
 
             // Home
-            actionBar.btnActionBarRight.onClick {
+            actionBar.btnActionBarNextToRight.onClick {
 
                     findNavController().navigate(
                         R.id.action_success_to_home, null,
@@ -91,7 +91,7 @@ class SuccessFragment : BaseFragment<FragmentSuccessBinding, SuccessViewModel>(
 
             }
             // Share
-            actionBar.btnActionBarNextToRight.onClick( 1500) { shareImage() }
+            actionBar.btnActionBarRight.onClick( 1500) { shareImage() }
 
             // MyCreation
             btnBottomLeft.onClick {

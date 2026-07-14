@@ -28,7 +28,7 @@
         android:id="@+id/frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:strokeWidth="2dp"
+        app:strokeWidth="3dp"
         app:strokeColor="@color/app_color"
         app:cardCornerRadius="100dp"
         app:layout_constraintBottom_toBottomOf="parent"

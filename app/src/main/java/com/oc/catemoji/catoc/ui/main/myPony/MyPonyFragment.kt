@@ -77,13 +77,11 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
 
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
     }
 
     override fun onFragmentStop() {
         if (!isAdded || isDetached) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = true
-        binding.flNativeCollab.removeAllViews()
+
     }
 
     override fun initView() {

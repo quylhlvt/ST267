@@ -13,7 +13,7 @@
     <color name="app_color2">#FFE6F4</color>
     <color name="app_color3">#EA4DA9</color>
     <color name="app_color4">#FCDCE8</color>
-    <color name="app_color5">#FDF5B9</color>
+    <color name="app_color5">#FF77B6</color>
     <color name="app_color6">#FBD893</color>
     <color name="app_color7">#935229</color>
     <color name="app_color8">#EEBD5A</color>
@@ -24,8 +24,8 @@
     <color name="stroke_forcus_1">#7EFEFD</color>
     <color name="stroke_forcus_2">#F5A8F6</color>
     <color name="color_content_dialog">#991F2F4F</color>
-    <color name="color_draw">#4A2711</color>
-    <color name="color_draw_unselect">#674A2711</color>
+    <color name="color_draw">#580029</color>
+    <color name="color_draw_unselect">#7B580029</color>
     <color name="shadown_black2">#66000000</color>
 
     <color name="color_1">#E2D2D2</color>

@@ -9,9 +9,7 @@
     <string name="title_3">विभिन्न आइटम्स का संग्रह</string>
     <string name="not_select_lang">कृपया एक भाषा चुनें</string>
     <string name="pony_maker">कैट मेकर</string>
-    <string name="trending_custom">ट्रेंडिंग कस्टम</string>
-    <string name="my_work">मेरा काम</string>
-
+    <string name="please_wait">कृपया प्रतीक्षा करें...</string>
     <string name="permission">अनुमति</string>
     <string name="storage">स्टोरेज</string>
     <string name="continue_per">जारी रखें</string>
@@ -27,7 +25,7 @@
     <string name="add_image">छवि जोड़ें</string>
     <string name="text">टेक्स्ट</string>
     <string name="type_your_content">अपना कंटेंट लिखें</string>
-    <string name="loading">लोड हो रहा है</string>
+    <string name="loading">लोड हो रहा है...</string>
     <string name="haven_t_saved_it_yet_do_you_want_to_exit">अभी तक सेव नहीं किया गया, क्या आप बाहर निकलना चाहते हैं?</string>
     <string name="no">नहीं</string>
     <string name="yes">हाँ</string>

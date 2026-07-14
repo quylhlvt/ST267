@@ -24,7 +24,7 @@
     <string name="add_image">Add Image</string>
     <string name="text">Text</string>
     <string name="type_your_content">Type_your_content</string>
-    <string name="loading">Loading</string>
+    <string name="loading">Loading...</string>
     <string name="haven_t_saved_it_yet_do_you_want_to_exit">Haven’t saved it yet, do you want to exit?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
@@ -115,4 +115,6 @@
     <string name="the_app_need_read_storage">The app need read storage</string>
     <string name="go_to_settings">Go To Settings</string>
     <string name="size">Size</string>
+    <string name="font">Font</string>
+    <string name="please_wait">Please wait...</string>
 </resources>

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/app_color4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.add_character.AddCharacterFragment">
@@ -36,11 +37,6 @@
             android:textSize="40sp" />
     </FrameLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_bg_custom" />
 
     <!--    flActionBar-->
     <FrameLayout
@@ -64,16 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/flActionBar" />
-<ImageView
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:scaleType="fitXY"
-    android:adjustViewBounds="true"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    android:src="@drawable/bg_addbackground"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toBottomOf="@+id/flSpce"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/flSave"
         android:layout_width="match_parent"
@@ -129,8 +116,8 @@
                 android:id="@+id/rcvSticker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="4.5dp"
-                android:paddingHorizontal="7.5dp"
+                android:layout_marginTop="12dp"
+                android:paddingHorizontal="12dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="5"
                 tools:listitem="@layout/item_sticker" />
@@ -150,8 +137,8 @@
                 android:id="@+id/rcvSpeech"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="4.5dp"
-                android:paddingHorizontal="7.5dp"
+                android:layout_marginTop="12dp"
+                android:paddingHorizontal="12dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="5"
                 tools:listitem="@layout/item_sticker" />
@@ -166,7 +153,7 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/app_color6"
+        android:background="@color/app_color5"
         app:layout_constraintBottom_toBottomOf="@+id/lnlBottom"
         app:layout_constraintEnd_toEndOf="@+id/lnlBottom"
         app:layout_constraintStart_toStartOf="@+id/lnlBottom"
@@ -213,17 +200,12 @@
         <!--        btnText-->
         <ImageView
             android:id="@+id/btnText"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:layout_marginHorizontal="24dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_text" />
     </LinearLayout>
 
-    <com.oc.catemoji.catoc.utils.BlockableFrameLayout
-        android:id="@+id/flNativeCollab"
-        android:elevation="100dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

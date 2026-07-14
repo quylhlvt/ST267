@@ -37,8 +37,8 @@ class SuccessfulFrameFragment : BaseFragment<FragmentSuccessfulFrameBinding, Suc
     override fun initView() {
         binding.apply {
             setImageActionBar(actionBar.btnActionBarLeft, R.drawable.back_app)
-            setImageActionBar(actionBar.btnActionBarNextToRight, R.drawable.ic_share)
-            setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_home)
+            setImageActionBar(actionBar.btnActionBarRight, R.drawable.ic_share)
+            setImageActionBar(actionBar.btnActionBarNextToRight, R.drawable.ic_home)
             setTextActionBar(actionBar.tvCenter, getString(R.string.successful))
             loadImage(requireContext(), imagePathFrame, imvImage)
             txtLeft.apply {
@@ -58,13 +58,13 @@ class SuccessfulFrameFragment : BaseFragment<FragmentSuccessfulFrameBinding, Suc
             findNavController().navigateUp()
         }
 
-        binding.actionBar.btnActionBarRight.onClick {
+        binding.actionBar.btnActionBarNextToRight.onClick {
             findNavController().navigate(
                 R.id.action_successfulFrameFragment_to_homeFragment
             )
         }
 
-        binding.actionBar.btnActionBarNextToRight.onClick(1500) {
+        binding.actionBar.btnActionBarRight.onClick(1500) {
             shareImage()
         }
 

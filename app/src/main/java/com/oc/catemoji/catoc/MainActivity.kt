@@ -27,6 +27,7 @@ import com.oc.catemoji.catoc.core.helper.SharedPreferencesManager
 import com.oc.catemoji.catoc.databinding.DialogbaseBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+
 interface LoadingController {
     fun showGlobalLoading()
     fun hideGlobalLoading()
@@ -138,34 +139,53 @@ class MainActivity : AppCompatActivity() , LoadingController{
         title: String? = null,
         showButtons: Boolean = false,
         cancelable: Boolean = false,
+        ads: Boolean? =false,
         onYes: (() -> Unit)? = null,
-        onNo: (() -> Unit)? = null
+        onNo: (() -> Unit)? = null,
+        onOk: (() -> Unit)? = null  // ← thêm onOk vào đây
     ): Dialog {
         return Dialog(this, R.style.BaseDialog).apply {
             val binding = DialogbaseBinding.inflate(layoutInflater)
             setContentView(binding.root)
-            binding.txtYes.isSelected = true
-            binding.txtNo.isSelected = true
-            title?.let { binding.txtTitle.text = it }
-            binding.txtContent.text = message
 
-            if (showButtons) {
-                binding.btnYes.visible()
-                binding.btnNo.visible()
-                binding.btnYes.setOnClickListener { onYes?.invoke() }
-                binding.btnNo.setOnClickListener { onNo?.invoke() }
-                binding.txtContent.visible()
-                binding.animationView.gone()
-            } else {
-                binding.btnYes.gone()
-                binding.btnNo.gone()
-                binding.txtContent.gone()
-                binding.animationView.visible()
+            binding.apply {
+                txtYes.isSelected = true
+                txtNo.isSelected = true
+                title?.let { tvTitle.text = it }
+                txtContent.text = message
+
+                if (showButtons) {
+                    txtContent.visible()
+                    animationView.gone()
+                    txtPlease.gone()
+                    bgEnd.visible()
+
+                    if (onOk != null) {
+                        // ← chế độ OK only
+                        btnYes.gone()
+                        btnNo.gone()
+                        btnOk.visible()
+                        btnOk.setOnClickListener { onOk.invoke() }
+                    } else {
+                        // ← chế độ Yes/No
+                        btnYes.visible()
+                        btnNo.visible()
+                        btnOk.gone()
+                        btnYes.setOnClickListener { onYes?.invoke() }
+                        btnNo.setOnClickListener { onNo?.invoke() }
+                    }
+                } else {
+                    bgEnd.gone()
+                    txtContent.gone()
+                    animationView.visible()
+                    txtPlease.visible()
+                }
             }
+
 
             setCancelable(cancelable)
             window?.apply {
-                setBackgroundDrawableResource(android.R.color.transparent)
+                setBackgroundDrawableResource(R.color.transparent)
                 setLayout(
                     WindowManager.LayoutParams.MATCH_PARENT,
                     WindowManager.LayoutParams.MATCH_PARENT

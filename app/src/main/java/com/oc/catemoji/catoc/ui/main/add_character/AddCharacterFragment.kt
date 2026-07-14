@@ -16,8 +16,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -47,6 +49,7 @@ import com.oc.catemoji.catoc.core.extention.hideSoftKeyboard
 import com.oc.catemoji.catoc.core.extention.loadImage
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.extention.setFont
+import com.oc.catemoji.catoc.core.extention.setFrameActionBar
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
 import com.oc.catemoji.catoc.core.extention.visible
 import com.oc.catemoji.catoc.core.helper.BitmapHelper
@@ -117,7 +120,6 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
     private val imagePickerLauncher =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             viewModel.isPickingImage = false
-            binding.flNativeCollab.visible()
             hideLoadingSafe()
 
             if (uri != null) {
@@ -127,7 +129,9 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                         Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
                 }
-                handleSetBackgroundImage(uri.toString(), -1)
+                // Ảnh từ thiết bị thuộc ô "Add image" đầu tiên trong danh sách.
+                // Không truyền -1 vì adapter sẽ hiểu là bỏ focus của mọi item.
+                handleSetBackgroundImage(uri.toString(), 0)
             } else {
                 restoreUIState()
             }
@@ -145,15 +149,13 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
         if (viewModel.isPickingImage) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
 
     }
 
     override fun onFragmentStop() {
         if (!isAdded || isDetached) return
         if (viewModel.isPickingImage) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = true
-        binding.flNativeCollab.removeAllViews()
+
     }
 
     // ── Observe ───────────────────────────────────────────────────────────────
@@ -238,10 +240,8 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
             // Action bar
             actionBar.btnActionBarLeft.onClick { confirmExit() }
             actionBar.btnActionBarCenter1.onClick { confirmReset() }
-            actionBar.btnActionBarRight.onClick {
-
+            actionBar.btnActionBarRightText.onClick {
                     handleSave()
-
             }
 
             // Background tabs
@@ -307,6 +307,20 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
 
             // Adapters
             backgroundImageAdapter.onAddImageClick = { launchImagePicker() }
+            backgroundImageAdapter.onNoneImageClick = {position->
+                viewModel.setBackgroundImage(null)
+                viewModel.savedBackgroundColor = null
+                Glide.with(requireContext()).clear(binding.imvBackground)
+                binding.imvBackground.setImageDrawable(null)
+
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.updateBackgroundImageSelected(position)
+                    withContext(Dispatchers.Main) {
+                        backgroundColorAdapter.clearSelection()
+                        backgroundImageAdapter.selectItem(position)
+                    }
+                }
+            }
             backgroundImageAdapter.onBackgroundImageClick = { path, position ->
                 if (!checkOnlineNetworkOrShowDialog()) {
                     handleSetBackgroundImage(path, position)
@@ -322,7 +336,7 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                     addDrawable(path)
                 }
             }
-            speechAdapter.onItemClick = { path -> handleSpeech(path) }
+            speechAdapter.onItemClick = { path, preview -> handleSpeech(path, preview) }
             textFontAdapter.onTextFontClick = { font, position -> handleFontClick(font, position) }
             textColorAdapter.onChooseColorClick = { handleChooseColor(isTextColor = true) }
             textColorAdapter.onTextColorClick = { color, position ->
@@ -339,6 +353,7 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
 
         binding.lnlBackground.btnBackgroundColorTv.isSelected = true
         binding.lnlBackground.btnBackgroundImageTv.isSelected = true
+
         requireActivity().hideNavigation(true)
         setupKeyboardListener()
         binding.tvGetText.setTextColor(requireContext().getColor(R.color.black))
@@ -349,8 +364,8 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
             initData()
             viewModel.isInitialized = true
         } else {
-            hideLoadingSafe()
             restoreUIState()
+            hideLoadingAfterContentReady()
         }
 
     }
@@ -378,7 +393,6 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                 insets
             }
         } else {
-            // Android 9 trở xuống: dùng GlobalLayout
             setupKeyboardListenerLegacy()
         }
     }
@@ -417,8 +431,6 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
     }
 
     private fun onKeyboardClose() {
-        // ✅ Android 9-: ignore nếu speech dialog đang mở
-        // vì GlobalLayoutListener fire false-close khi dialog transition
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q
             && viewModel.isSpeechDialogOpen
         ) return
@@ -440,7 +452,6 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
         binding.lnlText.edtText.clearFocus()
         binding.drawView.hideSelect()
         hideSoftKeyboard()
-        // Reset view ngay lập tức, không đợi layout change
         setFlFunctionTopMargin(0)
     }
 
@@ -460,7 +471,8 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
         binding.actionBar.apply {
             setImageActionBar(btnActionBarLeft, R.drawable.back_app)
             setImageActionBar(btnActionBarCenter1, R.drawable.ic_reset_all_custom)
-            setImageActionBar(btnActionBarRight, R.drawable.next_app)
+            setFrameActionBar(btnActionBarRightText,tvRightText,getString(R.string.save))
+
         }
     }
 
@@ -496,6 +508,14 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
             speeches = viewModelActivity.speechs.value
         )
         submitAllAdapters()
+        if (viewModel.backgroundImageList.size > 1) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.updateBackgroundImageSelected(1)
+                withContext(Dispatchers.Main) {
+                    backgroundImageAdapter.selectItem(1)
+                }
+            }
+        }
         viewModel.setTypeNavigation(ValueKey.BACKGROUND_NAVIGATION)
         viewModel.setTypeBackground(ValueKey.IMAGE_BACKGROUND)
 
@@ -505,11 +525,22 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                 binding.drawView.addDraw(
                     viewModel.loadDrawableEmoji(customizeBitmap, isCharacter = true)
                 )
-                hideLoadingSafe()
+                hideLoadingAfterContentReady()
             } else if (imagepath.isNotEmpty()) {
-                addDrawable(imagepath, isCharacter = true) { hideLoadingSafe() }
+                addDrawable(imagepath, isCharacter = true) { hideLoadingAfterContentReady() }
             } else {
-                hideLoadingSafe()
+                hideLoadingAfterContentReady()
+            }
+        }
+    }
+
+    /** Chỉ ẩn loading sau khi AddBackground đã chuẩn bị xong frame đầu tiên. */
+    private fun hideLoadingAfterContentReady() {
+        if (!isAdded || view == null) return
+        binding.root.doOnPreDraw {
+            // Đợi frame đã chuẩn bị được đưa lên màn hình rồi mới bỏ overlay.
+            binding.root.post {
+                if (isAdded && view != null) hideLoadingSafe()
             }
         }
     }
@@ -548,6 +579,10 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
             imagePath != null -> {
                 binding.imvBackground.setBackgroundColor(requireContext().getColor(R.color.transparent))
                 loadImage(requireContext(), imagePath, binding.imvBackground)
+
+                // ✅ re-highlight đúng item user đã chọn trước đó, không ép về 1
+                val pos = viewModel.selectedBackgroundPosition
+                if (pos >= 0) backgroundImageAdapter.selectItem(pos)
             }
             savedColor != null -> {
                 binding.imvBackground.setImageBitmap(null)
@@ -561,7 +596,6 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
             viewModel.isRestoringDraws = false
         }
     }
-
     // ── DrawView ──────────────────────────────────────────────────────────────
     private fun initDrawView() {
         requireActivity().hideNavigation(true)
@@ -647,6 +681,12 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                     lnlBackground.rcvBackgroundColor.gone()
                     lnlBackground.btnBackgroundImage.setBackgroundResource(R.drawable.img_bg_image_addcharacter)
                     lnlBackground.btnBackgroundColor.setBackgroundResource(R.drawable.img_bg_color_addcharacter)
+                    lnlBackground.btnBackgroundImageTv.setTextColor(
+                        ContextCompat.getColor(requireContext(), R.color.white)
+                    )
+                    lnlBackground.btnBackgroundColorTv.setTextColor(
+                        ContextCompat.getColor(requireContext(), R.color.app_color)
+                    )
                     backgroundImageAdapter.submitList(viewModel.backgroundImageList)
                 }
 
@@ -656,6 +696,12 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                     lnlBackground.rcvBackgroundColor.visible()
                     lnlBackground.btnBackgroundColor.setBackgroundResource(R.drawable.img_bg_image_addcharacter)
                     lnlBackground.btnBackgroundImage.setBackgroundResource(R.drawable.img_bg_color_addcharacter)
+                    lnlBackground.btnBackgroundColorTv.setTextColor(
+                        ContextCompat.getColor(requireContext(), R.color.white)
+                    )
+                    lnlBackground.btnBackgroundImageTv.setTextColor(
+                        ContextCompat.getColor(requireContext(), R.color.app_color)
+                    )
                     backgroundColorAdapter.submitList(viewModel.backgroundColorList)
                 }
             }
@@ -731,6 +777,7 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
     private fun handleSetBackgroundImage(path: String, position: Int) {
         viewModel.setBackgroundImage(path)
         viewModel.savedBackgroundColor = null
+
         binding.imvBackground.setBackgroundColor(requireContext().getColor(R.color.transparent))
         loadImage(requireContext(), path, binding.imvBackground)
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
@@ -798,12 +845,12 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
      * Giải pháp: set isSpeechDialogOpen = true TRƯỚC KHI dialog show.
      * Layout change listener sẽ check flag này và bỏ qua keyboard event.
      */
-    private fun handleSpeech(path: String) {
+    private fun handleSpeech(path: String, preview: android.graphics.drawable.Drawable?) {
         viewModel.isSpeechDialogOpen = true
         binding.lnlText.edtText.clearFocus()
         hideSoftKeyboard()
 
-        val dialog = DialogSpeech(requireContext(), path)
+        val dialog = DialogSpeech(requireContext(), path, preview)
 
         // ✅ Android 9-: SOFT_INPUT_STATE_VISIBLE để keyboard tự hiện
         // BaseDialog đã set ADJUST_RESIZE, chỉ cần OR thêm state

@@ -116,18 +116,18 @@
             android:layout_marginStart="5dp"
             android:fontFamily="@font/kavoon_regular"
             android:gravity="center"
+            style="@style/single_marquee"
             android:text="@string/pony_maker"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:dropShadowColor="@color/white"
-            app:dropShadowDy="2dp"
-            app:dropShadowWidth="2dp"
             app:layout_constraintEnd_toStartOf="@+id/img_home1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:outerStrokeColor="@color/app_color"
-
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:dropShadowColor="@color/white"
+            app:dropShadowDy="2dp"
+            app:dropShadowWidth="2dp"
             app:outerStrokeJoinStyle="miter"
             app:outerStrokeWidth="2.5dp" />
 
@@ -165,7 +165,7 @@
 
 
 
-        <com.oc.catemoji.catoc.core.extention.OuterStrokeTextView
+        <com.oc.catemoji.catoc.core.extention.OuterStrokeHaveShadownTextView
             android:id="@+id/tv2"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -174,16 +174,19 @@
             android:fontFamily="@font/kavoon_regular"
             android:gravity="center"
             android:text="@string/my_creation"
-            android:textColor="@color/white"
-            android:textSize="24sp"
+            style="@style/single_marquee"
             app:layout_constraintStart_toEndOf="@+id/img_home2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:outerStrokeColor="@color/app_color"
-
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:dropShadowColor="@color/white"
+            app:dropShadowDy="2dp"
+            app:dropShadowWidth="2dp"
             app:outerStrokeJoinStyle="miter"
-            app:outerStrokeWidth="1dp" />
+            app:outerStrokeWidth="2.5dp"  />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
@@ -217,9 +220,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-
-        <com.oc.catemoji.catoc.core.extention.OuterStrokeTextView
+        <com.oc.catemoji.catoc.core.extention.OuterStrokeHaveShadownTextView
             android:id="@+id/tv3"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -228,16 +229,19 @@
             android:fontFamily="@font/kavoon_regular"
             android:gravity="center"
             android:text="@string/frame_design"
-            android:textColor="@color/white"
-            android:textSize="24sp"
+            style="@style/single_marquee"
             app:layout_constraintEnd_toStartOf="@+id/img_home3"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:outerStrokeColor="@color/app_color"
-
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:dropShadowColor="@color/white"
+            app:dropShadowDy="2dp"
+            app:dropShadowWidth="2dp"
             app:outerStrokeJoinStyle="miter"
-            app:outerStrokeWidth="1dp" />
+            app:outerStrokeWidth="2.5dp"  />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

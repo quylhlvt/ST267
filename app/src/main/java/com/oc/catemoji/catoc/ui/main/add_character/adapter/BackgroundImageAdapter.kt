@@ -24,6 +24,7 @@ class BackgroundImageAdapter : BaseAdapter<SelectedAddModel, ItemBackgroundImage
     ItemBackgroundImageBinding::inflate
 ) {
     var onAddImageClick: (() -> Unit) = {}
+    var onNoneImageClick: ((Int) -> Unit) = {}
     var onBackgroundImageClick: ((String, Int) -> Unit) = { _, _ -> }
     var currentSelected = -1
 
@@ -32,27 +33,27 @@ class BackgroundImageAdapter : BaseAdapter<SelectedAddModel, ItemBackgroundImage
 
         val context = binding.root.context
         binding.apply {
+            tvAddImage.isSelected =true
             if (currentSelected == position) {
-                shadown.visible()
-                materialParent.apply {    strokeColor = ContextCompat.getColor(context, R.color.app_color)
-                    setCardBackgroundColor(
-                        ContextCompat.getColor(context, R.color.app_color4)
-                    )}
+
+                materialForcus.visible()
             } else {
-                shadown.gone()
-                materialParent.apply { strokeColor = ContextCompat.getColor(context, R.color.app_color7)
-                    setCardBackgroundColor(
-                        ContextCompat.getColor(context, R.color.app_color8)
-                    )
-                    // tắt elevation mặc định để dùng custom shadow
-                }
+                materialForcus.gone()
             }
             if (position == 0) {
-                imvAddItem.visible()
+                lnlAddItem.visible()
                 imvImage.gone()
-                imvAddItem.onClick { onAddImageClick() }
-            } else {
-                imvAddItem.gone()
+                imvNoneItem.gone()
+                lnlAddItem.onClick { onAddImageClick() }
+            }else if (position == 1){
+                lnlAddItem.gone()
+                imvImage.gone()
+                imvNoneItem.visible()
+                imvNoneItem.onClick { onNoneImageClick(position) }
+            }
+            else  {
+                lnlAddItem.gone()
+                imvNoneItem.gone()
                 imvImage.visible()
                 if (imvImage.tag != item.path) {
                     imvImage.tag = item.path

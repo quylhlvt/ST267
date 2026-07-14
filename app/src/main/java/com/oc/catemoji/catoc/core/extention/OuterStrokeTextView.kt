@@ -61,7 +61,7 @@ class OuterStrokeTextView : AppCompatTextView {
             a.recycle()
         }
         if (outerStrokeWidth > 0f) {
-            extraPadding = (outerStrokeWidth * dp(5)).toInt()
+            extraPadding = (outerStrokeWidth.toInt() + dp(5)).toInt()
         }
     }
     override fun onAttachedToWindow() {
@@ -85,7 +85,7 @@ class OuterStrokeTextView : AppCompatTextView {
             // Vẽ stroke bên ngoài
             setTextColor(outerStrokeColor)
             paint.style = Paint.Style.STROKE
-            paint.strokeWidth = outerStrokeWidth * dp(1.5)
+            paint.strokeWidth = outerStrokeWidth * 1.5f
             paint.strokeJoin = outerStrokeJoin
             paint.strokeMiter = strokeMiter
             paint.isAntiAlias = true

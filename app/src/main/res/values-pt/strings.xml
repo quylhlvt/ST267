@@ -9,9 +9,7 @@
     <string name="title_3">Coleção de vários itens</string>
     <string name="not_select_lang">Por favor, selecione um idioma</string>
     <string name="pony_maker">Criador de Gatos</string>
-    <string name="trending_custom">Personalizações em alta</string>
-    <string name="my_work">Meus trabalhos</string>
-
+    <string name="please_wait">Aguarde...</string>
     <string name="permission">Permissão</string>
     <string name="storage">Armazenamento</string>
     <string name="continue_per">Continuar</string>
@@ -27,7 +25,7 @@
     <string name="add_image">Adicionar imagem</string>
     <string name="text">Texto</string>
     <string name="type_your_content">Digite seu conteúdo</string>
-    <string name="loading">Carregando</string>
+    <string name="loading">Carregando...</string>
     <string name="haven_t_saved_it_yet_do_you_want_to_exit">Ainda não foi salvo, deseja sair?</string>
     <string name="no">Não</string>
     <string name="yes">Sim</string>

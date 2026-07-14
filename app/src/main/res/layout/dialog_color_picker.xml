@@ -7,122 +7,166 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:paddingHorizontal="-2dp"
-            android:layout_marginBottom="-30dp"
-            android:elevation="2dp"
-            android:src="@drawable/img_title_loading"
-            app:layout_constraintBottom_toTopOf="@+id/contrainColor"
-            app:layout_constraintDimensionRatio="3.2:1.91"
-            app:layout_constraintEnd_toEndOf="@+id/contrainColor"
-            app:layout_constraintStart_toStartOf="@+id/contrainColor"
-            />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/contrainColor"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginHorizontal="20dp"
-            android:background="@drawable/frame_bg_dialog"
-            android:paddingTop="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingVertical="16dp"
+            app:cardCornerRadius="20dp"
+            app:strokeWidth="3dp"
+            app:strokeColor="@color/white"
+            app:cardBackgroundColor="@color/app_color2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.oc.catemoji.catoc.core.extention.OuterStrokeShadownTextView
-                android:id="@+id/tvTitle"
-                style="@style/single_marquee"
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contrainColor"
                 android:layout_width="match_parent"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/baloo2_bold"
-                android:gravity="center"
-                android:shadowColor="@color/app_color"
-                android:shadowDx="5"
-                android:shadowDy="-5"
-                android:shadowRadius="5"
-                android:text="@string/choose_color"
-                android:textColor="@color/app_color2"
-                android:textSize="28sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:outerStrokeColor="@color/app_color"
-                app:outerStrokeWidth="1dp" />
-
-            <RelativeLayout
-                android:id="@+id/top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                >
 
 
-                <ImageView
-                    android:id="@+id/btnClose"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_close_1"
-                    android:visibility="invisible"
-                    app:tint="#1F2F4F" />
-            </RelativeLayout>
 
-            <ir.kotlin.kavehcolorpicker.KavehColorPicker
-                android:id="@+id/colorPickerView"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginHorizontal="35dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
-            <LinearLayout
-                android:layout_width="274dp"
-                android:layout_height="133dp"
-                android:layout_marginHorizontal="44dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/colorPickerView">
-
-                <ir.kotlin.kavehcolorpicker.KavehHueSlider
-                    android:id="@+id/hueSlider"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    style="@style/single_marquee"
                     android:layout_width="match_parent"
-                    android:layout_height="24dp" />
+                    android:layout_height="0dp"
+                    android:fontFamily="@font/kavoon_regular"
+                    android:gravity="center"
+                    android:textColor="@color/app_color"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="12dp"
+                    android:text="@string/choose_color"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
 
-                <!--                btnDone-->
-                <RelativeLayout
-                    android:id="@+id/btnDone"
-                    android:layout_width="135dp"
-                    android:layout_height="44dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="38dp"
-                    android:background="@drawable/bg_cosplay1">
+                    />
 
-                    <TextView
+                <ir.kotlin.kavehcolorpicker.KavehColorPicker
+                    android:id="@+id/colorPickerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="11dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="11dp"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/colorPickerView">
+
+                    <ir.kotlin.kavehcolorpicker.KavehHueSlider
+                        android:id="@+id/hueSlider"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp" />
+
+                    <!--                btnDone-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/bg"
+                        android:layout_marginTop="16dp"
+                        android:paddingBottom="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="@font/baloo2_bold"
-                        android:gravity="center"
-                        android:text="@string/done"
-                        android:textColor="@color/app_color"
-                        android:textSize="20sp" />
-                </RelativeLayout>
-            </LinearLayout>
+                        app:layout_constraintTop_toBottomOf="@+id/txtContent">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btnCancle"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginHorizontal="5dp"
+                            app:layout_constraintDimensionRatio="1.48:0.44"
+                            app:layout_constraintEnd_toStartOf="@+id/btnSave"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeColor="@color/app_color2"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:id="@+id/imgCancleFor"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/bg_frame_successfalse" />
+
+                            <TextView
+                                android:id="@+id/txtCancle"
+                                style="@style/single_marquee"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/imgCancleFor"
+                                app:layout_constraintTop_toTopOf="@+id/imgCancleFor"
+                                app:layout_constraintBottom_toBottomOf="@+id/imgCancleFor"
+                                android:fontFamily="@font/kavoon_regular"
+                                android:gravity="center"
+                                android:text="@string/cancel"
+                                android:textColor="@color/app_color"
+
+                                android:textSize="16sp" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btnSave"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginHorizontal="5dp"
+                            app:layout_constraintDimensionRatio="1.48:0.44"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/btnCancle"
+                            app:layout_constraintTop_toTopOf="@+id/btnCancle"
+                            app:strokeColor="@color/app_color2"
+                            app:strokeWidth="1dp">
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                            <ImageView
+                                android:id="@+id/imgSaveFor"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/bg_frame_successtrue" />
+
+                            <TextView
+                                android:id="@+id/txtSave"
+                                style="@style/single_marquee"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/imgSaveFor"
+                                app:layout_constraintTop_toTopOf="@+id/imgSaveFor"
+                                app:layout_constraintBottom_toBottomOf="@+id/imgSaveFor"
+                                android:fontFamily="@font/kavoon_regular"
+                                android:gravity="center"
+                                android:text="@string/save"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"  />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

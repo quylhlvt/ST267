@@ -3,6 +3,7 @@ package com.oc.catemoji.catoc.core.dialog
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -12,15 +13,21 @@ import kotlin.apply
 import kotlin.text.trim
 import kotlin.toString
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BaseDialog
 import com.oc.catemoji.catoc.core.extention.invisible
-import com.oc.catemoji.catoc.core.extention.loadImage
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.helper.BitmapHelper
 import com.oc.catemoji.catoc.databinding.DialogSpeechBinding
 
-class DialogSpeech(val mcontext: Context, val path: String) : BaseDialog<DialogSpeechBinding>(mcontext, maxWidth = true, maxHeight = true) {
+class DialogSpeech(
+    val mcontext: Context,
+    val path: String,
+    private val preview: Drawable? = null
+) : BaseDialog<DialogSpeechBinding>(mcontext, maxWidth = true, maxHeight = true) {
     override val layoutId: Int = R.layout.dialog_speech
     override val isCancelOnTouchOutside: Boolean = false
     override val isCancelableByBack: Boolean = false
@@ -37,7 +44,17 @@ class DialogSpeech(val mcontext: Context, val path: String) : BaseDialog<DialogS
                         as android.view.inputmethod.InputMethodManager
                 imm.showSoftInput(edtSpeech, android.view.inputmethod.InputMethodManager.SHOW_FORCED)
             }, 100) // ✅ Tăng delay từ 30 lên 100 để dialog attach xong
-            loadImage(mcontext, path, imvBubble)
+            // Thumbnail đã nằm trong memory từ RecyclerView nên hiển thị tức thì.
+            // Glide chỉ thay bằng bản dialog, không hiện shimmer cho asset local.
+            imvBubble.setImageDrawable(preview)
+            Glide.with(imvBubble)
+                .load(path)
+                .override(512, 512)
+                .priority(Priority.IMMEDIATE)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(preview)
+                .dontAnimate()
+                .into(imvBubble)
         }
     }
 

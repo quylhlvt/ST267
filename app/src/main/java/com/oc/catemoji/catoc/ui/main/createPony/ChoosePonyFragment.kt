@@ -50,13 +50,11 @@ class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyVie
 
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
     }
 
     override fun onFragmentStop() {
         if (!isAdded || isDetached) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = true
-        binding.flNativeCollab.removeAllViews()
+
     }
     override fun initView() {
         // Dialog ở Home do Activity giữ nên phải đóng khi Category đã được tạo.

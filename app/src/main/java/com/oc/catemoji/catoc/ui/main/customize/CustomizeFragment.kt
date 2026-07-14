@@ -33,7 +33,6 @@ import com.oc.catemoji.catoc.core.extention.InternetExtension.isNetworkConnected
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.extention.gone
 import com.oc.catemoji.catoc.core.extention.visible
-import com.oc.catemoji.catoc.core.extention.saveToFile
 import com.oc.catemoji.catoc.core.extention.setFrameActionBar
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
 import com.oc.catemoji.catoc.data.model.custom.BodyPartModel
@@ -42,10 +41,8 @@ import com.oc.catemoji.catoc.databinding.FragmentCustomizeBinding
 import com.oc.catemoji.catoc.utils.BlockableFrameLayout
 import com.oc.catemoji.catoc.utils.key.IntentKey
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.concurrent.atomic.AtomicInteger
 
 @AndroidEntryPoint
@@ -87,13 +84,19 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
 
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = false
     }
 
     override fun onFragmentStop() {
         if (!isAdded || isDetached) return
-        (binding.flNativeCollab as? BlockableFrameLayout)?.isBlocked = true
-        binding.flNativeCollab.removeAllViews()
+
+    }
+
+    override fun onDestroyView() {
+        // frameScale của binding mới luôn bắt đầu ở trạng thái gone. Fragment vẫn
+        // có thể còn trong back stack, vì vậy phải reset flag để icon khớp panel
+        // khi quay lại từ AddBackground. Transform của layer vẫn nằm trong ViewModel.
+        isScaleActive = false
+        super.onDestroyView()
     }
 
     // ── INIT ──────────────────────────────────────────────────────────────────
@@ -278,7 +281,6 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
                 if (checkOnlineNetworkOrShowDialog()) return@onClick
                 if (canSave)
                         performSave()
-
             }
             actionBar.btnActionBarLeft.setOnClickListener { confirmExit() }
         }
@@ -616,25 +618,16 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
         showLoadingSafe()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val bitmap =
-                withContext(Dispatchers.Default) {  // ✅ Đổi sang Default thay vì gọi trực tiếp
-                    renderLayersToBitmap()
-                }
+            // View phải được đọc/draw trên Main thread. Bitmap này được truyền thẳng
+            // sang AddBackground nên không cần chờ nén PNG xong mới chuyển màn.
+            val bitmap = renderLayersToBitmap()
             if (bitmap == null) {
                 setSaveEnabled(true)
                 hideLoadingSafe()
                 return@launch
             }
             viewModelActivity.customizeBitmap = bitmap
-            val savedPath = withContext(Dispatchers.IO) {
-                bitmap.saveToFile(requireActivity(), "avatar")
-            }
-
-            if (savedPath == null) {
-                setSaveEnabled(true)
-                hideLoadingSafe()
-                return@launch
-            }
+            val savedPath = sharedViewModel.saveRenderedBitmapAsync(bitmap)
 
             val result = viewModel.onSaveComplete(savedPath)
             result?.let { (template, selections) ->

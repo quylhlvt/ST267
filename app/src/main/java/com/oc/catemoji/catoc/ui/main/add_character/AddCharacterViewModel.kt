@@ -51,6 +51,8 @@ class AddCharacterViewModel @Inject constructor(
     private val _backgroundImagePath = MutableStateFlow(
         savedStateHandle.get<String>(KEY_BACKGROUND_IMAGE_PATH)
     )
+    val selectedBackgroundPosition: Int
+        get() = savedStateHandle.get<Int>(KEY_SELECTED_BACKGROUND) ?: -1
     val backgroundImagePath: StateFlow<String?> = _backgroundImagePath.asStateFlow()
 
     var savedBackgroundColor: Int?
@@ -101,6 +103,10 @@ class AddCharacterViewModel @Inject constructor(
         stickers: List<String>,
         speeches: List<String>
     ) {
+        // Font/màu là dữ liệu local, phải luôn sẵn sàng và không phụ thuộc
+        // background/sticker/speech (các list này có thể về trễ từ cache/API).
+        ensureLocalLists()
+
         // Giữ nguyên các list và trạng thái selected khi Fragment tạm dừng
         // (ví dụ lúc mở Photo Picker).
         if (hasLoadedData) return
@@ -108,10 +114,8 @@ class AddCharacterViewModel @Inject constructor(
 
         backgroundImageList.clear()
         backgroundImageList.add(SelectedAddModel(path = "")) // ← giữ item pick từ gallery
+        backgroundImageList.add(SelectedAddModel(path = "")) // none
         backgroundImageList.addAll(backgrounds.map { SelectedAddModel(path = it) })
-
-        backgroundColorList.clear()
-        backgroundColorList.addAll(DataLocal.getBackgroundColorDefault(context))
 
         stickerList.clear()
         stickerList.addAll(stickers.map { SelectedAddModel(path = it) })
@@ -119,17 +123,24 @@ class AddCharacterViewModel @Inject constructor(
         speechList.clear()
         speechList.addAll(speeches.map { SelectedAddModel(path = it) })
 
-        textFontList.clear()
-        textFontList.addAll(DataLocal.getTextFontDefault())
-        textFontList.firstOrNull()?.isSelected = true
-
-        textColorList.clear()
-        textColorList.addAll(DataLocal.getTextColorDefault(context))
-        textColorList.getOrNull(1)?.isSelected = true
-
         hasLoadedData = true
         cacheLists()
     }
+
+    private fun ensureLocalLists() {
+        if (backgroundColorList.isEmpty()) {
+            backgroundColorList.addAll(DataLocal.getBackgroundColorDefault(context))
+        }
+        if (textFontList.isEmpty()) {
+            textFontList.addAll(DataLocal.getTextFontDefault())
+            textFontList.firstOrNull()?.isSelected = true
+        }
+        if (textColorList.isEmpty()) {
+            textColorList.addAll(DataLocal.getTextColorDefault(context))
+            textColorList.getOrNull(1)?.isSelected = true
+        }
+    }
+
     fun loadDataFromQuantity(
         bgQuantity: Int,
         stickerQuantity: Int,
@@ -260,6 +271,8 @@ class AddCharacterViewModel @Inject constructor(
     }
 
     private fun restoreCachedLists() {
+        ensureLocalLists()
+
         val backgrounds = savedStateHandle
             .get<ArrayList<String>>(KEY_BACKGROUND_PATHS)
             .orEmpty()
@@ -278,9 +291,6 @@ class AddCharacterViewModel @Inject constructor(
         })
         stickerList.addAll(stickers.map { SelectedAddModel(path = it) })
         speechList.addAll(speeches.map { SelectedAddModel(path = it) })
-        backgroundColorList.addAll(DataLocal.getBackgroundColorDefault(context))
-        textFontList.addAll(DataLocal.getTextFontDefault())
-        textColorList.addAll(DataLocal.getTextColorDefault(context))
         hasLoadedData = true
     }
 

@@ -9,8 +9,7 @@
     <string name="title_3">Sammlung vielfältiger Elemente</string>
     <string name="not_select_lang">Bitte wählen Sie eine Sprache</string>
     <string name="pony_maker">Katzen-Editor</string>
-    <string name="trending_custom">Beliebte Anpassungen</string>
-    <string name="my_work">Meine Arbeiten</string>
+
 
     <string name="permission">Berechtigung</string>
     <string name="storage">Speicher</string>
@@ -27,7 +26,7 @@
     <string name="add_image">Bild hinzufügen</string>
     <string name="text">Text</string>
     <string name="type_your_content">Geben Sie Ihren Inhalt ein</string>
-    <string name="loading">Wird geladen</string>
+    <string name="loading">Wird geladen...</string>
     <string name="haven_t_saved_it_yet_do_you_want_to_exit">Noch nicht gespeichert, möchten Sie wirklich beenden?</string>
     <string name="no">Nein</string>
     <string name="yes">Ja</string>
@@ -102,6 +101,7 @@
     <string name="please_connect_to_the_internet_to_download_more_data">Bitte mit dem Internet verbinden, um mehr Daten herunterzuladen</string>
     <string name="unstable_connection_please_check_your_network_connection">Instabile Verbindung, bitte überprüfe deine Netzwerkverbindung</string>
     <string name="ok">OK</string>
+    <string name="please_wait">Bitte warten...</string>
     <string name="please_wait_a_few_seconds_for_data_to_load">Bitte warte einen Moment, bis die Daten geladen sind.</string>
     <string name="create_package_name">Paketnamen erstellen</string>
     <string name="enter_your_package_name">Paketnamen eingeben</string>

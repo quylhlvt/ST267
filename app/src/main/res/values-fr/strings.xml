@@ -9,8 +9,7 @@
     <string name="title_3">Collection d’éléments variés</string>
     <string name="not_select_lang">Veuillez sélectionner une langue</string>
     <string name="pony_maker">Créateur de chats</string>
-    <string name="trending_custom">Tendances</string>
-    <string name="my_work">Mes créations</string>
+
 
     <string name="permission">Autorisation</string>
     <string name="storage">Stockage</string>
@@ -27,7 +26,7 @@
     <string name="add_image">Ajouter une image</string>
     <string name="text">Texte</string>
     <string name="type_your_content">Saisissez votre contenu</string>
-    <string name="loading">Chargement</string>
+    <string name="loading">Chargement...</string>
     <string name="haven_t_saved_it_yet_do_you_want_to_exit">Non enregistré, souhaitez-vous quitter ?</string>
     <string name="no">Non</string>
     <string name="yes">Oui</string>
@@ -102,6 +101,7 @@
     <string name="please_connect_to_the_internet_to_download_more_data">Veuillez vous connecter à internet pour télécharger plus de données</string>
     <string name="unstable_connection_please_check_your_network_connection">Connexion instable, veuillez vérifier votre connexion réseau</string>
     <string name="ok">OK</string>
+    <string name="please_wait">Veuillez patienter...</string>
     <string name="please_wait_a_few_seconds_for_data_to_load">Veuillez patienter quelques secondes pour le chargement des données.</string>
     <string name="create_package_name">Créer un nom de package</string>
     <string name="enter_your_package_name">Saisir le nom du package</string>

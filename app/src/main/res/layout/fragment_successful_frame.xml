@@ -46,15 +46,17 @@ tools:context=".ui.main.frameDesign.successful.SuccessfulFrameFragment">
     android:scaleType="centerCrop"
     android:src="@drawable/img_permission" />
 
-<TextView
+<com.oc.catemoji.catoc.core.extention.OuterStrokeTextView
     android:id="@+id/tvSuccess"
     style="@style/single_marquee"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/baloo2_bold"
+    android:fontFamily="@font/kavoon_regular"
     android:gravity="center"
     android:text="@string/image_has_been_saved_successfully"
-    android:textColor="@color/app_color"
+    android:textColor="@color/white"
+    app:outerStrokeColor="@color/app_color"
+    app:outerStrokeWidth="0.8dp"
     android:textSize="16sp"
     app:layout_constraintBottom_toTopOf="@+id/lnlBottom"
     app:layout_constraintTop_toBottomOf="@+id/imvImage" />
@@ -90,7 +92,7 @@ tools:context=".ui.main.frameDesign.successful.SuccessfulFrameFragment">
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/bg_100linear_stroker_white" />
+            android:src="@drawable/bg_frame_successtrue" />
         <TextView
             android:id="@+id/txtLeft"
             style="@style/single_marquee"
@@ -99,8 +101,8 @@ tools:context=".ui.main.frameDesign.successful.SuccessfulFrameFragment">
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/my_creation"
-            android:textColor="@color/app_color"
-            android:fontFamily="@font/baloo2_bold"
+            android:textColor="@color/white"
+            android:fontFamily="@font/kavoon_regular"
             android:textSize="16sp" />
     </FrameLayout>
 
@@ -131,7 +133,7 @@ tools:context=".ui.main.frameDesign.successful.SuccessfulFrameFragment">
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/bg_100linear_stroker_white" />
+            android:src="@drawable/bg_frame_successfalse" />
         <TextView
             android:id="@+id/txtRight"
             style="@style/single_marquee"
@@ -141,7 +143,7 @@ tools:context=".ui.main.frameDesign.successful.SuccessfulFrameFragment">
             android:layout_gravity="center"
             android:text="@string/download"
             android:textColor="@color/app_color"
-            android:fontFamily="@font/baloo2_bold"
+            android:fontFamily="@font/kavoon_regular"
             android:textSize="16sp" />
     </FrameLayout>
     <!--        btnBottomRight-->

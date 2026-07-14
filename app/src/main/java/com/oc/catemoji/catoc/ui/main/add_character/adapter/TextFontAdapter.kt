@@ -20,9 +20,6 @@ class TextFontAdapter(val context: Context) : BaseAdapter<SelectedAddModel, Item
             vFocus.setBackgroundResource(res)
 
             tvFont.setFont(item.color)
-            val (color, elevation) = if (item.isSelected) R.color.app_color to 6f else R.color.app_color9 to 0f
-            tvFont.setTextColor(context.getColor(color))
-            cvMain.cardElevation = elevation
             root.onClick { onTextFontClick.invoke(item.color, position) }
         }
     }

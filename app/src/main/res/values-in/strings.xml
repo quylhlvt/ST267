@@ -9,9 +9,7 @@
     <string name="title_3">Koleksi berbagai item</string>
     <string name="not_select_lang">Silakan pilih bahasa</string>
     <string name="pony_maker">Pembuat Kucing</string>
-    <string name="trending_custom">Kustom Populer</string>
-    <string name="my_work">Karya Saya</string>
-
+    <string name="please_wait">Mohon tunggu...</string>
     <string name="permission">Izin</string>
     <string name="storage">Penyimpanan</string>
     <string name="continue_per">Lanjutkan</string>
@@ -27,7 +25,7 @@
     <string name="add_image">Tambah Gambar</string>
     <string name="text">Teks</string>
     <string name="type_your_content">Ketik konten Anda</string>
-    <string name="loading">Memuat</string>
+    <string name="loading">Memuat...</string>
     <string name="haven_t_saved_it_yet_do_you_want_to_exit">Belum disimpan, apakah Anda ingin keluar?</string>
     <string name="no">Tidak</string>
     <string name="yes">Ya</string>

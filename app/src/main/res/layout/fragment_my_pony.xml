@@ -220,57 +220,81 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:weightSum="320"
+            android:weightSum="312"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/llBottom"
-            app:layout_constraintDimensionRatio="3.2:0.44">
+            app:layout_constraintDimensionRatio="3.12:0.36">
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnWhatsapp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="154"
+                android:layout_weight="136"
                 android:background="@drawable/bg_btn_whatsapp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_whatsapp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvWhatApp"
                     style="@style/single_marquee"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="4dp"
-                    android:fontFamily="@font/baloo2_bold"
+                    android:fontFamily="@font/kavoon_regular"
                     android:gravity="center"
                     android:text="@string/add_to_whatsapp"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
-            </FrameLayout>
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="12" />
+                android:layout_weight="40" />
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnTelegram"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="154"
+                android:layout_weight="136"
                 android:background="@drawable/bg_btn_telegram">
 
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_telegram"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
                 <TextView
                     android:id="@+id/tvTelegram"
                     style="@style/single_marquee"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="4dp"
-                    android:fontFamily="@font/baloo2_bold"
+                    android:fontFamily="@font/kavoon_regular"
                     android:gravity="center"
                     android:text="@string/add_to_telegram"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
-            </FrameLayout>
+                    android:textSize="12sp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -279,16 +303,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:weightSum="320"
-            app:layout_constraintDimensionRatio="3.2:0.44"
+            android:weightSum="312"
+            app:layout_constraintDimensionRatio="3.12:0.4"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <FrameLayout
                 android:id="@+id/btnShare"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="154"
-                android:background="@drawable/bg_cosplay">
+                android:layout_weight="136"
+                android:background="@drawable/bg_frame_mycreation">
 
                 <TextView
                     android:id="@+id/tvShare"
@@ -297,24 +321,24 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="4dp"
-                    android:fontFamily="@font/baloo2_bold"
+                    android:fontFamily="@font/kavoon_regular"
                     android:gravity="center"
                     android:text="@string/share"
                     android:textColor="@color/app_color"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
             </FrameLayout>
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="12" />
+                android:layout_weight="40" />
 
             <FrameLayout
                 android:id="@+id/btnDownload"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="154"
-                android:background="@drawable/bg_cosplay">
+                android:layout_weight="136"
+                android:background="@drawable/bg_frame_mycreation">
 
                 <TextView
                     android:id="@+id/tvDownload"
@@ -323,20 +347,14 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="4dp"
-                    android:fontFamily="@font/baloo2_bold"
+                    android:fontFamily="@font/kavoon_regular"
                     android:gravity="center"
                     android:text="@string/download"
                     android:textColor="@color/app_color"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
             </FrameLayout>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.oc.catemoji.catoc.utils.BlockableFrameLayout
-        android:id="@+id/flNativeCollab"
-        android:elevation="100dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

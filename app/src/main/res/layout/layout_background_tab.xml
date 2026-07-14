@@ -32,8 +32,8 @@
         android:gravity="center"
         android:paddingVertical="2dp"
         android:text="@string/image"
-        android:fontFamily="@font/baloo2_bold"
-        android:textColor="@color/app_color"
+        android:fontFamily="@font/kavoon_regular"
+        android:textColor="@color/white"
         android:textSize="20sp"
         tools:ignore="NestedWeights" />
 </FrameLayout>
@@ -54,7 +54,7 @@
             android:gravity="center"
             android:paddingVertical="2dp"
             android:text="@string/color"
-            android:fontFamily="@font/baloo2_bold"
+            android:fontFamily="@font/kavoon_regular"
             android:textColor="@color/app_color"
             android:textSize="20sp" />
         </FrameLayout>

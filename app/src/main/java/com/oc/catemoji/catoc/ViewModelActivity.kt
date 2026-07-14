@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 import java.util.UUID
 import javax.inject.Inject
 @HiltViewModel
@@ -308,6 +310,26 @@ class ViewModelActivity @Inject constructor(
             Log.d("ViewModelActivity", "💾 Saving: id=${toSave.id}, templateId=${toSave.templateId}, imageSave=${toSave.imageSave}")
             appDataManager.updateCustomizedCharacter(toSave)
         }
+    }
+
+    /**
+     * Cấp đường dẫn ngay để UI có thể điều hướng, sau đó nén PNG trong
+     * viewModelScope để công việc không bị hủy khi CustomizeFragment đóng.
+     */
+    fun saveRenderedBitmapAsync(bitmap: Bitmap): String {
+        val dir = File(context.filesDir, "avatars").apply { mkdirs() }
+        val file = File(dir, "avatar_${UUID.randomUUID()}.png")
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                FileOutputStream(file).use { output ->
+                    check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, output))
+                }
+            }.onFailure { error ->
+                Log.e("ViewModelActivity", "Failed to save rendered avatar", error)
+                file.delete()
+            }
+        }
+        return file.absolutePath
     }
 
     fun deleteCharacter(characterId: String) {

@@ -4,20 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
+    android:background="@drawable/img_bg_splash"
     android:clipToPadding="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.view.ViewFragment">
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:elevation="-1dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/img_bg_view"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="125dp" />
 
     <FrameLayout
         android:id="@+id/layoutActionBar"
@@ -110,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/bg_100linear_stroker_white" />
+                android:src="@drawable/bg_frame_mycreation" />
             <TextView
                 android:id="@+id/txtLeft"
                 style="@style/single_marquee"
@@ -118,9 +108,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/my_creation"
+                android:text="@string/share"
                 android:textColor="@color/app_color"
-                android:fontFamily="@font/baloo2_bold"
+                android:fontFamily="@font/kavoon_regular"
                 android:textSize="16sp" />
         </FrameLayout>
 
@@ -151,7 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/bg_100linear_stroker_white" />
+                android:src="@drawable/bg_frame_mycreation" />
             <TextView
                 android:id="@+id/txtRight"
                 style="@style/single_marquee"
@@ -161,7 +151,7 @@
                 android:layout_gravity="center"
                 android:text="@string/download"
                 android:textColor="@color/app_color"
-                android:fontFamily="@font/baloo2_bold"
+                android:fontFamily="@font/kavoon_regular"
                 android:textSize="16sp" />
         </FrameLayout>
         <!--        btnBottomRight-->
