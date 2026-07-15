@@ -127,13 +127,18 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
     }
 
     override fun initView() {
-        binding.actionBar.apply {
-            setImageActionBar(btnActionBarLeft, R.drawable.back_app)
-            setImageActionBar(btnActionCenter, R.drawable.ic_reset_all_custom)
+        binding.apply {
+            txtReset.isSelected =true
+            txtSize.isSelected =true
+            actionBar.apply {
+                setImageActionBar(btnActionBarLeft, R.drawable.back_app)
+                setImageActionBar(btnActionCenter, R.drawable.ic_reset_all_custom)
 //            setImageActionBar(btnActionBarCenter2, R.drawable.ic_flip_all_custom)
-            setFrameActionBar(btnActionBarRightText,tvRightText,getString(R.string.next ))
+                setFrameActionBar(btnActionBarRightText,tvRightText,getString(R.string.next ))
 
+            }
         }
+
         setupAdapters()
 
         readArgsAndInit()
@@ -215,6 +220,7 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
             applyTransformToCurrentLayer()
         }
         binding.imgScale.onClick {
+            if (!checkOnlineNetworkOrShowDialog()){
             val state = viewModel.state.value
             if (viewModel.resolvePathAt(state.currentNavIndex) == null) return@onClick
             isScaleActive = !isScaleActive
@@ -222,7 +228,7 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
                 if (isScaleActive) R.drawable.ic_scale_cus_true else R.drawable.ic_scale_cus_false
             )
             if (isScaleActive) binding.frameScale.visible() else binding.frameScale.gone()
-        }
+        }}
         adapterNav.onClick = {
             if (!checkOnlineNetworkOrShowDialog()) syncNavSelection(it)
         }
@@ -241,15 +247,16 @@ class CustomizeFragment : BaseFragment<FragmentCustomizeBinding, CustomizeViewMo
 
         binding.apply {
             changeAvatar.onClick {
-                viewModel.toggleCharacter()
+                if (!checkOnlineNetworkOrShowDialog()){
+                viewModel.toggleCharacter()}
             }
-            end.onClick {
-                val navPos = viewModel.state.value.currentNavIndex
-                if (navPos < arrShowColor.size) arrShowColor[navPos] = false
-                llColor.animate().alpha(0f).setDuration(200).withEndAction {
-                    llColor.visibility = View.INVISIBLE
-                }.start()
-            }
+//            end.onClick {
+//                val navPos = viewModel.state.value.currentNavIndex
+//                if (navPos < arrShowColor.size) arrShowColor[navPos] = false
+//                llColor.animate().alpha(0f).setDuration(200).withEndAction {
+//                    llColor.visibility = View.INVISIBLE
+//                }.start()
+//            }
             imgChangColor.onClick {
                 val navPos = viewModel.state.value.currentNavIndex
                 if (!viewModel.state.value.hasMultipleColors) return@onClick

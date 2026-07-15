@@ -33,7 +33,8 @@ class BackgroundImageAdapter : BaseAdapter<SelectedAddModel, ItemBackgroundImage
 
         val context = binding.root.context
         binding.apply {
-            tvAddImage.isSelected =true
+            // Fragment resets this state when the Image tab becomes visible again.
+            tvAddImage.isSelected = position == 0
             if (currentSelected == position) {
 
                 materialForcus.visible()

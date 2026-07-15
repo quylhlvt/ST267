@@ -19,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.oc.catemoji.catoc.R
 import com.oc.catemoji.catoc.core.base.BaseFragment
 import com.oc.catemoji.catoc.core.extention.InternetExtension.isInternetAvailable
@@ -136,8 +137,8 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
     }
     private fun loadFrame(framePath: String) {
         viewLifecycleOwner.lifecycleScope.launch {
-            val loaded = withContext(Dispatchers.Default) {
-                val frame = loadBitmapFromAssets(framePath) ?: return@withContext null
+            val loaded = withContext(Dispatchers.IO) {
+                val frame = loadFrameBitmap(framePath) ?: return@withContext null
                 frame to FrameDetector.detectAllTransparentRects(frame)
             } ?: return@launch
 
@@ -153,6 +154,24 @@ class AddOneFrameFragment : BaseFragment<FragmentAddOneFrameBinding, AddOneFrame
             updateSaveButtonVisibility()
             setupFrameClick()
         }
+    }
+
+    private fun loadFrameBitmap(framePath: String): Bitmap? {
+        if (!framePath.startsWith("http")) {
+            return loadBitmapFromAssets(framePath)
+        }
+
+        if (!isInternetAvailable(requireContext()) || !isNetworkConnected(requireContext())) {
+            return null
+        }
+
+        return runCatching {
+            Glide.with(requireContext().applicationContext)
+                .asBitmap()
+                .load(framePath)
+                .submit()
+                .get()
+        }.getOrNull()
     }
 
     private suspend fun restoreSelectedImages() {

@@ -20,10 +20,6 @@ class MyApplication :  Application() {
                 // 1. Font — giảm ~100-300ms cho lần đầu
                 ResourcesCompat.getFont(this, R.font.baloo2_extrabold)
 
-                // 2. Drawable — thread-safe
-                ContextCompat.getDrawable(this, R.drawable.img_bg_home1)
-                ContextCompat.getDrawable(this, R.drawable.img_bg_tv1)
-                ContextCompat.getDrawable(this, R.drawable.img_bg_home)
                 ContextCompat.getDrawable(this, R.drawable.img_title_home)
             } catch (e: Exception) {
                 Log.e("MyApplication", "Warm up error: ${e.message}")

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:paddingHorizontal="16dp"
-        android:fontFamily="@font/baloo2_bold"
+        android:fontFamily="@font/kavoon_regular"
         android:textColor="@color/app_color"
         app:outerStrokeColor="@color/white"
         app:outerStrokeWidth="1dp"
@@ -33,15 +33,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
-            android:background="@drawable/frame_bg_intro"
+            android:background="@drawable/bg_frame_permission"
             android:layout_height="match_parent"
             android:textStyle="bold"
-            android:fontFamily="@font/baloo2_bold"
+            android:fontFamily="@font/kavoon_regular"
             android:gravity="center"
             android:paddingHorizontal="50dp"
             android:text="@string/next"
             android:textColor="@color/app_color"
-            android:textSize="17sp" />
+            android:textSize="20sp" />
 
     </com.google.android.material.card.MaterialCardView>
 </FrameLayout>

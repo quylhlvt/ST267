@@ -672,6 +672,20 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
     }
 
     // ── UI setup ──────────────────────────────────────────────────────────────
+    private fun restartAddImageMarquee() {
+        binding.lnlBackground.rcvBackgroundImage.doOnPreDraw {
+            val addImageText = binding.lnlBackground.rcvBackgroundImage
+                .findViewHolderForAdapterPosition(0)
+                ?.itemView
+                ?.findViewById<android.widget.TextView>(R.id.tvAddImage)
+                ?: return@doOnPreDraw
+
+            // RecyclerView may keep the old ViewHolder when the same list is submitted.
+            addImageText.isSelected = false
+            addImageText.post { addImageText.isSelected = true }
+        }
+    }
+
     private fun setupTypeBackground(type: Int) {
         binding.apply {
             when (type) {
@@ -688,6 +702,7 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                         ContextCompat.getColor(requireContext(), R.color.app_color)
                     )
                     backgroundImageAdapter.submitList(viewModel.backgroundImageList)
+                    restartAddImageMarquee()
                 }
 
                 ValueKey.COLOR_BACKGROUND -> {
@@ -760,6 +775,18 @@ class AddCharacterFragment : BaseFragment<FragmentAddCharacterBinding, AddCharac
                 binding.imvBackground.setBackgroundColor(requireContext().getColor(R.color.transparent))
                 backgroundImageAdapter.clearSelection()
                 backgroundColorAdapter.clearSelection()
+
+                // Trở về trạng thái mặc định: Background > Image và focus ô None.
+                viewModel.setTypeNavigation(ValueKey.BACKGROUND_NAVIGATION)
+                viewModel.setTypeBackground(ValueKey.IMAGE_BACKGROUND)
+                if (viewModel.backgroundImageList.size > 1) {
+                    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                        viewModel.updateBackgroundImageSelected(1)
+                        withContext(Dispatchers.Main) {
+                            backgroundImageAdapter.selectItem(1)
+                        }
+                    }
+                }
                 hideLoadingSafe()
 
                 val cachedBitmap = viewModelActivity.customizeBitmap

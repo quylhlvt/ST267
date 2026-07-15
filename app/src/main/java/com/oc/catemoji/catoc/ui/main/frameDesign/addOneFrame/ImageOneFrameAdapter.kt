@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerDrawable
 import com.oc.catemoji.catoc.databinding.ItemImageBinding
+import com.oc.catemoji.catoc.utils.DataLocal
 import java.io.File
 
 class ImageOneFrameAdapter(
@@ -23,6 +25,8 @@ class ImageOneFrameAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(path: String) {
+            val shimmerDrawable = ShimmerDrawable().apply { setShimmer(DataLocal.shimmer) }
+
             val model: Any = when {
                 path.startsWith("content://") || path.startsWith("file://") -> Uri.parse(path)
                 File(path).exists() -> File(path)
@@ -32,6 +36,7 @@ class ImageOneFrameAdapter(
             Glide.with(binding.imvImage)
                 .load(model)
                 .centerCrop()
+                .placeholder(shimmerDrawable)
                 .into(binding.imvImage)
 
             binding.root.setOnClickListener {

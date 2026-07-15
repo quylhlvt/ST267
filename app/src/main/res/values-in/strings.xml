@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- values-id/strings.xml -->
 <resources>
-    <string name="app_name">Cat Avatar: Cat Maker</string>
+    <string name="app_name">Couple Creators &amp; Dress Up 2</string>
     <string name="next">Lanjut</string>
+    <string name="save">Simpan</string>
     <string name="language">Bahasa</string>
-    <string name="title_1">Buat berbagai gaya sesuai keinginanmu</string>
-    <string name="title_2">Buat avatar sempurnamu</string>
-    <string name="title_3">Koleksi berbagai item</string>
+    <string name="title_1">Ciptakan pasangan impian dan dandani dengan gayamu sendiri!</string>
+    <string name="title_2">Dua karakter, dua kali lebih seru dalam berbusana!</string>
+    <string name="title_3">Rancang duo sempurnamu dan kuasai panggung mode!</string>
     <string name="not_select_lang">Silakan pilih bahasa</string>
-    <string name="pony_maker">Pembuat Kucing</string>
+    <string name="pony_maker">Pembuat Pasangan</string>
     <string name="please_wait">Mohon tunggu...</string>
     <string name="permission">Izin</string>
     <string name="storage">Penyimpanan</string>
@@ -30,7 +31,6 @@
     <string name="no">Tidak</string>
     <string name="yes">Ya</string>
     <string name="null_edt">Silakan masukkan teks</string>
-    <string name="done">Selesai</string>
     <string name="choose_color">Pilih Warna</string>
     <string name="do_you_want_to_reset_all">Apakah Anda ingin mengatur ulang semua?</string>
     <string name="reset">Atur Ulang</string>
@@ -40,15 +40,13 @@
     <string name="image_has_been_saved_successfully">Gambar berhasil disimpan!</string>
     <string name="download">Unduh</string>
     <string name="avatar">Avatar</string>
-    <string name="my_avatar">Avatar Saya</string>
-    <string name="design">Desain Saya</string>
+    <string name="design">Desain</string>
     <string name="no_item_here">Tidak ada item di sini</string>
     <string name="add_to_whatsapp">Tambahkan ke WhatsApp</string>
     <string name="add_to_telegram">Tambahkan ke Telegram</string>
     <string name="share">Bagikan</string>
     <string name="no_app_found_to_handle_this_action">Tidak ada aplikasi yang ditemukan untuk tindakan ini</string>
     <string name="download_success">Berhasil diunduh ke album %s</string>
-    <string name="download_fail">Gagal mengunduh, silakan coba lagi nanti!</string>
     <string name="delete">Hapus</string>
     <string name="are_you_sure_want_to_delete_this_item">Apakah Anda yakin ingin menghapus item ini?</string>
     <string name="please_select_an_image">Silakan pilih gambar</string>
@@ -57,7 +55,6 @@
     <string name="invalid_action_msg">Aplikasi tidak terpasang</string>
     <string name="invalid_action">Kesalahan</string>
     <string name="download_failed_please_try_again_later">Gagal mengunduh, silakan coba lagi nanti!</string>
-    <string name="edit">Edit</string>
     <string name="rate">Nilai</string>
     <string name="privacy_policy"><![CDATA[Kebijakan Privasi]]></string>
 
@@ -65,15 +62,13 @@
     <string name="zero_star">Beri tahu kami pengalaman Anda</string>
 
     <string name="one_star_title">Oh tidak =(</string>
-    <string name="one_star">Silakan beri kami masukan</string>
 
     <string name="two_star_title">Oh tidak =(</string>
-    <string name="two_star">Silakan beri kami masukan</string>
 
     <string name="three_star_title">Oh tidak =(</string>
     <string name="three_star">Silakan beri kami masukan</string>
 
-    <string name="four_star_title">Kami juga menyukaimu</string>
+    <string name="four_star_title">Kami juga menyukaimu!</string>
     <string name="four_star">Terima kasih atas masukan Anda</string>
 
     <string name="five_star_title">Kami juga menyukaimu</string>
@@ -81,20 +76,12 @@
 
     <string name="rate_us_0">Anda belum memberi nilai!</string>
     <string name="have_rated">Terima kasih telah memberi nilai aplikasi kami</string>
-    <string name="refresh">Muat Ulang</string>
-    <string name="hello_blank_fragment">Halo fragmen kosong</string>
-    <string name="cosplay">Bermain Peran</string>
-    <string name="permission_camera_denied">Izin kamera diperlukan untuk menggunakan fitur ini</string>
-    <string name="cat_random">Kucing Acak</string>
-    <string name="random">Acak</string>
-    <string name="my_creation">Kreasi Saya</string>
-    <string name="my_creation1">Kreasi saya</string>
+    <string name="my_creation">Pasangan Saya</string>
+    <string name="my_creation1">Pasangan saya</string>
     <string name="category">Kategori</string>
     <string name="image">Gambar</string>
     <string name="color">Warna</string>
     <string name="successful">Berhasil</string>
-    <string name="context_guide_body">Dalam mode Bermain Peran, pemain akan diberikan satu gambar referensi secara acak. Tugas Anda adalah membuat ulang karakter tersebut seakurat mungkin dengan memilih gaya rambut, pakaian, warna, dan aksesori yang tepat. Setiap kecocokan yang benar akan meningkatkan persentase Anda (%). Semakin mirip karakter Anda dengan gambar acak, semakin tinggi skor akhir Anda. Perhatikan detail kecil untuk mendapatkan hasil cosplay terbaik.</string>
-    <string name="try_again">Coba Lagi</string>
     <string name="no_internet">Tidak ada internet</string>
     <string name="internet">Internet</string>
     <string name="please_connect_to_the_internet_to_download_more_data">Sambungkan ke internet untuk mengunduh lebih banyak data</string>
@@ -107,4 +94,14 @@
     <string name="this_action_may_contain_advertising">Tindakan ini mungkin mengandung iklan</string>
     <string name="error">Pemberitahuan</string>
     <string name="errorcontent">Karakter ini telah dihapus dan tidak dapat diedit.</string>
+    <string name="frame_design">Desain Bingkai</string>
+    <string name="frame">Bingkai</string>
+    <string name="add_frame">Tambah Bingkai</string>
+    <string name="gallery">Galeri</string>
+    <string name="create">Buat</string>
+    <string name="the_app_need_read_storage">Aplikasi memerlukan akses penyimpanan</string>
+    <string name="go_to_settings">Buka Pengaturan</string>
+    <string name="size">Ukuran</string>
+    <string name="font">Font</string>
+    <string name="done">Selesai</string>
 </resources>

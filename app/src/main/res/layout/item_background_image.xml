@@ -37,7 +37,6 @@ android:layout_marginBottom="12dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_margin="4dp"
             android:weightSum="48"
             android:orientation="vertical"
             android:visibility="visible">

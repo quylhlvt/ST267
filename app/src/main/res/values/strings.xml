@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cat Avatar: Cat Maker</string>
+    <string name="app_name">Couple Creators &amp; Dress Up 2</string>
     <string name="next">Next</string>
     <string name="save">Save</string>
     <string name="language">Language</string>
@@ -29,7 +29,6 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="null_edt">Please enter text</string>
-    <string name="done">Done</string>
     <string name="choose_color">Choose Color</string>
     <string name="do_you_want_to_reset_all">Do you want to reset all?</string>
     <string name="reset">Reset</string>
@@ -39,7 +38,6 @@
     <string name="image_has_been_saved_successfully">Image has been saved successfully!</string>
     <string name="download">Download</string>
     <string name="avatar">Avatar</string>
-    <string name="my_avatar">My Avatar</string>
     <string name="design">Design</string>
     <string name="no_item_here">No Item Here</string>
     <string name="add_to_whatsapp">Add To WhatsApp</string>
@@ -47,7 +45,6 @@
     <string name="share">Share</string>
     <string name="no_app_found_to_handle_this_action">No app found to handle this action</string>
     <string name="download_success">Download successful to the %s album</string>
-    <string name="download_fail">Download failed, please try again later!</string>
     <string name="delete">Delete</string>
     <string name="are_you_sure_want_to_delete_this_item">Are you sure want to delete this item?</string>
     <string name="please_select_an_image">Please select an image</string>
@@ -56,7 +53,6 @@
     <string name="invalid_action_msg">Application not installed</string>
     <string name="invalid_action">Error</string>
     <string name="download_failed_please_try_again_later">Download failed, please try again later!</string>
-    <string name="edit">Edit</string>
     <string name="rate">Rate</string>
     <string name="privacy_policy"><![CDATA[Privacy & Policy]]></string>
 
@@ -64,15 +60,13 @@
     <string name="zero_star">Let us know your experience</string>
 
     <string name="one_star_title">Oh, no</string>
-    <string name="one_star">Please give us some feedback</string>
 
     <string name="two_star_title">Oh, no</string>
-    <string name="two_star">Please give us some feedback</string>
 
     <string name="three_star_title">Oh, no</string>
     <string name="three_star">Please give us some feedback</string>
 
-    <string name="four_star_title">We love you too</string>
+    <string name="four_star_title">We love you too!</string>
     <string name="four_star">Thanks for your feedback</string>
 
     <string name="five_star_title">We love you too</string>
@@ -80,21 +74,13 @@
 
     <string name="rate_us_0">You have not rated it yet!</string>
     <string name="have_rated">Thank you for rate our app</string>
-    <string name="refresh">Refesh</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="cosplay">Cosplay</string>
-    <string name="permission_camera_denied">Cần quyền camera để sử dụng tính năng này</string>
-    <string name="cat_random">Cat Random</string>
-    <string name="random">Random</string>
     <string name="my_creation">My Couple</string>
     <string name="my_creation1">My couple</string>
-    <string name="category">Category</string>
+    <string name="category">Couple Maker</string>
     <string name="image">Image</string>
     <string name="color">Color</string>
     <string name="successful">Successful</string>
-    <string name="context_guide_body">Cosplay Mode, players are randomly given one reference image to follow. Your task is to recreate that character as accurately as possible by choosing the right hairstyles, outfits, colors, and accessories. Every correct match increases your percentage score (%). The closer your character looks to the random image, the higher your final score will be. Pay attention to small details to achieve the best cosplay result.</string>
-    <string name="try_again">Try Again</string>
     <string name="no_internet">No internet</string>
     <string name="internet">Internet</string>
     <string name="please_connect_to_the_internet_to_download_more_data">Please connect to the internet to download more data</string>
@@ -117,4 +103,5 @@
     <string name="size">Size</string>
     <string name="font">Font</string>
     <string name="please_wait">Please wait...</string>
+    <string name="done">Done</string>
 </resources>

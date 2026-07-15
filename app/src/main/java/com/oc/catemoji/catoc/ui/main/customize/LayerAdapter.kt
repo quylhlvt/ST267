@@ -24,10 +24,12 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.load.DataSource
+import com.facebook.shimmer.ShimmerDrawable
 import com.oc.catemoji.catoc.core.extention.dp
 import com.oc.catemoji.catoc.core.extention.gone
 import com.oc.catemoji.catoc.core.extention.invisible
 import com.oc.catemoji.catoc.databinding.ItemBottomCustomBinding
+import com.oc.catemoji.catoc.utils.DataLocal
 
 // ── NAV ADAPTER ───────────────────────────────────────────────────────────────
 class NavAdapter :
@@ -46,6 +48,7 @@ class NavAdapter :
     }
 
     override fun onBind(binding: ItemBottomCustomBinding, item: BodyPartModel, position: Int) {
+        val shimmerDrawable = ShimmerDrawable().apply { setShimmer(DataLocal.shimmer) }
         binding.apply {
             val ctx = root.context
         if (posNav == position) {
@@ -78,6 +81,7 @@ class NavAdapter :
                     return false
                 }
             })
+            .placeholder(shimmerDrawable)
             .into(imvImage)
 
         root.setOnClickListener { onClick?.invoke(position) }
@@ -137,6 +141,7 @@ class PartAdapter : BaseAdapter<String, ItemLayerBinding>(ItemLayerBinding::infl
     }
 
     override fun onBind(binding: ItemLayerBinding, item: String, position: Int) {
+        val shimmerDrawable = ShimmerDrawable().apply { setShimmer(DataLocal.shimmer) }
         binding.apply {
             val ctx = root.context
 
@@ -191,6 +196,7 @@ class PartAdapter : BaseAdapter<String, ItemLayerBinding>(ItemLayerBinding::infl
                             return false
                         }
                     })
+                    .placeholder(shimmerDrawable)
                     .into(imvImage)
             }
         }

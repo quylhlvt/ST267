@@ -90,7 +90,6 @@
                 android:id="@+id/imgScale"
                 android:layout_width="40dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_scale_cus_none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
@@ -141,7 +140,7 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginVertical="8dp"
+                        android:paddingVertical="8dp"
                         android:layout_marginEnd="0dp">
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -158,19 +157,7 @@
                     </RelativeLayout>
 
                     <!-- imvEndColor — đóng llColor -->
-                    <ImageView
-                        android:id="@+id/end"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginEnd="8dp"
-                        android:adjustViewBounds="true"
-                        android:clickable="true"
-                        android:elevation="3dp"
-                        android:focusable="true"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/img_end_color"
-                        android:visibility="gone" />
+
 
                 </com.google.android.material.card.MaterialCardView>
 

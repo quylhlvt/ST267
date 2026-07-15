@@ -21,10 +21,9 @@ import com.oc.catemoji.catoc.core.extention.safeNavigate
 import com.oc.catemoji.catoc.core.extention.setImageActionBar
 import com.oc.catemoji.catoc.core.extention.setTextActionBar
 import com.oc.catemoji.catoc.data.model.custom.CustomModel
-import com.oc.catemoji.catoc.databinding.FragmentChoosePonyBinding
+import com.oc.catemoji.catoc.databinding.FragmentChooseAvatarBinding
 import com.oc.catemoji.catoc.ui.main.customize.CustomizeFragment.Companion.ARG_TEMPLATE_ID
 import com.oc.catemoji.catoc.ui.main.customize.CustomizeFragment.Companion.ARG_TEMPLATE_INDEX
-import com.oc.catemoji.catoc.utils.BlockableFrameLayout
 import com.oc.catemoji.catoc.utils.key.IntentKey
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -34,8 +33,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
-class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyViewModel>(
-    FragmentChoosePonyBinding::inflate,
+class ChooseAvatarFragment : BaseFragment<FragmentChooseAvatarBinding, ChoosePonyViewModel>(
+    FragmentChooseAvatarBinding::inflate,
     ChoosePonyViewModel::class.java
 ) {
     private val mainViewModel: ViewModelActivity by activityViewModels()
@@ -46,7 +45,7 @@ class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyVie
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): FragmentChoosePonyBinding = FragmentChoosePonyBinding.inflate(inflater, container, false)
+    ): FragmentChooseAvatarBinding = FragmentChooseAvatarBinding.inflate(inflater, container, false)
 
     override fun onFragmentStart() {
         if (!isAdded || isDetached) return
@@ -88,7 +87,7 @@ class ChoosePonyFragment : BaseFragment<FragmentChoosePonyBinding, ChoosePonyVie
 
         binding.recycleChoose.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            adapter       = this@ChoosePonyFragment.adapter
+            adapter       = this@ChooseAvatarFragment.adapter
             itemAnimator  = null
         }
     }

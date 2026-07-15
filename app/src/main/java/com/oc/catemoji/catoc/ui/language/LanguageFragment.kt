@@ -161,9 +161,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding, LanguageViewModel
         binding.recycleLanguage.apply {
             adapter = languageAdapter
             itemAnimator = null
-            post {
-                background = ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_rcy_lang)
-            }
+
         }
     }
     private fun handleRcv() {

@@ -10,14 +10,15 @@ import com.oc.catemoji.catoc.core.extention.gone
 import com.oc.catemoji.catoc.core.extention.onClick
 import com.oc.catemoji.catoc.core.extention.visible
 import com.oc.catemoji.catoc.data.model.addcharacter.SelectedAddModel
+import com.oc.catemoji.catoc.databinding.ItemSpeechBinding
 import com.oc.catemoji.catoc.databinding.ItemStickerBinding
 import com.oc.catemoji.catoc.utils.DataLocal
 
-class SpeechAdapter  : BaseAdapter<SelectedAddModel, ItemStickerBinding>(ItemStickerBinding::inflate) {
+class SpeechAdapter  : BaseAdapter<SelectedAddModel, ItemSpeechBinding>(ItemSpeechBinding::inflate) {
     var onItemClick: ((String, Drawable?) -> Unit) = { _, _ -> }
     var currentSelected = -1
 
-    override fun onBind(binding: ItemStickerBinding, item: SelectedAddModel, position: Int) {
+    override fun onBind(binding: ItemSpeechBinding, item: SelectedAddModel, position: Int) {
         val shimmerDrawable = ShimmerDrawable().apply { setShimmer(DataLocal.shimmer) }
 
         binding.apply {

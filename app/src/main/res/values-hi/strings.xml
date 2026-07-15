@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- values-hi/strings.xml -->
 <resources>
-    <string name="app_name">Cat Avatar: Cat Maker</string>
+    <string name="app_name">Couple Creators &amp; Dress Up 2</string>
     <string name="next">आगे</string>
+    <string name="save">सहेजें</string>
     <string name="language">भाषा</string>
-    <string name="title_1">अपनी पसंद के अनुसार अलग-अलग स्टाइल बनाएं</string>
-    <string name="title_2">अपना परफेक्ट अवतार बनाएं</string>
-    <string name="title_3">विभिन्न आइटम्स का संग्रह</string>
+    <string name="title_1">अपने सपनों की जोड़ी बनाएँ और उसे अपने अंदाज़ में सजाएँ!</string>
+    <string name="title_2">दोगुने किरदार, फैशन का दोगुना मज़ा!</string>
+    <string name="title_3">अपनी बेहतरीन जोड़ी बनाएँ और रैंप पर छा जाएँ!</string>
     <string name="not_select_lang">कृपया एक भाषा चुनें</string>
-    <string name="pony_maker">कैट मेकर</string>
+    <string name="pony_maker">जोड़ी निर्माता</string>
     <string name="please_wait">कृपया प्रतीक्षा करें...</string>
     <string name="permission">अनुमति</string>
     <string name="storage">स्टोरेज</string>
@@ -30,7 +31,6 @@
     <string name="no">नहीं</string>
     <string name="yes">हाँ</string>
     <string name="null_edt">कृपया टेक्स्ट दर्ज करें</string>
-    <string name="done">हो गया</string>
     <string name="choose_color">रंग चुनें</string>
     <string name="do_you_want_to_reset_all">क्या आप सब कुछ रीसेट करना चाहते हैं?</string>
     <string name="reset">रीसेट</string>
@@ -40,15 +40,13 @@
     <string name="image_has_been_saved_successfully">छवि सफलतापूर्वक सेव हो गई!</string>
     <string name="download">डाउनलोड</string>
     <string name="avatar">अवतार</string>
-    <string name="my_avatar">मेरा अवतार</string>
-    <string name="design">मेरा डिज़ाइन</string>
+    <string name="design">डिज़ाइन</string>
     <string name="no_item_here">यहाँ कोई आइटम नहीं है</string>
     <string name="add_to_whatsapp">WhatsApp में जोड़ें</string>
     <string name="add_to_telegram">Telegram में जोड़ें</string>
     <string name="share">साझा करें</string>
     <string name="no_app_found_to_handle_this_action">इस क्रिया को संभालने के लिए कोई ऐप नहीं मिला</string>
     <string name="download_success">%s एल्बम में सफलतापूर्वक डाउनलोड किया गया</string>
-    <string name="download_fail">डाउनलोड विफल, कृपया बाद में फिर से प्रयास करें!</string>
     <string name="delete">हटाएं</string>
     <string name="are_you_sure_want_to_delete_this_item">क्या आप इस आइटम को हटाना चाहते हैं?</string>
     <string name="please_select_an_image">कृपया एक छवि चुनें</string>
@@ -57,7 +55,6 @@
     <string name="invalid_action_msg">ऐप इंस्टॉल नहीं है</string>
     <string name="invalid_action">त्रुटि</string>
     <string name="download_failed_please_try_again_later">डाउनलोड विफल, कृपया बाद में फिर से प्रयास करें!</string>
-    <string name="edit">संपादित करें</string>
     <string name="rate">रेट करें</string>
     <string name="privacy_policy"><![CDATA[गोपनीयता और नीति]]></string>
 
@@ -65,15 +62,13 @@
     <string name="zero_star">अपना अनुभव बताएं</string>
 
     <string name="one_star_title">ओह नहीं =(</string>
-    <string name="one_star">कृपया हमें अपनी प्रतिक्रिया दें</string>
 
     <string name="two_star_title">ओह नहीं =(</string>
-    <string name="two_star">कृपया हमें अपनी प्रतिक्रिया दें</string>
 
     <string name="three_star_title">ओह नहीं =(</string>
     <string name="three_star">कृपया हमें अपनी प्रतिक्रिया दें</string>
 
-    <string name="four_star_title">हम भी आपसे प्यार करते हैं</string>
+    <string name="four_star_title">हम भी आपसे प्यार करते हैं!</string>
     <string name="four_star">आपकी प्रतिक्रिया के लिए धन्यवाद</string>
 
     <string name="five_star_title">हम भी आपसे प्यार करते हैं</string>
@@ -81,20 +76,12 @@
 
     <string name="rate_us_0">आपने अभी तक रेट नहीं किया है!</string>
     <string name="have_rated">हमारे ऐप को रेट करने के लिए धन्यवाद</string>
-    <string name="refresh">रीफ़्रेश</string>
-    <string name="hello_blank_fragment">नमस्ते खाली फ्रैगमेंट</string>
-    <string name="cosplay">वेशभूषा</string>
-    <string name="permission_camera_denied">इस सुविधा के लिए कैमरा अनुमति आवश्यक है</string>
-    <string name="cat_random">रैंडम बिल्ली</string>
-    <string name="random">रैंडम</string>
-    <string name="my_creation">मेरी रचना</string>
-    <string name="my_creation1">मेरी रचना</string>
+    <string name="my_creation">मेरी जोड़ी</string>
+    <string name="my_creation1">मेरी जोड़ी</string>
     <string name="category">श्रेणी</string>
     <string name="image">छवि</string>
     <string name="color">रंग</string>
     <string name="successful">सफल</string>
-    <string name="context_guide_body">कॉसप्ले मोड में, खिलाड़ियों को एक संदर्भ छवि यादृच्छिक रूप से दी जाती है। आपका कार्य सही हेयरस्टाइल, कपड़े, रंग और एक्सेसरी चुनकर उस चरित्र को जितना हो सके उतना सटीक रूप से बनाना है। हर सही मिलान आपके प्रतिशत (%) को बढ़ाता है। आपका चरित्र जितना अधिक उस छवि जैसा दिखेगा, आपका अंतिम स्कोर उतना ही अधिक होगा। सर्वोत्तम परिणाम पाने के लिए छोटे-छोटे विवरणों पर ध्यान दें।</string>
-    <string name="try_again">फिर से प्रयास करें</string>
     <string name="no_internet">इंटरनेट नहीं है</string>
     <string name="internet">इंटरनेट</string>
     <string name="please_connect_to_the_internet_to_download_more_data">अधिक डेटा डाउनलोड करने के लिए इंटरनेट से जुड़ें</string>
@@ -107,4 +94,14 @@
     <string name="this_action_may_contain_advertising">इस क्रिया में विज्ञापन हो सकते हैं</string>
     <string name="error">सूचना</string>
     <string name="errorcontent">यह पात्र हटा दिया गया है और इसे संपादित नहीं किया जा सकता।</string>
+    <string name="frame_design">फ़्रेम डिज़ाइन</string>
+    <string name="frame">फ़्रेम</string>
+    <string name="add_frame">फ़्रेम जोड़ें</string>
+    <string name="gallery">गैलरी</string>
+    <string name="create">बनाएँ</string>
+    <string name="the_app_need_read_storage">ऐप को स्टोरेज की अनुमति चाहिए</string>
+    <string name="go_to_settings">सेटिंग्स पर जाएँ</string>
+    <string name="size">आकार</string>
+    <string name="font">फ़ॉन्ट</string>
+    <string name="done">पूर्ण</string>
 </resources>

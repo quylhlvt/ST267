@@ -42,9 +42,9 @@ class IntroViewModel @Inject constructor( private val sharedPreferences: SharedP
 
     fun getPage(currentPage: Int, totalPages: Int) {
         val textRes =
-            if (currentPage >= totalPages - 1)
-                R.string.continue_per
-            else
+//            if (currentPage >= totalPages - 1)
+//                R.string.continue_per
+//            else
                 R.string.next
 
         _uiState.update {

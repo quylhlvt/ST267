@@ -9,7 +9,6 @@ import com.oc.catemoji.catoc.core.extention.setFont
 import com.oc.catemoji.catoc.data.model.addcharacter.SelectedAddModel
 import com.oc.catemoji.catoc.databinding.ItemFontBinding
 
-
 class TextFontAdapter(val context: Context) : BaseAdapter<SelectedAddModel, ItemFontBinding>(ItemFontBinding::inflate) {
     var onTextFontClick: ((Int, Int) -> Unit) = { _, _ -> }
     private var currentSelected = 0

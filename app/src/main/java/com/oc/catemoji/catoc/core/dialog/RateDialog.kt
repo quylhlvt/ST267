@@ -82,11 +82,11 @@ class RateDialog(private val activity: Activity) : DialogFragment() {
             rating = r.toInt()
             when (rating) {
                 0 -> setView(R.drawable.ic_rate_rero,R.string.zero_star_title, R.string.zero_star)
-                1 -> setView(R.drawable.ic_rate_one,R.string.one_star_title, R.string.four_star)
-                2 -> setView(R.drawable.ic_rate_two,R.string.two_star_title, R.string.four_star)
+                1 -> setView(R.drawable.ic_rate_one,R.string.one_star_title, R.string.three_star)
+                2 -> setView(R.drawable.ic_rate_two,R.string.two_star_title, R.string.three_star)
                 3 -> setView(R.drawable.ic_rate_three,R.string.three_star_title, R.string.three_star)
                 4 -> setView(R.drawable.ic_rate_four,R.string.four_star_title, R.string.four_star)
-                5 -> setView(R.drawable.ic_rate_five,R.string.five_star_title, R.string.five_star)
+                5 -> setView(R.drawable.ic_rate_five,R.string.four_star_title, R.string.five_star)
             }
         }
     }

@@ -63,14 +63,6 @@
         </androidx.cardview.widget.CardView>
 
         <!--        imvFocus-->
-        <View
-            android:id="@+id/vFocus"
-            android:elevation="-1dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="3.5dp"
-            android:visibility="invisible"
-            android:background="@drawable/bg_10_stroke_linear_color" />
 
     </FrameLayout>
 

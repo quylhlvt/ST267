@@ -363,14 +363,24 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
             binding.lnlBottom.visible()
             if (currentTab.value == MyPonyTab.AVATAR) {
                 binding.lnlBottomTop.visible()   // WhatsApp + Telegram
-                binding.llBottom.gone()
+                binding.llBottom.visible()       // Long click Avatar: hiện Share + Download
             } else {
                 binding.lnlBottomTop.gone()       // Ẩn WhatsApp + Telegram cho Design tab
                 binding.llBottom.visible()
 
             }
         } else {
-            binding.lnlBottom.gone()
+            if (currentTab.value == MyPonyTab.AVATAR && currentList.isNotEmpty()) {
+                // Bình thường: Avatar chỉ hiện WhatsApp + Telegram.
+                binding.lnlBottom.visible()
+                binding.lnlBottomTop.visible()
+                binding.llBottom.gone()
+            } else {
+                // Danh sách rỗng, Design và Frame đều ẩn toàn bộ thanh thao tác.
+                binding.lnlBottom.gone()
+                binding.lnlBottomTop.gone()
+                binding.llBottom.gone()
+            }
         }
     }
 
@@ -599,8 +609,20 @@ class MyPonyFragment : WhatsappSharingFragment<FragmentMyPonyBinding, MyPonyView
      * - Design tab: dùng path trực tiếp
      * KHÔNG dùng customized.avatar (đó là thumbnail template gốc từ assets)
      */
-    private fun getSharePaths(): List<String> =
-        getSelectedItems().map { it.path }.filter { it.isNotEmpty() }
+    private fun getSharePaths(): List<String> {
+        val currentItems = getCurrentItems()
+        val isSelectionMode = currentItems.any { it.isShowSelection }
+
+        // Tab Avatar ở trạng thái bình thường mặc định dùng toàn bộ avatar.
+        // Sau khi long click, chỉ dùng những item đã được tick chọn.
+        val itemsToShare = if (currentTab.value == MyPonyTab.AVATAR && !isSelectionMode) {
+            currentItems
+        } else {
+            currentItems.filter { it.isSelected }
+        }
+
+        return itemsToShare.map { it.path }.filter { it.isNotEmpty() }
+    }
 
     // ── WHATSAPP ──────────────────────────────────────────────────────────────
 

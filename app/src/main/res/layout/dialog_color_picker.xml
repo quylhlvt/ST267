@@ -42,7 +42,7 @@
                     android:gravity="center"
                     android:textColor="@color/app_color"
                     android:paddingHorizontal="5dp"
-                    android:paddingVertical="12dp"
+                    android:paddingTop="12dp"
                     android:text="@string/choose_color"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,6 @@
                     android:id="@+id/colorPickerView"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="11dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -153,7 +152,7 @@
                                 app:layout_constraintBottom_toBottomOf="@+id/imgSaveFor"
                                 android:fontFamily="@font/kavoon_regular"
                                 android:gravity="center"
-                                android:text="@string/save"
+                                android:text="@string/done"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"  />
 
